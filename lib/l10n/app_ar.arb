@@ -1,0 +1,18 @@
+{
+    "login":"تسجيل الدخول",
+    "title":"الرعاية الأساسية لحديثي الولادة",
+    "password":"كلمة المرور",
+    "serverURL":"عنوان URL للخادم",
+    "username":"اسم المستخدم",
+    "noInternet":"لا يوجد اتصال بالإنترنت",
+    "invalidRequest":"طلب غير صالح",
+    "invalidInput":"مدخل غير صالح",
+    "errorDuringCommunication":"خطأ أثناء الاتصال",
+    "unauthorized":"عمل غير مصرح به",
+    "chooseOrganisation":"اختر المنظمة",
+    "proceed":"يتابع",
+    "continueWithLocalAuth":"تواصل مع المصادقة المحلية",
+    "localAuthNotSupported":"المصادقة المحلية غير معتمدة",
+    "noCredentialsSaved":"لا توجد بيانات اعتماد محفوظة!",
+    "localAuthError":"حدث خطأ في المصادقة المحلية"
+}

@@ -14,5 +14,6 @@
     "continueWithLocalAuth":"Fahren Sie mit Lokale Authentifizierung fort",
     "localAuthNotSupported":"Lokale Authentifizierung wird nicht unterstützt",
     "noCredentialsSaved":"Keine Zugangsdaten gespeichert!",
-    "localAuthError":"Bei der lokalen Authentifizierung ist ein Fehler aufgetreten"
+    "localAuthError":"Bei der lokalen Authentifizierung ist ein Fehler aufgetreten",
+    "chooseSavedProfile":"Gespeichertes Profil wählen"
 }

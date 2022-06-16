@@ -4,8 +4,6 @@ import 'package:neoroo_app/bloc/authentication/login_bloc/login_bloc_events.dart
 import 'package:neoroo_app/bloc/authentication/login_bloc/login_bloc_states.dart';
 import 'package:neoroo_app/repository/authentication_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class LoginBloc extends Bloc<LoginEvents, LoginState> {
@@ -41,7 +39,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
         }
         Map<String,dynamic> savedCredentials= await authenticationRepository.getSavedCredentials();
         if(!savedCredentials["status"]){
-          emitter(LocalAuthSupportError(canAuthenticate["message"]));
+          emitter(LocalAuthSupportError(savedCredentials["message"]));
           return;
         }
         emitter(LocalAuthSuccess(savedCredentials["data"]));

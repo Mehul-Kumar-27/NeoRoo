@@ -14,5 +14,6 @@
     "continueWithLocalAuth":"Continue with Local Auth",
     "localAuthNotSupported":"Local auth not supported",
     "noCredentialsSaved":"No credentials saved!",
-    "localAuthError":"Error occurred in local auth"
+    "localAuthError":"Error occurred in local auth",
+    "chooseSavedProfile":"Choose Saved Profile"
 }

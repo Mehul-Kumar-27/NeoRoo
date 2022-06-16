@@ -1,0 +1,18 @@
+{
+    "login":"Anmeldung",
+    "title":"ESSENTIELLE NEONATALISCHE PFLEGE",
+    "password":"Passwort",
+    "serverURL":"Server-URL",
+    "username":"Nutzername",
+    "noInternet":"Keine Internetverbindung",
+    "invalidRequest":"ungültige Anfrage",
+    "invalidInput":"Ungültige Eingabe",
+    "errorDuringCommunication":"Fehler während der Kommunikation",
+    "unauthorized":"unerlaubte Handlung",
+    "selectOrganisation":"Wählen Sie Organisation",
+    "proceed":"Fortfahren",
+    "continueWithLocalAuth":"Fahren Sie mit Lokale Authentifizierung fort",
+    "localAuthNotSupported":"Lokale Authentifizierung wird nicht unterstützt",
+    "noCredentialsSaved":"Keine Zugangsdaten gespeichert!",
+    "localAuthError":"Bei der lokalen Authentifizierung ist ein Fehler aufgetreten"
+}

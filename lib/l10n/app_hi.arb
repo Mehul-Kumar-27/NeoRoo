@@ -1,0 +1,18 @@
+{
+    "login":"लॉग इन करें",
+    "title":"आवश्यक नवजात देखभाल",
+    "password":"पासवर्ड",
+    "serverURL":"सर्वर यूआरएल",
+    "username":"उपयोगकर्ता नाम",
+    "noInternet":"कोई इंटरनेट कनेक्शन नहीं",
+    "invalidRequest":"अमान्य अनुरोध",
+    "invalidInput":"अमान्य निवेश",
+    "errorDuringCommunication":"संचार के दौरान त्रुटि",
+    "unauthorized":"अनधिकृत कार्रवाई",
+    "selectOrganisation":"संगठन चुनें",
+    "proceed":"आगे बढ़ना",
+    "continueWithLocalAuth":"स्थानीय प्रमाणीकरण के साथ जारी रखें",
+    "localAuthNotSupported":"स्थानीय प्रमाणीकरण समर्थित नहीं है",
+    "noCredentialsSaved":"कोई क्रेडेंशियल सहेजा नहीं गया!",
+    "localAuthError":"स्थानीय प्रमाणीकरण में त्रुटि हुई"
+}

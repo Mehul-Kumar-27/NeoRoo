@@ -14,5 +14,6 @@
     "continueWithLocalAuth":"स्थानीय प्रमाणीकरण के साथ जारी रखें",
     "localAuthNotSupported":"स्थानीय प्रमाणीकरण समर्थित नहीं है",
     "noCredentialsSaved":"कोई क्रेडेंशियल सहेजा नहीं गया!",
-    "localAuthError":"स्थानीय प्रमाणीकरण में त्रुटि हुई"
+    "localAuthError":"स्थानीय प्रमाणीकरण में त्रुटि हुई",
+    "chooseSavedProfile":"सहेजी गई प्रोफ़ाइल चुनें"
 }

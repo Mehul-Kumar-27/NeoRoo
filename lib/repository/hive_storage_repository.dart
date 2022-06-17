@@ -34,9 +34,9 @@ class HiveStorageRepository {
   }
 
   Future<void> saveCredentials(
-      String username, String password, String serverURL) async {
+      String username, String password, String serverURL,String? avatarId,String name) async {
     Box box = await Hive.openBox("saved");
-    await box.put(username, [password, serverURL]);
+    await box.put(username, avatarId==null?[password, serverURL,name]:[password,serverURL,name,avatarId]);
   }
 
   Future<Map<String, List<String>>> getSavedCredentials() async {

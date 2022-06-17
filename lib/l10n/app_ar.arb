@@ -14,5 +14,6 @@
     "continueWithLocalAuth":"تواصل مع المصادقة المحلية",
     "localAuthNotSupported":"المصادقة المحلية غير معتمدة",
     "noCredentialsSaved":"لا توجد بيانات اعتماد محفوظة!",
-    "localAuthError":"حدث خطأ في المصادقة المحلية"
+    "localAuthError":"حدث خطأ في المصادقة المحلية",
+    "chooseSavedProfile":"اختر الملف الشخصي المحفوظ"
 }

@@ -40,7 +40,7 @@ class AuthenticationRepository {
         await hiveStorageRepository.saveUserProfile(
             Profile(avatarId, body["name"], password, username, body["id"]));
         await hiveStorageRepository.saveCredentials(
-            username, password, serverURL);
+            username, password, serverURL,avatarId,body["name"]);
         await hiveStorageRepository.saveOrganisationURL(serverURL);
         await hiveStorageRepository.saveOrganisations(organisationUnits);
         return {

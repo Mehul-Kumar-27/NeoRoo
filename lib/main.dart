@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:neoroo_app/bloc/authentication/local_auth_login_bloc/local_authentication_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/login_bloc/login_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/select_organisation_bloc/select_organisation_bloc.dart';
 import 'package:neoroo_app/models/profile.dart';
@@ -9,8 +10,6 @@ import 'package:neoroo_app/network/authentication_client.dart';
 import 'package:neoroo_app/repository/authentication_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
-import 'package:neoroo_app/screens/authentication/local_auth_login/select_account.dart';
-import 'package:neoroo_app/screens/authentication/select_organisation/select_organisation.dart';
 import 'package:neoroo_app/screens/temp_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -74,6 +73,12 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider<SelectOrganisationBloc>(
             create: (context) => SelectOrganisationBloc(
+              context.read<AuthenticationRepository>(),
+              context.read<HiveStorageRepository>(),
+            ),
+          ),
+          BlocProvider<LocalAuthBloc>(
+            create: (context) => LocalAuthBloc(
               context.read<AuthenticationRepository>(),
               context.read<HiveStorageRepository>(),
             ),

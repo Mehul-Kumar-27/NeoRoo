@@ -1,0 +1,18 @@
+{
+    "login":"Login",
+    "title":"ESSENTIAL NEONATAL CARE",
+    "password":"Password",
+    "serverURL":"Server URL",
+    "username":"Username",
+    "noInternet":"No internet connection",
+    "invalidRequest":"Invalid Request",
+    "invalidInput":"Invalid Input",
+    "errorDuringCommunication":"Error During Communication",
+    "unauthorized":"Unauthorized action",
+    "chooseOrganisation":"Choose Organisation",
+    "proceed":"Proceed",
+    "continueWithLocalAuth":"Continue with Local Auth",
+    "localAuthNotSupported":"Local auth not supported",
+    "noCredentialsSaved":"No credentials saved!",
+    "localAuthError":"Error occurred in local auth"
+}

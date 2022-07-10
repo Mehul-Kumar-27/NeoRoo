@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import '../models/profile.dart';
+import 'package:neoroo_app/models/profile.dart';
 
 class HiveStorageRepository {
   static Future<bool> checkUserLoggedIn() async{

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../utils/api_config.dart' as APIConfig;
+import 'package:neoroo_app/utils/api_config.dart' as APIConfig;
 
 class AuthenticationClient{
   Future<http.Response> loginUser(String username,String password,String serverURL)async{

@@ -12,6 +12,7 @@ import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
 import 'package:neoroo_app/screens/temp_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:http/http.dart' as http;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

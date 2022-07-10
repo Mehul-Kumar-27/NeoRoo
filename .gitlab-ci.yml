@@ -13,7 +13,7 @@ build:
 
   script:
     - flutter pub get
-    - flutter clean
+    - flutter gen-l10n && flutter test
     - flutter build apk --debug
     - flutter build apk --profile
     - flutter build apk --release

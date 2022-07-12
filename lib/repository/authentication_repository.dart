@@ -8,6 +8,7 @@ import 'package:neoroo_app/network/authentication_client.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:neoroo_app/utils/dhis2_config.dart';
 
 class AuthenticationRepository {
   final HiveStorageRepository hiveStorageRepository;
@@ -37,6 +38,19 @@ class AuthenticationRepository {
         for (int i = 0; i < orgUnitList.length; i++) {
           organisationUnits.add(orgUnitList[i]["id"]);
         }
+        List<String> userGroups=[];
+        bool isCareGiver=false;
+        for(int i=0;i<body["userGroups"].length;i++){
+          if(body["userGroups"][i]["id"]==caregiverGroup){
+            isCareGiver=true;
+          }else if(body["userGroups"][i]["id"]==familyMember){
+            isCareGiver=false;
+          }else{
+            userGroups.add(body["userGroups"][i]["id"]);
+          }
+        }
+        await hiveStorageRepository.setIsCareGiver(isCareGiver);
+        await hiveStorageRepository.setUserGroups(userGroups);
         await hiveStorageRepository.saveUserProfile(
             Profile(avatarId, body["name"], password, username, body["id"]));
         await hiveStorageRepository.saveCredentials(

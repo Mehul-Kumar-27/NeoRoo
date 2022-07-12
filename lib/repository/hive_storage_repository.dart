@@ -67,4 +67,25 @@ class HiveStorageRepository {
     Box box = await Hive.openBox("users");
     return (await box.get("selectedOrg"));
   }
+  Future<void> setIsCareGiver(bool isCareGiver)async{
+    Box box=await Hive.openBox("users");
+    await box.put("isCareGiver",isCareGiver);
+  }
+  Future<bool> getIsCareGiver()async{
+    Box box=await Hive.openBox("users");
+    return (await box.get("isCareGiver"));
+  }
+  Future<void> setUserGroups(List<String> userGroups)async{
+    Box box=await Hive.openBox("users");
+    await box.put("userGroups",userGroups);
+  }
+  Future<List<String>> getUserGroups()async{
+    Box box=await Hive.openBox("users");
+    return (await box.get("userGroups"));
+  }
+  Future<void> logOutUser()async{
+    Box box=await Hive.openBox("users");
+    box.clear();
+    return;
+  }
 }

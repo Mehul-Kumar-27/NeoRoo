@@ -15,5 +15,19 @@
     "localAuthNotSupported":"Lokale Authentifizierung wird nicht unterstützt",
     "noCredentialsSaved":"Keine Zugangsdaten gespeichert!",
     "localAuthError":"Bei der lokalen Authentifizierung ist ein Fehler aufgetreten",
-    "chooseSavedProfile":"Gespeichertes Profil wählen"
+    "chooseSavedProfile":"Gespeichertes Profil wählen",
+    "more":"Mehr",
+    "home":"Heim",
+    "sts":"STS",
+    "vitals":"lebenswichtig",
+    "notifications":"Benachrichtigungen",
+    "moreOptions":"Mehr Optionen",
+    "babyBirthDetails":"Babygeburtsdetails",
+    "addUpdateDetails":"Babydetails hinzufügen/aktualisieren",
+    "trainingModules":"Trainingsmodule",
+    "bookmarkResources":"Mit Lesezeichen versetzte Ressourcen",
+    "dataSync":"Datensynchronisierung",
+    "helpAndSupport":"Hilfe Unterstützung",
+    "clearLocalCache":"Löschen lokaler Cache",
+    "signOut":"Ausloggen"
 }

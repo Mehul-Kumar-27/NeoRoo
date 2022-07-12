@@ -5,14 +5,15 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:neoroo_app/bloc/authentication/local_auth_login_bloc/local_authentication_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/login_bloc/login_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/select_organisation_bloc/select_organisation_bloc.dart';
+import 'package:neoroo_app/bloc/more_options/more_options_bloc.dart';
 import 'package:neoroo_app/models/profile.dart';
 import 'package:neoroo_app/network/authentication_client.dart';
 import 'package:neoroo_app/repository/authentication_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
+import 'package:neoroo_app/repository/more_options_repository.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
-import 'package:neoroo_app/screens/temp_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:http/http.dart' as http;
+import 'package:neoroo_app/screens/main_screen/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,6 +47,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    checkIfUserLoggedIn();
     super.initState();
   }
 
@@ -57,7 +59,7 @@ class _MyAppState extends State<MyApp> {
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           title: "NeoRoo",
-          home: isLoggedIn ? TempScreen() : LoginPage(),
+          home: isLoggedIn ? MainScreen() : LoginPage(),
           localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -83,6 +85,11 @@ class _MyAppState extends State<MyApp> {
               context.read<AuthenticationRepository>(),
               context.read<HiveStorageRepository>(),
             ),
+          ),
+          BlocProvider<MoreOptionsBloc>(
+            create: (context) => MoreOptionsBloc(
+              context.read<HiveStorageRepository>(),
+            ),
           )
         ],
       ),
@@ -97,6 +104,11 @@ class _MyAppState extends State<MyApp> {
             context: navigatorKey.currentContext!,
           ),
         ),
+        RepositoryProvider<MoreOptionsRepository>(
+          create: (context) => MoreOptionsRepository(
+            hiveStorageRepository: context.read<HiveStorageRepository>(),
+          ),
+        )
       ],
     );
   }

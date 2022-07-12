@@ -15,5 +15,19 @@
     "localAuthNotSupported":"स्थानीय प्रमाणीकरण समर्थित नहीं है",
     "noCredentialsSaved":"कोई क्रेडेंशियल सहेजा नहीं गया!",
     "localAuthError":"स्थानीय प्रमाणीकरण में त्रुटि हुई",
-    "chooseSavedProfile":"सहेजी गई प्रोफ़ाइल चुनें"
+    "chooseSavedProfile":"सहेजी गई प्रोफ़ाइल चुनें",
+    "more":"अधिक",
+    "home":"घर",
+    "sts":"STS",
+    "vitals":"नब्ज",
+    "notifications":"सूचनाएं",
+    "moreOptions":"More Options",
+    "babyBirthDetails":"बच्चे के जन्म का विवरण",
+    "addUpdateDetails":"बच्चे का विवरण जोड़ें/अपडेट करें",
+    "trainingModules":"प्रशिक्षण मॉड्यूल",
+    "bookmarkResources":"बुकमार्क किए गए संसाधन",
+    "dataSync":"डेटा सिंक",
+    "helpAndSupport":"मदद समर्थन",
+    "clearLocalCache":"स्पष्ट स्थानीय कैश",
+    "signOut":"साइन आउट"
 }

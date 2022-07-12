@@ -15,5 +15,19 @@
     "localAuthNotSupported":"Local auth not supported",
     "noCredentialsSaved":"No credentials saved!",
     "localAuthError":"Error occurred in local auth",
-    "chooseSavedProfile":"Choose Saved Profile"
+    "chooseSavedProfile":"Choose Saved Profile",
+    "more":"More",
+    "home":"Home",
+    "sts":"STS",
+    "vitals":"Vitals",
+    "notifications":"Notifications",
+    "moreOptions":"More Options",
+    "babyBirthDetails":"Baby Birth Details",
+    "addUpdateDetails":"Add/Update Baby Details",
+    "trainingModules":"Training Modules",
+    "bookmarkResources":"Bookmarked Resources",
+    "dataSync":"Data Sync",
+    "helpAndSupport":"Help & Support",
+    "clearLocalCache":"Clear Local Cache",
+    "signOut":"Sign out"
 }

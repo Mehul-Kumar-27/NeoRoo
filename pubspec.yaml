@@ -44,6 +44,7 @@ dependencies:
   persistent_bottom_nav_bar: ^4.0.2
   intl: ^0.17.0
   dartz: ^0.10.1
+  font_awesome_flutter: ^10.1.0
   local_auth: ^2.1.0
   mockito: ^5.2.0
 

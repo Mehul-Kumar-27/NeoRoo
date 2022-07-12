@@ -15,5 +15,19 @@
     "localAuthNotSupported":"المصادقة المحلية غير معتمدة",
     "noCredentialsSaved":"لا توجد بيانات اعتماد محفوظة!",
     "localAuthError":"حدث خطأ في المصادقة المحلية",
-    "chooseSavedProfile":"اختر الملف الشخصي المحفوظ"
+    "chooseSavedProfile":"اختر الملف الشخصي المحفوظ",
+    "more":"أكثر",
+    "home":"مسكن",
+    "sts":"STS",
+    "vitals":"حيوي",
+    "notifications":"إشعارات",
+    "moreOptions":"المزيد من الخيارات",
+    "babyBirthDetails":"تفاصيل ميلاد الطفل",
+    "addUpdateDetails":"إضافة/تحديث تفاصيل الطفل",
+    "trainingModules":"وحدات التدريب",
+    "bookmarkResources":"الموارد المرجعية",
+    "dataSync":"مزامنة البيانات",
+    "helpAndSupport":"ساعد لدعم",
+    "clearLocalCache":"مسح ذاكرة التخزين المؤقت المحلية",
+    "signOut":"خروج"
 }

@@ -13,6 +13,7 @@ import 'package:neoroo_app/network/authentication_client.dart';
 import 'package:neoroo_app/repository/authentication_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:neoroo_app/utils/dhis2_config.dart';
 import 'authentication_test.mocks.dart' as mocks;
 import 'package:http/http.dart' as http;
 
@@ -55,7 +56,7 @@ void main() {
     },
   );
   //testing correct password
-  testWidgets('incorrect credentials test', (WidgetTester tester) async {
+  testWidgets('correct credentials test', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: Material(
@@ -77,7 +78,12 @@ void main() {
                 {'id': 'y'}
               ],
               'name': 'dev',
-              'id': '10'
+              'id': '10',
+              'userGroups': [
+                {
+                  'id': caregiverGroup,
+                }
+              ]
             },
           ),
           200,
@@ -92,6 +98,12 @@ void main() {
         .thenAnswer((realInvocation) async => null);
     when(hiveStorageRepository.saveUserProfile(any))
         .thenAnswer((realInvocation) async => null);
+    when(hiveStorageRepository.setIsCareGiver(any))
+        .thenAnswer((realInvocation) async => null);
+    when(hiveStorageRepository.setIsCareGiver(any))
+        .thenAnswer((realInvocation) async => Future<void>.value(null),);
+    when(hiveStorageRepository.setUserGroups(any))
+        .thenAnswer((realInvocation) async => Future<void>.value(null),);
     authenticationRepository = AuthenticationRepository(
       hiveStorageRepository: hiveStorageRepository,
       authenticationClient: authenticationClient,

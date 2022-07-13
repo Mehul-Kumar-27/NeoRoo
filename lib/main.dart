@@ -13,6 +13,7 @@ import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:neoroo_app/repository/more_options_repository.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:http/http.dart' as http;
 import 'package:neoroo_app/screens/main_screen/main_screen.dart';
 
 void main() async {

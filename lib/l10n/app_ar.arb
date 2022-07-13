@@ -29,5 +29,15 @@
     "dataSync":"مزامنة البيانات",
     "helpAndSupport":"ساعد لدعم",
     "clearLocalCache":"مسح ذاكرة التخزين المؤقت المحلية",
-    "signOut":"خروج"
+    "signOut":"خروج",
+    "motherName":"اسم الأم",
+    "birthDate":"تاريخ الميلاد",
+    "birthTime":"وقت الميلاد",
+    "birthWeight":"الوزن عند الولادة",
+    "bodyLength":"طول الجسم",
+    "headCircumference":"محيط الرأس",
+    "requireBirthResuscitation":"تتطلب إنعاش الولادة",
+    "birthDescription":"وصف الولادة",
+    "errorPageMessage":"Fehler beim Abrufen von Babydetails!",
+    "emptyPageMessage":"Keine Babys eingeschrieben!"
 }

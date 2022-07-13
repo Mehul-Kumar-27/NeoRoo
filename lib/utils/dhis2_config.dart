@@ -1,2 +1,13 @@
 const caregiverGroup="m7rHFvlkv8G";
-const familyMember="xfRuyEIN71P";
+const familyMemberGroup="xfRuyEIN71P";
+const motherName="OQQT0IVOKMC";
+const birthDate="XShE95RVDjc";
+const birthTime="CF2zfJ40hIt";
+const bodyLength="WkBwfQh2zvs";
+const birthWeight="IjwsihsWFGs";
+const headCircumference="GETv5cVMMaj";
+const requireResuscitation="vIYf2LgS9CN";
+const birthNotes="GwciK5IFjLF";
+const familyMemberUserGroup="dfsJxqlEejm";
+const caregiverUserGroup="vCMP96VuOKE";
+const trackerProgramId="Nsieup9fiQp";

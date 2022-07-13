@@ -7,6 +7,7 @@ import 'package:neoroo_app/models/profile.dart';
 import 'package:neoroo_app/network/authentication_client.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:http/http.dart' as http;
+import 'package:neoroo_app/utils/dhis2_config.dart' as DHIS2Config;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:neoroo_app/utils/dhis2_config.dart';
 
@@ -43,7 +44,7 @@ class AuthenticationRepository {
         for(int i=0;i<body["userGroups"].length;i++){
           if(body["userGroups"][i]["id"]==caregiverGroup){
             isCareGiver=true;
-          }else if(body["userGroups"][i]["id"]==familyMember){
+          }else if(body["userGroups"][i]["id"]==DHIS2Config.familyMemberGroup){
             isCareGiver=false;
           }else{
             userGroups.add(body["userGroups"][i]["id"]);

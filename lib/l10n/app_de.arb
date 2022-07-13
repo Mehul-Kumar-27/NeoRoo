@@ -29,5 +29,13 @@
     "dataSync":"Datensynchronisierung",
     "helpAndSupport":"Hilfe Unterstützung",
     "clearLocalCache":"Löschen lokaler Cache",
-    "signOut":"Ausloggen"
+    "signOut":"Ausloggen",
+    "motherName":"Name der Mutter",
+    "birthWeight":"Geburtsgewicht",
+    "bodyLength":"Körper Länge",
+    "headCircumference":"Kopfumfang",
+    "requireBirthResuscitation":"Erforderndern einer Geburt",
+    "birthDescription":"Geburtsbeschreibung",
+    "errorPageMessage":"Fehler beim Abrufen von Babydetails!",
+    "emptyPageMessage":"Keine Babys eingeschrieben!"
 }

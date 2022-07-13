@@ -29,5 +29,13 @@
     "dataSync":"डेटा सिंक",
     "helpAndSupport":"मदद समर्थन",
     "clearLocalCache":"स्पष्ट स्थानीय कैश",
-    "signOut":"साइन आउट"
+    "signOut":"साइन आउट",
+    "motherName":"माता का नाम",
+    "birthWeight":"जन्म के समय वजन",
+    "bodyLength":"शारीरिक लम्बाई",
+    "headCircumference":"सिर की परिधि",
+    "requireBirthResuscitation":"जन्म पुनर्जीवन की आवश्यकता है",
+    "birthDescription":"जन्म विवरण",
+    "errorPageMessage":"बेबी विवरण लाने में त्रुटि!",
+    "emptyPageMessage":"कोई बच्चा नामांकित नहीं!"
 }

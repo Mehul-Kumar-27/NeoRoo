@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
 
 class HiveStorageRepository {
@@ -86,6 +87,23 @@ class HiveStorageRepository {
   Future<void> logOutUser()async{
     Box box=await Hive.openBox("users");
     box.clear();
+    box=await Hive.openBox("baby");
+    await box.clear();
     return;
+  }
+  Future<void> storeBabyFamilyMember(BabyDetailsFamilyMember babyDetailsFamilyMember)async{
+    Box box=await Hive.openBox("baby");
+    await box.put("baby",babyDetailsFamilyMember);
+    return;
+  }
+  Future<BabyDetailsFamilyMember?> getBabyDetailsFamilyMember()async{
+    if(await Hive.boxExists("baby")){
+      Box box=await Hive.openBox("baby");
+      if(box.containsKey("baby")){
+        return box.get("baby");
+      }
+      return null;
+    }
+    return null;
   }
 }

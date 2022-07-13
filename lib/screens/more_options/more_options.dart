@@ -5,8 +5,10 @@ import 'package:neoroo_app/bloc/more_options/more_options_bloc.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_events.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_states.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
+import 'package:neoroo_app/screens/baby_details/baby_details.dart';
 import 'package:neoroo_app/screens/more_options/components/more_options_item.dart';
 import 'package:neoroo_app/screens/more_options/components/more_options_layout.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class MoreOptions extends StatefulWidget {
   const MoreOptions({Key? key}) : super(key: key);
@@ -23,11 +25,21 @@ class _MoreOptionsState extends State<MoreOptions> {
   }
 
   void takeToLoginScreen() {
-    Navigator.of(context,rootNavigator: true,).pushAndRemoveUntil(
+    Navigator.of(
+      context,
+      rootNavigator: true,
+    ).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => LoginPage(),
       ),
       (route) => false,
+    );
+  }
+
+  void takeToBabyDetails() {
+    pushNewScreen(
+      context,
+      screen: BabyDetails(),
     );
   }
 
@@ -52,7 +64,9 @@ class _MoreOptionsState extends State<MoreOptions> {
               return MoreOptionsLayout(
                 children: [
                   MoreOptionsItem(
-                    onPressed: () {},
+                    onPressed: () {
+                      takeToBabyDetails();
+                    },
                     title: state is CaregiverUser
                         ? AppLocalizations.of(context).addUpdateDetails
                         : AppLocalizations.of(context).babyBirthDetails,

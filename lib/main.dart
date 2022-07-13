@@ -5,10 +5,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:neoroo_app/bloc/authentication/local_auth_login_bloc/local_authentication_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/login_bloc/login_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/select_organisation_bloc/select_organisation_bloc.dart';
+import 'package:neoroo_app/bloc/baby_details/baby_details_bloc.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_bloc.dart';
+import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
 import 'package:neoroo_app/network/authentication_client.dart';
+import 'package:neoroo_app/network/baby_details_client.dart';
 import 'package:neoroo_app/repository/authentication_repository.dart';
+import 'package:neoroo_app/repository/baby_details_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:neoroo_app/repository/more_options_repository.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
@@ -24,6 +28,7 @@ void main() async {
 Future<void> registerHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ProfileAdapter());
+  Hive.registerAdapter(BabyDetailsFamilyMemberAdapter());
   await Hive.openBox("users");
 }
 
@@ -59,7 +64,7 @@ class _MyAppState extends State<MyApp> {
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           title: "NeoRoo",
-          home: isLoggedIn ? MainScreen() : LoginPage(),
+          home: isLoggedIn?MainScreen():LoginPage(),
           localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -90,7 +95,13 @@ class _MyAppState extends State<MyApp> {
             create: (context) => MoreOptionsBloc(
               context.read<HiveStorageRepository>(),
             ),
-          )
+          ),
+          BlocProvider<BabyDetailsBloc>(
+            create: (context) => BabyDetailsBloc(
+              context.read<BabyDetailsRepository>(),
+              context.read<HiveStorageRepository>(),
+            ),
+          ),
         ],
       ),
       providers: [
@@ -108,7 +119,13 @@ class _MyAppState extends State<MyApp> {
           create: (context) => MoreOptionsRepository(
             hiveStorageRepository: context.read<HiveStorageRepository>(),
           ),
-        )
+        ),
+        RepositoryProvider<BabyDetailsRepository>(
+          create: (context) => BabyDetailsRepository(
+            babyDetailsClient: BabyDetailsClient(),
+            hiveStorageRepository: context.read<HiveStorageRepository>(),
+          ),
+        ),
       ],
     );
   }

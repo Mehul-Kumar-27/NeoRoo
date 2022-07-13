@@ -29,5 +29,15 @@
     "dataSync":"Data Sync",
     "helpAndSupport":"Help & Support",
     "clearLocalCache":"Clear Local Cache",
-    "signOut":"Sign out"
+    "signOut":"Sign out",
+    "motherName":"Mother's Name",
+    "birthDate":"Birth Date",
+    "birthTime":"Birth Time",
+    "birthWeight":"Birth Weight",
+    "bodyLength":"Body Length",
+    "headCircumference":"Head Circumference",
+    "requireBirthResuscitation":"Require Birth Resuscitation",
+    "birthDescription":"Birth Description",
+    "errorPageMessage":"Error Fetching Baby Details!",
+    "emptyPageMessage":"No Babies Enrolled!"
 }

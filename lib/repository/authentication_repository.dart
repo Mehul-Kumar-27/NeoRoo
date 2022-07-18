@@ -39,14 +39,15 @@ class AuthenticationRepository {
         for (int i = 0; i < orgUnitList.length; i++) {
           organisationUnits.add(orgUnitList[i]["id"]);
         }
-        List<String> userGroups=[];
-        bool isCareGiver=false;
-        for(int i=0;i<body["userGroups"].length;i++){
-          if(body["userGroups"][i]["id"]==caregiverGroup){
-            isCareGiver=true;
-          }else if(body["userGroups"][i]["id"]==DHIS2Config.familyMemberGroup){
-            isCareGiver=false;
-          }else{
+        List<String> userGroups = [];
+        bool isCareGiver = false;
+        for (int i = 0; i < body["userGroups"].length; i++) {
+          if (body["userGroups"][i]["id"] == caregiverGroup) {
+            isCareGiver = true;
+          } else if (body["userGroups"][i]["id"] ==
+              DHIS2Config.familyMemberGroup) {
+            isCareGiver = false;
+          } else {
             userGroups.add(body["userGroups"][i]["id"]);
           }
         }
@@ -55,7 +56,7 @@ class AuthenticationRepository {
         await hiveStorageRepository.saveUserProfile(
             Profile(avatarId, body["name"], password, username, body["id"]));
         await hiveStorageRepository.saveCredentials(
-            username, password, serverURL,avatarId,body["name"]);
+            username, password, serverURL, avatarId, body["name"]);
         await hiveStorageRepository.saveOrganisationURL(serverURL);
         await hiveStorageRepository.saveOrganisations(organisationUnits);
         return {
@@ -113,26 +114,34 @@ class AuthenticationRepository {
     return [orgNames, organisationUnits];
   }
 
-  Future selectOrganisation(String id,String? name) async {
-    await hiveStorageRepository.saveSelectedOrganisation(id,name);
+  Future selectOrganisation(String id, String? name) async {
+    await hiveStorageRepository.saveSelectedOrganisation(id, name);
   }
 
-  Future<Map<String,dynamic>> isLocalAuthSupported() async {
+  Future<Map<String, dynamic>> isLocalAuthSupported() async {
     final LocalAuthentication auth = LocalAuthentication();
     final bool canAuthenticate =
         (await auth.canCheckBiometrics) || await auth.isDeviceSupported();
-    if(!canAuthenticate){
-      return {"status":canAuthenticate,"message":AppLocalizations.of(context).localAuthNotSupported};
-    }else{
-      return {"status":canAuthenticate};
+    if (!canAuthenticate) {
+      return {
+        "status": canAuthenticate,
+        "message": AppLocalizations.of(context).localAuthNotSupported
+      };
+    } else {
+      return {"status": canAuthenticate};
     }
   }
-  Future<Map<String,dynamic>> getSavedCredentials()async{
-    Map<String, List<String>> savedCredentials=await hiveStorageRepository.getSavedCredentials();
-    if(savedCredentials.keys.isEmpty){
-      return {"status":false,"message":AppLocalizations.of(context).noCredentialsSaved};
-    }else{
-      return {"status":true,"data":savedCredentials};
+
+  Future<Map<String, dynamic>> getSavedCredentials() async {
+    Map<String, List<String>> savedCredentials =
+        await hiveStorageRepository.getSavedCredentials();
+    if (savedCredentials.keys.isEmpty) {
+      return {
+        "status": false,
+        "message": AppLocalizations.of(context).noCredentialsSaved
+      };
+    } else {
+      return {"status": true, "data": savedCredentials};
     }
   }
 }

@@ -14,7 +14,11 @@ class ErrorPage extends StatelessWidget {
       children: [
         ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: min(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height)>600?300:200,
+            maxHeight: min(MediaQuery.of(context).size.width,
+                        MediaQuery.of(context).size.height) >
+                    600
+                ? 300
+                : 200,
           ),
           child: Container(
             width: double.infinity,

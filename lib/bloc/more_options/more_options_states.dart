@@ -1,15 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-abstract class MoreOptionsStates extends Equatable{
+abstract class MoreOptionsStates extends Equatable {}
 
-}
-
-class InitialMoreOptionsState extends MoreOptionsStates{
+class InitialMoreOptionsState extends MoreOptionsStates {
   @override
   List<Object?> get props => [];
 }
 
-class CaregiverUser extends MoreOptionsStates{
+class CaregiverUser extends MoreOptionsStates {
   final String? avatarId;
   final String name;
   final String userId;
@@ -17,12 +15,19 @@ class CaregiverUser extends MoreOptionsStates{
   final String baseURL;
   final String orgId;
   final String authHeaderValue;
-  CaregiverUser({required this.avatarId,required this.name,required this.userId,required this.orgId,required this.orgName,required this.baseURL,required this.authHeaderValue});
+  CaregiverUser(
+      {required this.avatarId,
+      required this.name,
+      required this.userId,
+      required this.orgId,
+      required this.orgName,
+      required this.baseURL,
+      required this.authHeaderValue});
   @override
-  List<Object?> get props => [];  
+  List<Object?> get props => [];
 }
 
-class FamilyMemberUser extends MoreOptionsStates{
+class FamilyMemberUser extends MoreOptionsStates {
   final String? avatarId;
   final String name;
   final String userId;
@@ -30,12 +35,19 @@ class FamilyMemberUser extends MoreOptionsStates{
   final String baseURL;
   final String? orgName;
   final String authHeaderValue;
-  FamilyMemberUser({required this.avatarId,required this.name,required this.userId,required this.orgName,required this.orgId,required this.baseURL,required this.authHeaderValue});
+  FamilyMemberUser(
+      {required this.avatarId,
+      required this.name,
+      required this.userId,
+      required this.orgName,
+      required this.orgId,
+      required this.baseURL,
+      required this.authHeaderValue});
   @override
   List<Object?> get props => [];
 }
 
-class UserLoggedOut extends MoreOptionsStates{
+class UserLoggedOut extends MoreOptionsStates {
   @override
   List<Object?> get props => [];
 }

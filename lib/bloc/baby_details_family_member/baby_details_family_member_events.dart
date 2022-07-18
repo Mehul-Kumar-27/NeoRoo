@@ -1,4 +1,3 @@
-class BabyDetailsFamilyMemberEvents{}
+class BabyDetailsFamilyMemberEvents {}
 
-class LoadBabyDetailsFamilyMemberEvents extends BabyDetailsFamilyMemberEvents{}
-
+class LoadBabyDetailsFamilyMemberEvents extends BabyDetailsFamilyMemberEvents {}

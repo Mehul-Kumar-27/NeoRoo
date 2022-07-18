@@ -5,7 +5,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ManageBaby extends StatelessWidget {
   final bool isCaregiver;
   final VoidCallback onTap;
-  const ManageBaby({Key? key, required this.isCaregiver,required this.onTap}) : super(key: key);
+  const ManageBaby({Key? key, required this.isCaregiver, required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

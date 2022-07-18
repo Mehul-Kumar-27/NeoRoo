@@ -4,7 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PasswordFieldLogin extends StatelessWidget {
   final TextEditingController controller;
-  const PasswordFieldLogin({Key? key,required this.controller}) : super(key: key);
+  const PasswordFieldLogin({Key? key, required this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

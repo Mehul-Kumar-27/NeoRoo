@@ -99,7 +99,7 @@ class _SelectAccountState extends State<SelectAccount> {
                       login: () {
                         BlocProvider.of<LocalAuthBloc>(context).add(
                           LocalAuthRequestEvent(
-                             widget.data[keys[index]]![1],
+                            widget.data[keys[index]]![1],
                             widget.data[keys[index]]![0],
                             keys[index],
                           ),

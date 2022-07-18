@@ -12,12 +12,6 @@ class Profile {
   @HiveField(3)
   String? avatarId;
   @HiveField(4)
-  String userId;  
-  Profile(
-    this.avatarId,
-    this.name,
-    this.password,
-    this.username,
-    this.userId
-  );
+  String userId;
+  Profile(this.avatarId, this.name, this.password, this.username, this.userId);
 }

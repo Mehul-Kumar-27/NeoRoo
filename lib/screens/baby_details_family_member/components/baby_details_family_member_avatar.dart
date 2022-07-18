@@ -4,7 +4,9 @@ import 'package:neoroo_app/utils/constants.dart';
 class BabyDetailsAvatar extends StatelessWidget {
   final String? imageURL;
   final String auth;
-  const BabyDetailsAvatar({Key? key, required this.imageURL,required this.auth}) : super(key: key);
+  const BabyDetailsAvatar(
+      {Key? key, required this.imageURL, required this.auth})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class BabyDetailsAvatar extends StatelessWidget {
             backgroundColor: Colors.white,
             child: imageURL == null
                 ? Image.asset(
-                    "assets/Baby 1.png",
+                    "assets/baby_placeholder.png",
                   )
                 : null,
             backgroundImage: imageURL == null
@@ -27,7 +29,7 @@ class BabyDetailsAvatar extends StatelessWidget {
                 : NetworkImage(
                     imageURL!,
                     headers: {
-                      "authorization":auth,
+                      "authorization": auth,
                     },
                   ),
           ),

@@ -4,7 +4,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BabyDetailsFamilyMemberBirthDescription extends StatelessWidget {
   final String description;
-  const BabyDetailsFamilyMemberBirthDescription({Key? key,required this.description}) : super(key: key);
+  const BabyDetailsFamilyMemberBirthDescription(
+      {Key? key, required this.description})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class BabyDetailsFamilyMemberBirthDescription extends StatelessWidget {
             minLines: 4,
             maxLines: 4,
             enabled: false,
-            controller: TextEditingController()..text=description,
+            controller: TextEditingController()..text = description,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 10,

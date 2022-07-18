@@ -4,7 +4,8 @@ import 'package:neoroo_app/utils/constants.dart';
 class OrganisationName extends StatelessWidget {
   final String orgName;
   final String orgId;
-  const OrganisationName({Key? key,required this.orgName,required this.orgId}) : super(key: key);
+  const OrganisationName({Key? key, required this.orgName, required this.orgId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

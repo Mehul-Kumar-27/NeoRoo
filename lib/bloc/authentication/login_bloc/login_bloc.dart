@@ -5,7 +5,6 @@ import 'package:neoroo_app/bloc/authentication/login_bloc/login_bloc_states.dart
 import 'package:neoroo_app/repository/authentication_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 
-
 class LoginBloc extends Bloc<LoginEvents, LoginState> {
   final AuthenticationRepository authenticationRepository;
   final HiveStorageRepository hiveStorageRepository;
@@ -31,17 +30,19 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
 
   Future<void> handleLocalLoginEvent(
       LocalLoginEvent event, Emitter<LoginState> emitter) async {
-        emitter(LoginLoading());
-        Map<String,dynamic> canAuthenticate=await authenticationRepository.isLocalAuthSupported();
-        if(!canAuthenticate["status"]){
-          emitter(LocalAuthSupportError(canAuthenticate["message"]));
-          return;
-        }
-        Map<String,dynamic> savedCredentials= await authenticationRepository.getSavedCredentials();
-        if(!savedCredentials["status"]){
-          emitter(LocalAuthSupportError(savedCredentials["message"]));
-          return;
-        }
-        emitter(LocalAuthSuccess(savedCredentials["data"]));
-      }
+    emitter(LoginLoading());
+    Map<String, dynamic> canAuthenticate =
+        await authenticationRepository.isLocalAuthSupported();
+    if (!canAuthenticate["status"]) {
+      emitter(LocalAuthSupportError(canAuthenticate["message"]));
+      return;
+    }
+    Map<String, dynamic> savedCredentials =
+        await authenticationRepository.getSavedCredentials();
+    if (!savedCredentials["status"]) {
+      emitter(LocalAuthSupportError(savedCredentials["message"]));
+      return;
+    }
+    emitter(LocalAuthSuccess(savedCredentials["data"]));
+  }
 }

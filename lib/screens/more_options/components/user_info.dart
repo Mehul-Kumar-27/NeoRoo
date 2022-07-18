@@ -9,7 +9,12 @@ class UserInfo extends StatelessWidget {
   final String baseURL;
   final String authHeaderValue;
   const UserInfo(
-      {Key? key, required this.avatarId, required this.id, required this.name,required this.baseURL,required this.authHeaderValue})
+      {Key? key,
+      required this.avatarId,
+      required this.id,
+      required this.name,
+      required this.baseURL,
+      required this.authHeaderValue})
       : super(key: key);
 
   @override
@@ -26,17 +31,20 @@ class UserInfo extends StatelessWidget {
           CircleAvatar(
             radius: 25,
             backgroundColor: Colors.white,
-            child: avatarId==null?Icon(
-              Icons.person,
-              color: Colors.blueGrey[300],
-              size: 35,
-            ):null,
-            backgroundImage: avatarId!=null?NetworkImage(
-              baseURL+APIConfig.fileResources+"/$avatarId"+"/data",
-              headers: {
-                "authorization":authHeaderValue,
-              }
-            ):null,
+            child: avatarId == null
+                ? Icon(
+                    Icons.person,
+                    color: Colors.blueGrey[300],
+                    size: 35,
+                  )
+                : null,
+            backgroundImage: avatarId != null
+                ? NetworkImage(
+                    baseURL + APIConfig.fileResources + "/$avatarId" + "/data",
+                    headers: {
+                        "authorization": authHeaderValue,
+                      })
+                : null,
           ),
           SizedBox(
             width: 10,

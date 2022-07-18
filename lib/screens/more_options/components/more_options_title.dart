@@ -2,7 +2,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:neoroo_app/utils/constants.dart';
 
-class MoreOptionsTitle extends StatelessWidget with PreferredSizeWidget{
+class MoreOptionsTitle extends StatelessWidget with PreferredSizeWidget {
   const MoreOptionsTitle({Key? key}) : super(key: key);
 
   @override
@@ -21,6 +21,7 @@ class MoreOptionsTitle extends StatelessWidget with PreferredSizeWidget{
       backgroundColor: white,
     );
   }
+
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

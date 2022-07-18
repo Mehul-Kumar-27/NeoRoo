@@ -5,21 +5,23 @@ import 'package:neoroo_app/models/profile.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'dart:convert';
 
-class MoreOptionsBloc extends Bloc<MoreOptionsEvents,MoreOptionsStates>{
+class MoreOptionsBloc extends Bloc<MoreOptionsEvents, MoreOptionsStates> {
   final HiveStorageRepository hiveStorageRepository;
-  MoreOptionsBloc(this.hiveStorageRepository):super(InitialMoreOptionsState()){
+  MoreOptionsBloc(this.hiveStorageRepository)
+      : super(InitialMoreOptionsState()) {
     on<LoadMoreOptionsEvent>(loadMoreOptions);
     on<LogoutEvent>(logOutUser);
   }
-  Future<void> loadMoreOptions(LoadMoreOptionsEvent loadMoreOptionsEvent, Emitter<MoreOptionsStates> emitter)async{
-    bool isCaregiver=await hiveStorageRepository.getIsCareGiver();
-    Profile profile=await hiveStorageRepository.getUserProfile();
-    String? orgName=await hiveStorageRepository.getSelectedOrgName();
-    String orgId=await hiveStorageRepository.getSelectedOrganisation();
-    String organisationURL=await hiveStorageRepository.getOrganisationURL();
-    String basicAuth =
-        'Basic ' + base64Encode(utf8.encode('${profile.username}:${profile.password}'));
-    if(isCaregiver){
+  Future<void> loadMoreOptions(LoadMoreOptionsEvent loadMoreOptionsEvent,
+      Emitter<MoreOptionsStates> emitter) async {
+    bool isCaregiver = await hiveStorageRepository.getIsCareGiver();
+    Profile profile = await hiveStorageRepository.getUserProfile();
+    String? orgName = await hiveStorageRepository.getSelectedOrgName();
+    String orgId = await hiveStorageRepository.getSelectedOrganisation();
+    String organisationURL = await hiveStorageRepository.getOrganisationURL();
+    String basicAuth = 'Basic ' +
+        base64Encode(utf8.encode('${profile.username}:${profile.password}'));
+    if (isCaregiver) {
       emitter(
         CaregiverUser(
           name: profile.name,
@@ -31,7 +33,7 @@ class MoreOptionsBloc extends Bloc<MoreOptionsEvents,MoreOptionsStates>{
           authHeaderValue: basicAuth,
         ),
       );
-    }else{
+    } else {
       emitter(
         FamilyMemberUser(
           name: profile.name,
@@ -45,7 +47,9 @@ class MoreOptionsBloc extends Bloc<MoreOptionsEvents,MoreOptionsStates>{
       );
     }
   }
-  Future<void> logOutUser(LogoutEvent logoutEvent,Emitter<MoreOptionsStates> emitter)async{
+
+  Future<void> logOutUser(
+      LogoutEvent logoutEvent, Emitter<MoreOptionsStates> emitter) async {
     await hiveStorageRepository.logOutUser();
     emitter(UserLoggedOut());
   }

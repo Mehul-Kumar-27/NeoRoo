@@ -8,7 +8,9 @@ class LoginHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (min(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height) > 600) {
+    if (min(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height) >
+        600) {
       return Center(
         child: LayoutBuilder(
           builder: (context, constraint) => SingleChildScrollView(

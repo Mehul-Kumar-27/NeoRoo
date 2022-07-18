@@ -2,26 +2,25 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:neoroo_app/utils/api_config.dart' as APIConfig;
 
-class AuthenticationClient{
-  Future<http.Response> loginUser(String username,String password,String serverURL)async{
+class AuthenticationClient {
+  Future<http.Response> loginUser(
+      String username, String password, String serverURL) async {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    return http.Client().get(
-      Uri.parse(serverURL+APIConfig.loginAPI),
-      headers: <String,String>{
-        'authorization': basicAuth,
-      }
-    );
+    return http.Client().get(Uri.parse(serverURL + APIConfig.loginAPI),
+        headers: <String, String>{
+          'authorization': basicAuth,
+        });
   }
-  Future<http.Response> getOrganisationName(String id,String username,String password,String serverURL)async{
 
+  Future<http.Response> getOrganisationName(
+      String id, String username, String password, String serverURL) async {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     return http.Client().get(
-      Uri.parse(serverURL+"/api/organisationUnits/"+id),
-      headers: <String,String>{
-        'authorization': basicAuth,
-      }
-    );
+        Uri.parse(serverURL + "/api/organisationUnits/" + id),
+        headers: <String, String>{
+          'authorization': basicAuth,
+        });
   }
 }

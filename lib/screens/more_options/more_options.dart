@@ -50,6 +50,7 @@ class _MoreOptionsState extends State<MoreOptions> {
     initialise();
     super.initState();
   }
+
   void takeToBabyDetailsFamilyMember() {
     pushNewScreen(
       context,
@@ -143,7 +144,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                       children: [
                         ManageBaby(
                           isCaregiver: true,
-                          onTap: (){},
+                          onTap: () {},
                         ),
                         GeneralListItem(
                           icon: Icons.cast_for_education,

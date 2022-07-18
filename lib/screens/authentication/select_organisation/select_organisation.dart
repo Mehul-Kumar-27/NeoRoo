@@ -53,11 +53,9 @@ class _SelectOrganisationState extends State<SelectOrganisation> {
                 ),
               ),
             );
-          }
-          else if(state is SelectOrganisationComplete){
+          } else if (state is SelectOrganisationComplete) {
             return Container();
-          } 
-          else {
+          } else {
             List<List<String?>> orgUnitLists =
                 (state as SelectOrganisationLoaded).organisationData;
             if (min(MediaQuery.of(context).size.width,
@@ -65,7 +63,7 @@ class _SelectOrganisationState extends State<SelectOrganisation> {
                 600) {
               return Scaffold(
                 body: TabletBodySelectOrganisation(
-                  proceed: (String id,String? name) {
+                  proceed: (String id, String? name) {
                     BlocProvider.of<SelectOrganisationBloc>(context).add(
                       SelectOrganisationEvent(
                         organisationId: id,
@@ -87,7 +85,7 @@ class _SelectOrganisationState extends State<SelectOrganisation> {
             } else {
               return Scaffold(
                 body: MobileBodySelectOrganisation(
-                  proceed: (String id,String? name) {
+                  proceed: (String id, String? name) {
                     BlocProvider.of<SelectOrganisationBloc>(context).add(
                       SelectOrganisationEvent(
                         organisationId: id,

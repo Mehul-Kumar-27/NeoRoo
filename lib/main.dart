@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           title: "NeoRoo",
-          home: isLoggedIn?MainScreen():LoginPage(),
+          home: isLoggedIn ? MainScreen() : LoginPage(),
           localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,

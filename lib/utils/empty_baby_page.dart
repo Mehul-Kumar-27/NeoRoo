@@ -23,7 +23,7 @@ class EmptyBabyPage extends StatelessWidget {
           child: Container(
             width: double.infinity,
             child: Image.asset(
-              "assets/Baby 1.png",
+              "assets/baby_placeholder.png",
               fit: BoxFit.contain,
             ),
           ),

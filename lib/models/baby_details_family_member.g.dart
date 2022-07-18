@@ -27,13 +27,16 @@ class BabyDetailsFamilyMemberAdapter
       motherName: fields[0] as String,
       needResuscitation: fields[6] as bool,
       weight: fields[3] as double,
+      avatarId: fields[9] as String?,
+      caregiverGroup: fields[11] as String,
+      familyMemberGroup: fields[10] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, BabyDetailsFamilyMember obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.motherName)
       ..writeByte(1)
@@ -51,7 +54,13 @@ class BabyDetailsFamilyMemberAdapter
       ..writeByte(7)
       ..write(obj.birthNotes)
       ..writeByte(8)
-      ..write(obj.id);
+      ..write(obj.id)
+      ..writeByte(9)
+      ..write(obj.avatarId)
+      ..writeByte(10)
+      ..write(obj.familyMemberGroup)
+      ..writeByte(11)
+      ..write(obj.caregiverGroup);
   }
 
   @override

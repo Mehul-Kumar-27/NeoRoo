@@ -113,8 +113,8 @@ class AuthenticationRepository {
     return [orgNames, organisationUnits];
   }
 
-  Future selectOrganisation(String id) async {
-    await hiveStorageRepository.saveSelectedOrganisation(id);
+  Future selectOrganisation(String id,String? name) async {
+    await hiveStorageRepository.saveSelectedOrganisation(id,name);
   }
 
   Future<Map<String,dynamic>> isLocalAuthSupported() async {

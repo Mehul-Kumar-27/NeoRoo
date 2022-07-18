@@ -3,15 +3,16 @@ import 'package:neoroo_app/utils/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SelectOrganisationButton extends StatelessWidget {
-  final void Function(String) proceed;
+  final void Function(String,String?) proceed;
   final String selectedId;
-  const SelectOrganisationButton({Key? key,required this.proceed,required this.selectedId}) : super(key: key);
+  final String? selectedOrgName;
+  const SelectOrganisationButton({Key? key,required this.proceed,required this.selectedId,required this.selectedOrgName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: (){
-        proceed(selectedId);
+        proceed(selectedId,selectedOrgName);
       },
       child: Container(
         width: double.infinity,

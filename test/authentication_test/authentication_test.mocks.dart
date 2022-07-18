@@ -7,9 +7,10 @@ import 'dart:async' as _i7;
 import 'package:flutter/cupertino.dart' as _i6;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:neoroo_app/models/baby_details_family_member.dart' as _i8;
 import 'package:neoroo_app/models/profile.dart' as _i3;
 import 'package:neoroo_app/network/authentication_client.dart' as _i5;
-import 'package:neoroo_app/repository/authentication_repository.dart' as _i8;
+import 'package:neoroo_app/repository/authentication_repository.dart' as _i9;
 import 'package:neoroo_app/repository/hive_storage_repository.dart' as _i4;
 
 // ignore_for_file: type=lint
@@ -89,6 +90,10 @@ class MockHiveStorageRepository extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#getOrganisationURL, []),
           returnValue: Future<String>.value('')) as _i7.Future<String>);
   @override
+  _i7.Future<String?> getSelectedOrgName() =>
+      (super.noSuchMethod(Invocation.method(#getSelectedOrgName, []),
+          returnValue: Future<String?>.value()) as _i7.Future<String?>);
+  @override
   _i7.Future<void> saveCredentials(String? username, String? password,
           String? serverURL, String? avatarId, String? name) =>
       (super.noSuchMethod(
@@ -112,11 +117,6 @@ class MockHiveStorageRepository extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#getSavedOrganisations, []),
               returnValue: Future<List<String>>.value(<String>[]))
           as _i7.Future<List<String>>);
-  @override
-  _i7.Future<void> saveSelectedOrganisation(String? id) =>
-      (super.noSuchMethod(Invocation.method(#saveSelectedOrganisation, [id]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i7.Future<void>);
   @override
   _i7.Future<String> getSelectedOrganisation() =>
       (super.noSuchMethod(Invocation.method(#getSelectedOrganisation, []),
@@ -145,13 +145,30 @@ class MockHiveStorageRepository extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#logOutUser, []),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i7.Future<void>);
+  @override
+  _i7.Future<void> saveSelectedOrganisation(String? id, String? name) => (super
+      .noSuchMethod(Invocation.method(#saveSelectedOrganisation, [id, name]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i7.Future<void>);
+  @override
+  _i7.Future<void> storeBabyFamilyMember(
+          _i8.BabyDetailsFamilyMember? babyDetailsFamilyMember) =>
+      (super.noSuchMethod(
+          Invocation.method(#storeBabyFamilyMember, [babyDetailsFamilyMember]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i7.Future<void>);
+  @override
+  _i7.Future<_i8.BabyDetailsFamilyMember?> getBabyDetailsFamilyMember() =>
+      (super.noSuchMethod(Invocation.method(#getBabyDetailsFamilyMember, []),
+              returnValue: Future<_i8.BabyDetailsFamilyMember?>.value())
+          as _i7.Future<_i8.BabyDetailsFamilyMember?>);
 }
 
 /// A class which mocks [AuthenticationRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthenticationRepository extends _i1.Mock
-    implements _i8.AuthenticationRepository {
+    implements _i9.AuthenticationRepository {
   MockAuthenticationRepository() {
     _i1.throwOnMissingStub(this);
   }
@@ -180,8 +197,8 @@ class MockAuthenticationRepository extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#getOrganisationListDetails, []),
           returnValue: Future<dynamic>.value()) as _i7.Future<dynamic>);
   @override
-  _i7.Future<dynamic> selectOrganisation(String? id) =>
-      (super.noSuchMethod(Invocation.method(#selectOrganisation, [id]),
+  _i7.Future<dynamic> selectOrganisation(String? id, String? name) =>
+      (super.noSuchMethod(Invocation.method(#selectOrganisation, [id, name]),
           returnValue: Future<dynamic>.value()) as _i7.Future<dynamic>);
   @override
   _i7.Future<Map<String, dynamic>> isLocalAuthSupported() =>

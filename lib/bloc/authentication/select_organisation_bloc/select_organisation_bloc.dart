@@ -22,7 +22,7 @@ class SelectOrganisationBloc
   }
   Future<void> handleSelection(SelectOrganisationEvent event,
       Emitter<SelectOrganisationStates> emitter) async {
-        await authenticationRepository.selectOrganisation(event.organisationId);
+        await authenticationRepository.selectOrganisation(event.organisationId,event.organisationName);
         emitter(SelectOrganisationComplete());
       }
 }

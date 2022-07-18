@@ -24,9 +24,12 @@
     "moreOptions":"More Options",
     "babyBirthDetails":"Baby Birth Details",
     "addUpdateDetails":"Add/Update Baby Details",
+    "viewBabyDetails":"View Baby Details",
+    "manageBabyDetails":"Manage Baby Details",
     "trainingModules":"Training Modules",
     "bookmarkResources":"Bookmarked Resources",
     "dataSync":"Data Sync",
+    "makeSureYouHaveLatestData":"Make sure you have latest data",
     "helpAndSupport":"Help & Support",
     "clearLocalCache":"Clear Local Cache",
     "signOut":"Sign out",
@@ -39,5 +42,14 @@
     "requireBirthResuscitation":"Require Birth Resuscitation",
     "birthDescription":"Birth Description",
     "errorPageMessage":"Error Fetching Baby Details!",
-    "emptyPageMessage":"No Babies Enrolled!"
+    "emptyPageMessage":"No Babies Enrolled!",
+    "changeAvatar":"Change Avatar",
+    "scheduledSync":"Scheduled Sync",
+    "syncAtRegularIntervals":"Sync data at set intervals",
+    "thisActionCannotBeUndone":"This action cannot be undone",
+    "switchOrganization":"Switch organisation",
+    "educationRelatedToChildCare":"Education related to neonatal care",
+    "saveResources":"Save resources for further reference",
+    "familyMemberGroup":"Family Member Usergroup",
+    "caregiverGroup":"Caregiver Usergroup"
 }

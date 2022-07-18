@@ -11,3 +11,4 @@ const birthNotes="GwciK5IFjLF";
 const familyMemberUserGroup="dfsJxqlEejm";
 const caregiverUserGroup="vCMP96VuOKE";
 const trackerProgramId="Nsieup9fiQp";
+const avatarIdAttribute="pr3gQ05Qf6q";

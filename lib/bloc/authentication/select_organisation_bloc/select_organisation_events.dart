@@ -4,5 +4,6 @@ class RequestOrganisationInfo extends SelectOrganisationEvents {}
 
 class SelectOrganisationEvent extends SelectOrganisationEvents {
   String organisationId;
-  SelectOrganisationEvent({required this.organisationId});
+  String? organisationName;
+  SelectOrganisationEvent({required this.organisationId,required this.organisationName});
 }

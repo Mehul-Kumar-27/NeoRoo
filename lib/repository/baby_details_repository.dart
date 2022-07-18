@@ -37,12 +37,14 @@ class BabyDetailsRepository {
           FetchDataException("", response.statusCode),
         );
       }
-      bool isLengthZero=jsonDecode(response.body)["trackedEntityInstances"].length==0?true:false;
-      if(isLengthZero){
+      bool isLengthZero =
+          jsonDecode(response.body)["trackedEntityInstances"].length == 0
+              ? true
+              : false;
+      if (isLengthZero) {
         Left(null);
       }
-      dynamic body =
-          jsonDecode(response.body)["trackedEntityInstances"][0];
+      dynamic body = jsonDecode(response.body)["trackedEntityInstances"][0];
       Map<String, dynamic> filteredData = {};
       filteredData["id"] = body["trackedEntityInstance"];
       List<dynamic> attributes = body["attributes"];
@@ -65,7 +67,8 @@ class BabyDetailsRepository {
             break;
           case DHIS2Config.birthWeight:
             {
-              filteredData["birthWeight"] = double.parse(attributes[i]["value"]);
+              filteredData["birthWeight"] =
+                  double.parse(attributes[i]["value"]);
             }
             break;
           case DHIS2Config.bodyLength:
@@ -90,13 +93,24 @@ class BabyDetailsRepository {
             break;
           case DHIS2Config.headCircumference:
             {
-              filteredData["headCircumference"] = double.parse(attributes[i]["value"]);
+              filteredData["headCircumference"] =
+                  double.parse(attributes[i]["value"]);
             }
             break;
           case DHIS2Config.requireResuscitation:
             {
               filteredData["needResuscitation"] =
                   int.parse(attributes[i]["value"]) == 1 ? true : false;
+            }
+            break;
+          case DHIS2Config.caregiverUserGroup:
+            {
+              filteredData["caregiverUserGroup"] = attributes[i]["value"];
+            }
+            break;
+          case DHIS2Config.avatarIdAttribute:
+            {
+              filteredData["avatarId"] = attributes[i]["value"];
             }
             break;
         }
@@ -112,6 +126,9 @@ class BabyDetailsRepository {
           motherName: filteredData["motherName"],
           needResuscitation: filteredData["needResuscitation"],
           weight: filteredData["birthWeight"],
+          familyMemberGroup: filteredData["familyMemberUserGroup"],
+          caregiverGroup: filteredData["caregiverUserGroup"],
+          avatarId: filteredData["avatarId"],
         ),
       );
       return Left(
@@ -125,11 +142,15 @@ class BabyDetailsRepository {
           motherName: filteredData["motherName"],
           needResuscitation: filteredData["needResuscitation"],
           weight: filteredData["birthWeight"],
+          familyMemberGroup: filteredData["familyMemberUserGroup"],
+          caregiverGroup: filteredData["caregiverUserGroup"],
+          avatarId: filteredData["avatarId"],
         ),
       );
     } catch (e) {
       print(e);
-      BabyDetailsFamilyMember? babyDetailsFamilyMember=await hiveStorageRepository.getBabyDetailsFamilyMember();
+      BabyDetailsFamilyMember? babyDetailsFamilyMember =
+          await hiveStorageRepository.getBabyDetailsFamilyMember();
       return Left(babyDetailsFamilyMember);
     }
   }

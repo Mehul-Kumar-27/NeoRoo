@@ -1,34 +1,47 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neoroo_app/bloc/baby_details/baby_details_events.dart';
-import 'package:neoroo_app/bloc/baby_details/baby_details_states.dart';
+import 'package:neoroo_app/bloc/baby_details_family_member/baby_details_family_member_events.dart';
+import 'package:neoroo_app/bloc/baby_details_family_member/baby_details_family_member_states.dart';
 import 'package:neoroo_app/exceptions/custom_exception.dart';
 import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
 import 'package:neoroo_app/repository/baby_details_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:neoroo_app/utils/dhis2_config.dart' as DHIS2Config;
+import 'dart:convert';
 
-class BabyDetailsBloc extends Bloc<BabyDetailsEvents, BabyDetailStates> {
+class BabyDetailsFamilyMemberBloc
+    extends Bloc<BabyDetailsFamilyMemberEvents, BabyDetailFamilyMemberStates> {
   final HiveStorageRepository hiveStorageRepository;
   final BabyDetailsRepository babyDetailsRepository;
-  BabyDetailsBloc(this.babyDetailsRepository, this.hiveStorageRepository)
-      : super(BabyDetailsInitial()) {
-    on<LoadBabyDetails>(fetchDetails);
+  BabyDetailsFamilyMemberBloc(
+      this.babyDetailsRepository, this.hiveStorageRepository)
+      : super(BabyDetailsFamilyMemberInitial()) {
+    on<LoadBabyDetailsFamilyMemberEvents>(fetchDetails);
   }
-  Future<void> fetchDetails(LoadBabyDetails loadBabyDetails,
-      Emitter<BabyDetailStates> emitter) async {
+  Future<void> fetchDetails(
+      LoadBabyDetailsFamilyMemberEvents loadBabyDetailsFamilyMember,
+      Emitter<BabyDetailFamilyMemberStates> emitter) async {
     //emitt loading
-    emitter(BabyDetailsLoading());
-    await Future.delayed(Duration(seconds: 3,));
+    emitter(BabyDetailsFamilyMemberLoading());
+    await Future.delayed(Duration(
+      seconds: 3,
+    ));
     Profile userProfile = await hiveStorageRepository.getUserProfile();
+    String basicAuth = 'Basic ' +
+        base64Encode(
+            utf8.encode('${userProfile.username}:${userProfile.password}'));
     String baseURL = await hiveStorageRepository.getOrganisationURL();
     String organizationUnit =
         await hiveStorageRepository.getSelectedOrganisation();
     List<String> userGroups = await hiveStorageRepository.getUserGroups();
     if (userGroups.isEmpty) {
       emitter(
-        BabyDetailsFamilyMemberLoaded(babyDetailsFamilyMember: null),
+        BabyDetailsFamilyMemberLoaded(
+          babyDetailsFamilyMember: null,
+          auth: basicAuth,
+          baseURL: baseURL,
+        ),
       );
       return;
     }
@@ -45,14 +58,18 @@ class BabyDetailsBloc extends Bloc<BabyDetailsEvents, BabyDetailStates> {
     fetchBabyData.fold(
       (l) {
         emitter(
-          BabyDetailsFamilyMemberLoaded(babyDetailsFamilyMember: l),
+          BabyDetailsFamilyMemberLoaded(
+            babyDetailsFamilyMember: l,
+            auth: basicAuth,
+            baseURL: baseURL,
+          ),
         );
         print("L" + l.toString());
       },
       (r) {
         print("R" + r.toString());
         emitter(
-          BabyDetailsFetchError(
+          BabyDetailsFamilyMemberFetchError(
             exception: r,
           ),
         );

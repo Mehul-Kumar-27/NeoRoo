@@ -34,6 +34,11 @@ class HiveStorageRepository {
     return box.get("url");
   }
 
+  Future<String?> getSelectedOrgName()async{
+    Box box = await Hive.openBox("users");
+    return (await box.get("selectedOrgName"));
+  }
+
   Future<void> saveCredentials(
       String username, String password, String serverURL,String? avatarId,String name) async {
     Box box = await Hive.openBox("saved");
@@ -59,10 +64,6 @@ class HiveStorageRepository {
   Future<List<String>> getSavedOrganisations() async {
     Box box = await Hive.openBox("users");
     return (await box.get("orgs"));
-  }
-  Future<void> saveSelectedOrganisation(String id)async{
-    Box box = await Hive.openBox("users");
-    await box.put("selectedOrg",id);
   }
   Future<String> getSelectedOrganisation()async{
     Box box = await Hive.openBox("users");
@@ -90,6 +91,11 @@ class HiveStorageRepository {
     box=await Hive.openBox("baby");
     await box.clear();
     return;
+  }
+  Future<void> saveSelectedOrganisation(String id,String? name)async{
+    Box box = await Hive.openBox("users");
+    await box.put("selectedOrg",id);
+    await box.put("selectedOrgName",name);
   }
   Future<void> storeBabyFamilyMember(BabyDetailsFamilyMember babyDetailsFamilyMember)async{
     Box box=await Hive.openBox("baby");

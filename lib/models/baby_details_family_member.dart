@@ -21,6 +21,12 @@ class BabyDetailsFamilyMember {
   final String birthNotes;
   @HiveField(8)
   final String id;
+  @HiveField(9)
+  final String? avatarId;
+  @HiveField(10)
+  final String familyMemberGroup;
+  @HiveField(11)
+  final String caregiverGroup;
   BabyDetailsFamilyMember({
     required this.birthDate,
     required this.birthNotes,
@@ -31,5 +37,8 @@ class BabyDetailsFamilyMember {
     required this.motherName,
     required this.needResuscitation,
     required this.weight,
+    required this.avatarId,
+    required this.caregiverGroup,
+    required this.familyMemberGroup,
   });
 }

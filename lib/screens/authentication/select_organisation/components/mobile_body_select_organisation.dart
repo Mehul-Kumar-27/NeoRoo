@@ -5,7 +5,7 @@ import 'package:neoroo_app/screens/authentication/select_organisation/components
 import 'package:neoroo_app/utils/vertical_space.dart';
 
 class MobileBodySelectOrganisation extends StatelessWidget {
-  final void Function(String) proceed;
+  final void Function(String,String?) proceed;
   final List<String?> orgIdList;
   final int groupValue;
   final List<String?> orgNameList;
@@ -49,6 +49,7 @@ class MobileBodySelectOrganisation extends StatelessWidget {
         SelectOrganisationButton(
           proceed: proceed,
           selectedId: orgIdList[groupValue]!,
+          selectedOrgName: orgNameList[groupValue],
         ),
         VerticalSpace(
           height: 10,

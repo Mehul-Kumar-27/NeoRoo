@@ -49,5 +49,16 @@
     "educationRelatedToChildCare":"Ausbildung im Zusammenhang mit Neugeborenenversorgung",
     "saveResources":"Sparen Sie Ressourcen für weitere Referenz",
     "familyMemberGroup":"Familienmitglied Benutzergruppe",
-    "caregiverGroup":"CAREGIVER UMSERGROUP"
+    "caregiverGroup":"CAREGIVER UMSERGROUP",
+    "babiesAssignedToYou":"Babys, die Ihnen zugewiesen sind",
+    "babyOfMother": "Baby von {motherName}",
+    "@babyOfMother": {
+        "description": "Denotes baby of a mother",
+        "placeholders": {
+            "motherName": {
+                "type": "String",
+                "example": "Jane"
+            }
+        }
+    }
 }

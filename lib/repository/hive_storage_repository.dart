@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:neoroo_app/models/baby_details_caregiver.dart';
 import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
 
@@ -125,5 +126,32 @@ class HiveStorageRepository {
       return null;
     }
     return null;
+  }
+
+  Future<List<BabyDetailsCaregiver>?> getBabyDetailsCaregiver() async {
+    if (!await Hive.boxExists("babies")) {
+      return null;
+    }
+    if (!(await Hive.openBox("babies")).containsKey("list_of_babies")) {
+      return null;
+    }
+    Box box = await Hive.openBox("babies");
+    List<BabyDetailsCaregiver> listOfBabies =
+        List<BabyDetailsCaregiver>.from((await box.get("list_of_babies")));
+    if (listOfBabies.isEmpty) {
+      return null;
+    }
+    return listOfBabies;
+  }
+
+  Future<void> saveBabyDetailsCaregiver(
+      List<BabyDetailsCaregiver>? listOfBabies) async {
+    Box box = await Hive.openBox("babies");
+    try {
+      await box.put("list_of_babies", listOfBabies);
+    } catch (e) {
+      print(e);
+    }
+    print("D");
   }
 }

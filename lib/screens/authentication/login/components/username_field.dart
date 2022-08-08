@@ -4,7 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UsernameFieldLogin extends StatelessWidget {
   final TextEditingController controller;
-  const UsernameFieldLogin({Key? key, required this.controller}) : super(key: key);
+  const UsernameFieldLogin({Key? key, required this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

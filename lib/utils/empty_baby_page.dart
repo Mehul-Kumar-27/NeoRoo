@@ -3,8 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:neoroo_app/utils/constants.dart';
 
-class ErrorPage extends StatelessWidget {
-  const ErrorPage({Key? key}) : super(key: key);
+class EmptyBabyPage extends StatelessWidget {
+  const EmptyBabyPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +14,16 @@ class ErrorPage extends StatelessWidget {
       children: [
         ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: min(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height)>600?300:200,
+            maxHeight: min(MediaQuery.of(context).size.width,
+                        MediaQuery.of(context).size.height) >
+                    600
+                ? 300
+                : 200,
           ),
           child: Container(
             width: double.infinity,
             child: Image.asset(
-              "assets/error_loading.png",
+              "assets/baby_placeholder.png",
               fit: BoxFit.contain,
             ),
           ),
@@ -30,7 +34,7 @@ class ErrorPage extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: Text(
-            AppLocalizations.of(context).errorPageMessage,
+            AppLocalizations.of(context).emptyPageMessage,
             style: TextStyle(
               fontFamily: openSans,
               fontWeight: FontWeight.w600,

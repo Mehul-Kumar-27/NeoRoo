@@ -4,7 +4,10 @@ import 'package:neoroo_app/utils/constants.dart';
 
 class LocalAuthOption extends StatelessWidget {
   final VoidCallback onPressed;
-  const LocalAuthOption({Key? key,required this.onPressed,}) : super(key: key);
+  const LocalAuthOption({
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

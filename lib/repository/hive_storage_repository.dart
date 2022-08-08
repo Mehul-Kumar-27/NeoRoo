@@ -3,10 +3,10 @@ import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
 
 class HiveStorageRepository {
-  static Future<bool> checkUserLoggedIn() async{
+  static Future<bool> checkUserLoggedIn() async {
     Box box = await Hive.openBox("users");
     print(box.containsKey("user"));
-    return box.containsKey("user")&&box.containsKey("selectedOrg");
+    return box.containsKey("user") && box.containsKey("selectedOrg");
   }
 
   Future<void> saveUserProfile(Profile profile) async {
@@ -34,19 +34,28 @@ class HiveStorageRepository {
     return box.get("url");
   }
 
-  Future<void> saveCredentials(
-      String username, String password, String serverURL,String? avatarId,String name) async {
+  Future<String?> getSelectedOrgName() async {
+    Box box = await Hive.openBox("users");
+    return (await box.get("selectedOrgName"));
+  }
+
+  Future<void> saveCredentials(String username, String password,
+      String serverURL, String? avatarId, String name) async {
     Box box = await Hive.openBox("saved");
-    await box.put(username, avatarId==null?[password, serverURL,name]:[password,serverURL,name,avatarId]);
+    await box.put(
+        username,
+        avatarId == null
+            ? [password, serverURL, name]
+            : [password, serverURL, name, avatarId]);
   }
 
   Future<Map<String, List<String>>> getSavedCredentials() async {
     Box box = await Hive.openBox("saved");
     print(box.keys);
-    dynamic keys=box.keys.toList();
-    Map<String,List<String>> data={};
-    for(int i=0;i<keys.length;i++){
-      data[keys[i]]=(await box.get(keys[i]));
+    dynamic keys = box.keys.toList();
+    Map<String, List<String>> data = {};
+    for (int i = 0; i < keys.length; i++) {
+      data[keys[i]] = (await box.get(keys[i]));
     }
     return data;
   }
@@ -60,46 +69,57 @@ class HiveStorageRepository {
     Box box = await Hive.openBox("users");
     return (await box.get("orgs"));
   }
-  Future<void> saveSelectedOrganisation(String id)async{
-    Box box = await Hive.openBox("users");
-    await box.put("selectedOrg",id);
-  }
-  Future<String> getSelectedOrganisation()async{
+
+  Future<String> getSelectedOrganisation() async {
     Box box = await Hive.openBox("users");
     return (await box.get("selectedOrg"));
   }
-  Future<void> setIsCareGiver(bool isCareGiver)async{
-    Box box=await Hive.openBox("users");
-    await box.put("isCareGiver",isCareGiver);
+
+  Future<void> setIsCareGiver(bool isCareGiver) async {
+    Box box = await Hive.openBox("users");
+    await box.put("isCareGiver", isCareGiver);
   }
-  Future<bool> getIsCareGiver()async{
-    Box box=await Hive.openBox("users");
+
+  Future<bool> getIsCareGiver() async {
+    Box box = await Hive.openBox("users");
     return (await box.get("isCareGiver"));
   }
-  Future<void> setUserGroups(List<String> userGroups)async{
-    Box box=await Hive.openBox("users");
-    await box.put("userGroups",userGroups);
+
+  Future<void> setUserGroups(List<String> userGroups) async {
+    Box box = await Hive.openBox("users");
+    await box.put("userGroups", userGroups);
   }
-  Future<List<String>> getUserGroups()async{
-    Box box=await Hive.openBox("users");
+
+  Future<List<String>> getUserGroups() async {
+    Box box = await Hive.openBox("users");
     return (await box.get("userGroups"));
   }
-  Future<void> logOutUser()async{
-    Box box=await Hive.openBox("users");
+
+  Future<void> logOutUser() async {
+    Box box = await Hive.openBox("users");
     box.clear();
-    box=await Hive.openBox("baby");
+    box = await Hive.openBox("baby");
     await box.clear();
     return;
   }
-  Future<void> storeBabyFamilyMember(BabyDetailsFamilyMember babyDetailsFamilyMember)async{
-    Box box=await Hive.openBox("baby");
-    await box.put("baby",babyDetailsFamilyMember);
+
+  Future<void> saveSelectedOrganisation(String id, String? name) async {
+    Box box = await Hive.openBox("users");
+    await box.put("selectedOrg", id);
+    await box.put("selectedOrgName", name);
+  }
+
+  Future<void> storeBabyFamilyMember(
+      BabyDetailsFamilyMember babyDetailsFamilyMember) async {
+    Box box = await Hive.openBox("baby");
+    await box.put("baby", babyDetailsFamilyMember);
     return;
   }
-  Future<BabyDetailsFamilyMember?> getBabyDetailsFamilyMember()async{
-    if(await Hive.boxExists("baby")){
-      Box box=await Hive.openBox("baby");
-      if(box.containsKey("baby")){
+
+  Future<BabyDetailsFamilyMember?> getBabyDetailsFamilyMember() async {
+    if (await Hive.boxExists("baby")) {
+      Box box = await Hive.openBox("baby");
+      if (box.containsKey("baby")) {
         return box.get("baby");
       }
       return null;

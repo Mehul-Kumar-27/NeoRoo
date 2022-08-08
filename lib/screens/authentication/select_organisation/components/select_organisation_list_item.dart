@@ -26,7 +26,7 @@ class SelectOrganisationListItem extends StatelessWidget {
       ),
       onTap: onTap,
       title: Text(
-        name==null?id:name!,
+        name == null ? id : name!,
         style: TextStyle(
           color: Colors.black,
           fontFamily: openSans,
@@ -43,8 +43,8 @@ class SelectOrganisationListItem extends StatelessWidget {
           Text(
             id,
             style: TextStyle(
-              color: name==null?transparent:outlineGrey,
-              decorationColor: name==null?transparent:outlineGrey,
+              color: name == null ? transparent : outlineGrey,
+              decorationColor: name == null ? transparent : outlineGrey,
             ),
           ),
         ],

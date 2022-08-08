@@ -26,7 +26,6 @@
     "addUpdateDetails":"बच्चे का विवरण जोड़ें/अपडेट करें",
     "trainingModules":"प्रशिक्षण मॉड्यूल",
     "bookmarkResources":"बुकमार्क किए गए संसाधन",
-    "dataSync":"डेटा सिंक",
     "helpAndSupport":"मदद समर्थन",
     "clearLocalCache":"स्पष्ट स्थानीय कैश",
     "signOut":"साइन आउट",
@@ -37,5 +36,18 @@
     "requireBirthResuscitation":"जन्म पुनर्जीवन की आवश्यकता है",
     "birthDescription":"जन्म विवरण",
     "errorPageMessage":"बेबी विवरण लाने में त्रुटि!",
-    "emptyPageMessage":"कोई बच्चा नामांकित नहीं!"
+    "emptyPageMessage":"कोई बच्चा नामांकित नहीं!",
+    "changeAvatar":"अवतार परिवर्तन",
+    "scheduledSync":"अनुसूचित सिंक",
+    "syncAtRegularIntervals":"सेट अंतराल पर डेटा सिंक करें",
+    "thisActionCannotBeUndone":"यह कार्य दोबारा से नहीं हो सकता",
+    "switchOrganization":"स्विच संगठन",
+    "dataSync":"डेटा सिंक",
+    "makeSureYouHaveLatestData":"सुनिश्चित करें कि आपके पास नवीनतम डेटा है",
+    "viewBabyDetails":"बच्चे का विवरण देखें",
+    "manageBabyDetails":"बच्चे के विवरण का प्रबंधन करें",
+    "educationRelatedToChildCare":"नवजात देखभाल से संबंधित शिक्षा",
+    "saveResources":"आगे के संदर्भ के लिए संसाधन सहेजें",
+    "familyMemberGroup":"परिवार के सदस्य उपयोगकर्ता समूह",
+    "caregiverGroup":"देखभाल करने वाला उपयोगकर्ता समूह"
 }

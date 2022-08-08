@@ -16,13 +16,16 @@ class SelectOrganisationBloc
   }
   Future handleRequest(RequestOrganisationInfo event,
       Emitter<SelectOrganisationStates> emitter) async {
-        emitter(SelectOrganisationLoading());
-      final List<List<String?>> organisationData=await authenticationRepository.getOrganisationListDetails();
-      emitter(SelectOrganisationLoaded(organisationData: organisationData));
+    emitter(SelectOrganisationLoading());
+    final List<List<String?>> organisationData =
+        await authenticationRepository.getOrganisationListDetails();
+    emitter(SelectOrganisationLoaded(organisationData: organisationData));
   }
+
   Future<void> handleSelection(SelectOrganisationEvent event,
       Emitter<SelectOrganisationStates> emitter) async {
-        await authenticationRepository.selectOrganisation(event.organisationId);
-        emitter(SelectOrganisationComplete());
-      }
+    await authenticationRepository.selectOrganisation(
+        event.organisationId, event.organisationName);
+    emitter(SelectOrganisationComplete());
+  }
 }

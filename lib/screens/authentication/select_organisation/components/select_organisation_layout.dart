@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 
 class SelectOrganisationLayout extends StatelessWidget {
   final List<Widget> children;
-  const SelectOrganisationLayout({Key? key,required this.children}) : super(key: key);
+  const SelectOrganisationLayout({Key? key, required this.children})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (min(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height) > 600) {
+    if (min(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height) >
+        600) {
       return Center(
         child: LayoutBuilder(
           builder: (context, constraint) => Container(

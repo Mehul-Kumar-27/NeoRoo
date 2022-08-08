@@ -3,8 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:neoroo_app/utils/constants.dart';
 
-class EmptyBabyPage extends StatelessWidget {
-  const EmptyBabyPage({Key? key}) : super(key: key);
+class ErrorPage extends StatelessWidget {
+  const ErrorPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class EmptyBabyPage extends StatelessWidget {
           child: Container(
             width: double.infinity,
             child: Image.asset(
-              "assets/Baby 1.png",
+              "assets/error_loading.png",
               fit: BoxFit.contain,
             ),
           ),
@@ -34,7 +34,7 @@ class EmptyBabyPage extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: Text(
-            AppLocalizations.of(context).emptyPageMessage,
+            AppLocalizations.of(context).errorPageMessage,
             style: TextStyle(
               fontFamily: openSans,
               fontWeight: FontWeight.w600,

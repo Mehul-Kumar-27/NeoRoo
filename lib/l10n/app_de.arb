@@ -26,7 +26,6 @@
     "addUpdateDetails":"Babydetails hinzufügen/aktualisieren",
     "trainingModules":"Trainingsmodule",
     "bookmarkResources":"Mit Lesezeichen versetzte Ressourcen",
-    "dataSync":"Datensynchronisierung",
     "helpAndSupport":"Hilfe Unterstützung",
     "clearLocalCache":"Löschen lokaler Cache",
     "signOut":"Ausloggen",
@@ -37,5 +36,18 @@
     "requireBirthResuscitation":"Erforderndern einer Geburt",
     "birthDescription":"Geburtsbeschreibung",
     "errorPageMessage":"Fehler beim Abrufen von Babydetails!",
-    "emptyPageMessage":"Keine Babys eingeschrieben!"
+    "emptyPageMessage":"Keine Babys eingeschrieben!",
+    "changeAvatar":"Avatar ändern",
+    "scheduledSync":"Geplante Synchronisation",
+    "syncAtRegularIntervals":"Synchronisierungsdaten in festgelegten Intervallen synchronisieren",
+    "thisActionCannotBeUndone":"Diese Aktion kann nicht rückgängig gemacht werden",
+    "switchOrganization":"Organisation wechseln",
+    "dataSync":"Datensynchronisation",
+    "makeSureYouHaveLatestData":"Stellen Sie sicher, dass Sie die neuesten Daten haben",
+    "viewBabyDetails":"Babydetails anzeigen",
+    "manageBabyDetails":"Verwalten Sie Babydetails",
+    "educationRelatedToChildCare":"Ausbildung im Zusammenhang mit Neugeborenenversorgung",
+    "saveResources":"Sparen Sie Ressourcen für weitere Referenz",
+    "familyMemberGroup":"Familienmitglied Benutzergruppe",
+    "caregiverGroup":"CAREGIVER UMSERGROUP"
 }

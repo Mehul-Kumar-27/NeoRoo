@@ -51,5 +51,16 @@
     "educationRelatedToChildCare":"التعليم المتعلق برعاية حديثي الولادة",
     "saveResources":"وفر الموارد لمزيد من المرجع",
     "familyMemberGroup":"مجموعة مستخدمي أفراد الأسرة",
-    "caregiverGroup":"مجموعة المستخدمين مقدمي الرعاية"
+    "caregiverGroup":"مجموعة المستخدمين مقدمي الرعاية",
+    "babiesAssignedToYou":"الأطفال المعينين لك",
+    "babyOfMother": "طفل سواروبا {motherName}",
+    "@babyOfMother": {
+        "description": "Denotes baby of a mother",
+        "placeholders": {
+            "motherName": {
+                "type": "String",
+                "example": "Jane"
+            }
+        }
+    }
 }

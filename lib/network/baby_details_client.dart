@@ -14,11 +14,32 @@ class BabyDetailsClient {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     return http.get(
-        Uri.parse("$baseURL" +
-            APIConfig.fetchTEI +
-            "/?ou=$organizationUnit&program=$programId&filter=$groupAttributeId:EQ:$parentGroup"),
-        headers: <String, String>{
-          'authorization': basicAuth,
-        });
+      Uri.parse("$baseURL" +
+          APIConfig.fetchTEI +
+          "/?ou=$organizationUnit&program=$programId&filter=$groupAttributeId:EQ:$parentGroup"),
+      headers: <String, String>{
+        'authorization': basicAuth,
+      },
+    );
+  }
+
+  Future<http.Response> fetchBabyFromCaregiver(
+      String username,
+      String password,
+      String organizationUnit,
+      String programId,
+      String caregiverGroup,
+      String baseURL,
+      String groupAttributeId) async {
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    return http.get(
+      Uri.parse("$baseURL" +
+          APIConfig.fetchTEI +
+          "/?ou=$organizationUnit&program=$programId&filter=$groupAttributeId:IN:$caregiverGroup"),
+      headers: <String, String>{
+        'authorization': basicAuth,
+      },
+    );
   }
 }

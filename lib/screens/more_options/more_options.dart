@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_bloc.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_events.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_states.dart';
+import 'package:neoroo_app/screens/all_babies_caregiver.dart/all_babies_caregiver.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:neoroo_app/screens/baby_details_family_member/baby_details_family_member.dart';
@@ -55,6 +56,13 @@ class _MoreOptionsState extends State<MoreOptions> {
     pushNewScreen(
       context,
       screen: BabyDetailsFamilyMember(),
+    );
+  }
+
+  void takeToBabyDetailsCaregiver() {
+    pushNewScreen(
+      context,
+      screen: AllBabiesList(),
     );
   }
 
@@ -144,7 +152,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                       children: [
                         ManageBaby(
                           isCaregiver: true,
-                          onTap: () {},
+                          onTap: takeToBabyDetailsCaregiver,
                         ),
                         GeneralListItem(
                           icon: Icons.cast_for_education,

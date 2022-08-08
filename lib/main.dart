@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:neoroo_app/bloc/all_babies_bloc/all_babies_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/local_auth_login_bloc/local_authentication_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/login_bloc/login_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/select_organisation_bloc/select_organisation_bloc.dart';
 import 'package:neoroo_app/bloc/baby_details_family_member/baby_details_family_member_bloc.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_bloc.dart';
+import 'package:neoroo_app/models/baby_details_caregiver.dart';
 import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
 import 'package:neoroo_app/network/authentication_client.dart';
@@ -29,6 +31,7 @@ Future<void> registerHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ProfileAdapter());
   Hive.registerAdapter(BabyDetailsFamilyMemberAdapter());
+  Hive.registerAdapter(BabyDetailsCaregiverAdapter());
   await Hive.openBox("users");
 }
 
@@ -98,6 +101,12 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider<BabyDetailsFamilyMemberBloc>(
             create: (context) => BabyDetailsFamilyMemberBloc(
+              context.read<BabyDetailsRepository>(),
+              context.read<HiveStorageRepository>(),
+            ),
+          ),
+          BlocProvider<BabyDetailsCaregiverBloc>(
+            create: (context) => BabyDetailsCaregiverBloc(
               context.read<BabyDetailsRepository>(),
               context.read<HiveStorageRepository>(),
             ),

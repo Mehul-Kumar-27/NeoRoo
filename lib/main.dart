@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:neoroo_app/bloc/add_baby_bloc/add_baby_bloc.dart';
 import 'package:neoroo_app/bloc/all_babies_bloc/all_babies_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/local_auth_login_bloc/local_authentication_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/login_bloc/login_bloc.dart';
@@ -11,8 +12,10 @@ import 'package:neoroo_app/bloc/more_options/more_options_bloc.dart';
 import 'package:neoroo_app/models/baby_details_caregiver.dart';
 import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
+import 'package:neoroo_app/network/add_update_baby_client.dart';
 import 'package:neoroo_app/network/authentication_client.dart';
 import 'package:neoroo_app/network/baby_details_client.dart';
+import 'package:neoroo_app/repository/add_update_baby_repository.dart';
 import 'package:neoroo_app/repository/authentication_repository.dart';
 import 'package:neoroo_app/repository/baby_details_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
@@ -111,6 +114,12 @@ class _MyAppState extends State<MyApp> {
               context.read<HiveStorageRepository>(),
             ),
           ),
+          BlocProvider<AddBabyBloc>(
+            create: (context) => AddBabyBloc(
+              context.read<HiveStorageRepository>(),
+              context.read<AddUpdateBabyRepository>(),
+            ),
+          ),
         ],
       ),
       providers: [
@@ -133,6 +142,13 @@ class _MyAppState extends State<MyApp> {
           create: (context) => BabyDetailsRepository(
             babyDetailsClient: BabyDetailsClient(),
             hiveStorageRepository: context.read<HiveStorageRepository>(),
+          ),
+        ),
+        RepositoryProvider<AddUpdateBabyRepository>(
+          create: (context) => AddUpdateBabyRepository(
+            babyAddUpdateClient: BabyAddUpdateClient(),
+            hiveStorageRepository: context.read<HiveStorageRepository>(),
+            context: navigatorKey.currentContext!,
           ),
         ),
       ],

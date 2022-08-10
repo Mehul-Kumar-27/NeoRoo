@@ -22,20 +22,21 @@ class BabyDetailsCaregiverAdapter extends TypeAdapter<BabyDetailsCaregiver> {
       birthTime: fields[2] as String,
       bodyLength: fields[4] as double,
       headCircumference: fields[5] as double,
-      id: fields[8] as String,
+      id: fields[8] as String?,
       motherName: fields[0] as String,
       needResuscitation: fields[6] as bool,
       weight: fields[3] as double,
       avatarId: fields[9] as String?,
       caregiverGroup: fields[11] as String,
       familyMemberGroup: fields[10] as String,
+      imagePath: fields[12] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, BabyDetailsCaregiver obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.motherName)
       ..writeByte(1)
@@ -59,7 +60,9 @@ class BabyDetailsCaregiverAdapter extends TypeAdapter<BabyDetailsCaregiver> {
       ..writeByte(10)
       ..write(obj.familyMemberGroup)
       ..writeByte(11)
-      ..write(obj.caregiverGroup);
+      ..write(obj.caregiverGroup)
+      ..writeByte(12)
+      ..write(obj.imagePath);
   }
 
   @override

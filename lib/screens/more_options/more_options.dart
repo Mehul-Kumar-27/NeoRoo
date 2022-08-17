@@ -7,6 +7,7 @@ import 'package:neoroo_app/screens/all_babies_caregiver.dart/all_babies_caregive
 import 'package:neoroo_app/screens/authentication/login/login.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:neoroo_app/screens/baby_details_family_member/baby_details_family_member.dart';
+import 'package:neoroo_app/screens/learning_resources/learning_resources.dart';
 import 'package:neoroo_app/screens/more_options/components/change_avatar.dart';
 import 'package:neoroo_app/screens/more_options/components/clear_local_cache.dart';
 import 'package:neoroo_app/screens/more_options/components/general_list_item.dart';
@@ -104,11 +105,18 @@ class _MoreOptionsState extends State<MoreOptions> {
                           subtitle: AppLocalizations.of(context)
                               .educationRelatedToChildCare,
                           title: AppLocalizations.of(context).trainingModules,
+                          onTap: () {
+                            pushNewScreen(
+                              context,
+                              screen: LearningResourcesPage(),
+                            );
+                          },
                         ),
                         GeneralListItem(
                           icon: Icons.bookmark,
                           subtitle: AppLocalizations.of(context).saveResources,
                           title: AppLocalizations.of(context).bookmarkResources,
+                          onTap: () {},
                         ),
                         NotificationsItem(),
                         DataSync(),
@@ -119,6 +127,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                           icon: Icons.support_agent,
                           subtitle: null,
                           title: AppLocalizations.of(context).helpAndSupport,
+                          onTap: () {},
                         ),
                         LogOutButton(
                           onTap: () {
@@ -159,11 +168,18 @@ class _MoreOptionsState extends State<MoreOptions> {
                           subtitle: AppLocalizations.of(context)
                               .educationRelatedToChildCare,
                           title: AppLocalizations.of(context).trainingModules,
+                          onTap: () {
+                            pushNewScreen(
+                              context,
+                              screen: LearningResourcesPage(),
+                            );
+                          },
                         ),
                         GeneralListItem(
                           icon: Icons.bookmark,
                           subtitle: AppLocalizations.of(context).saveResources,
                           title: AppLocalizations.of(context).bookmarkResources,
+                          onTap: () {},
                         ),
                         NotificationsItem(),
                         DataSync(),
@@ -174,6 +190,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                           icon: Icons.support_agent,
                           subtitle: null,
                           title: AppLocalizations.of(context).helpAndSupport,
+                          onTap: () {},
                         ),
                         LogOutButton(
                           onTap: () {

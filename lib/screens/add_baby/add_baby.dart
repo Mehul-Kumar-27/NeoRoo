@@ -215,7 +215,7 @@ class _AddBabyState extends State<AddBaby> {
           }
           if (state is AddBabySuccess) {
             showSnackbarSuccess(
-              AppLocalizations.of(context).addedBabySuccess,
+              AppLocalizations.of(context).addBabySuccess,
             );
             Navigator.of(context).pop();
           }

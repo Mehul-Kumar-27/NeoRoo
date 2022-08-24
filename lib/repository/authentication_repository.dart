@@ -11,6 +11,7 @@ import 'package:neoroo_app/utils/dhis2_config.dart' as DHIS2Config;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:neoroo_app/utils/dhis2_config.dart';
 
+
 class AuthenticationRepository {
   final HiveStorageRepository hiveStorageRepository;
   final AuthenticationClient authenticationClient;

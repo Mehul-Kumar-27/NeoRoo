@@ -32,17 +32,13 @@ class HiveStorageRepository {
 
   Future<void> saveUserProfile(Profile profile) async {
     List<int> key = await getKey();
-    try {
-      Box box = await Hive.openBox(
-        "users",
-        encryptionCipher: HiveAesCipher(
-          key,
-        ),
-      );
-      await box.put("user", profile);
-    } catch (e) {
-      print(e);
-    }
+    Box box = await Hive.openBox(
+      "users",
+      encryptionCipher: HiveAesCipher(
+        key,
+      ),
+    );
+    await box.put("user", profile);
   }
 
   Future<Profile> getUserProfile() async {
@@ -90,8 +86,13 @@ class HiveStorageRepository {
     return (await box.get("selectedOrgName"));
   }
 
-  Future<void> saveCredentials(String username, String password,
-      String serverURL, String? avatarId, String name) async {
+  Future<void> saveCredentials(
+    String username,
+    String password,
+    String serverURL,
+    String? avatarId,
+    String name,
+  ) async {
     List<int> key = await getKey();
     Box box = await Hive.openBox(
       "saved",

@@ -64,5 +64,6 @@
                 "example": "Jane"
             }
         }
-    }
+    },
+    "emptyFieldsInRequest":"Please fill in all fields"
 }

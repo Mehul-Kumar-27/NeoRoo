@@ -60,5 +60,6 @@
                 "example": "Jane"
             }
         }
-    }
+    },
+    "emptyFieldsInRequest":"कृपया सभी स्थानों को भरें"
 }

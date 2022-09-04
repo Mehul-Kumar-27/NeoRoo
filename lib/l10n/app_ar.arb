@@ -62,5 +62,6 @@
                 "example": "Jane"
             }
         }
-    }
+    },
+    "emptyFieldsInRequest":"يرجى تعبئة جميع الحقول"
 }

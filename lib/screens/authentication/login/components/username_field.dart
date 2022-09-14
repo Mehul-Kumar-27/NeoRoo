@@ -17,23 +17,27 @@ class UsernameFieldLogin extends StatelessWidget {
         cursorColor: primaryBlue,
         controller: controller,
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(
+            top: 16,
+            bottom: 16,
+          ),
           prefixIcon: Icon(
             Icons.person,
-            color: outlineGrey,
           ),
           hintText: AppLocalizations.of(context).username,
+          prefixIconColor: primaryBlue,
           hintStyle: TextStyle(
             color: outlineGrey,
             fontSize: 16,
             fontFamily: openSans,
           ),
-          focusedBorder: UnderlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: primaryBlue,
               width: 1.75,
             ),
           ),
-          border: UnderlineInputBorder(
+          border: OutlineInputBorder(
             borderSide: BorderSide(
               color: outlineGrey,
               width: 1,

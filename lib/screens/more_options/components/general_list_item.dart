@@ -5,16 +5,19 @@ class GeneralListItem extends StatelessWidget {
   final String title;
   final String? subtitle;
   final IconData icon;
-  const GeneralListItem(
-      {Key? key,
-      required this.icon,
-      required this.subtitle,
-      required this.title})
-      : super(key: key);
+  final VoidCallback onTap;
+  const GeneralListItem({
+    Key? key,
+    required this.icon,
+    required this.subtitle,
+    required this.onTap,
+    required this.title,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       leading: Icon(
         icon,
       ),

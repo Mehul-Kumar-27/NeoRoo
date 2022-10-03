@@ -279,17 +279,18 @@ class BabyDetailsRepository {
             familyMemberGroup: filteredData["familyMemberUserGroup"],
             caregiverGroup: filteredData["caregiverUserGroup"],
             avatarId: filteredData["avatarId"],
+            imagePath: null,
           ),
         );
       }
       await hiveStorageRepository
           .saveBabyDetailsCaregiver(babyDetailsCaregiver);
-      return Left(babyDetailsCaregiver);
+      return Left(babyDetailsCaregiver.reversed.toList());
     } catch (e) {
       print(e);
       List<BabyDetailsCaregiver>? babyDetailsCaregiver =
           await hiveStorageRepository.getBabyDetailsCaregiver();
-      return Left(babyDetailsCaregiver);
+      return Left(babyDetailsCaregiver==null?null:babyDetailsCaregiver.reversed.toList());
     }
   }
 }

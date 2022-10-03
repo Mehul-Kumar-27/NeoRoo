@@ -7,10 +7,11 @@ import 'dart:async' as _i7;
 import 'package:flutter/cupertino.dart' as _i6;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:neoroo_app/models/baby_details_caregiver.dart' as _i9;
 import 'package:neoroo_app/models/baby_details_family_member.dart' as _i8;
 import 'package:neoroo_app/models/profile.dart' as _i3;
 import 'package:neoroo_app/network/authentication_client.dart' as _i5;
-import 'package:neoroo_app/repository/authentication_repository.dart' as _i9;
+import 'package:neoroo_app/repository/authentication_repository.dart' as _i10;
 import 'package:neoroo_app/repository/hive_storage_repository.dart' as _i4;
 
 // ignore_for_file: type=lint
@@ -162,13 +163,30 @@ class MockHiveStorageRepository extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#getBabyDetailsFamilyMember, []),
               returnValue: Future<_i8.BabyDetailsFamilyMember?>.value())
           as _i7.Future<_i8.BabyDetailsFamilyMember?>);
+  @override
+  _i7.Future<List<_i9.BabyDetailsCaregiver>?> getBabyDetailsCaregiver() =>
+      (super.noSuchMethod(Invocation.method(#getBabyDetailsCaregiver, []),
+              returnValue: Future<List<_i9.BabyDetailsCaregiver>?>.value())
+          as _i7.Future<List<_i9.BabyDetailsCaregiver>?>);
+  @override
+  _i7.Future<void> saveBabyDetailsCaregiver(
+          List<_i9.BabyDetailsCaregiver>? listOfBabies) =>
+      (super.noSuchMethod(
+          Invocation.method(#saveBabyDetailsCaregiver, [listOfBabies]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i7.Future<void>);
+  @override
+  _i7.Future<void> addBaby(_i9.BabyDetailsCaregiver? babyDetailsCaregiver) =>
+      (super.noSuchMethod(Invocation.method(#addBaby, [babyDetailsCaregiver]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i7.Future<void>);
 }
 
 /// A class which mocks [AuthenticationRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthenticationRepository extends _i1.Mock
-    implements _i9.AuthenticationRepository {
+    implements _i10.AuthenticationRepository {
   MockAuthenticationRepository() {
     _i1.throwOnMissingStub(this);
   }

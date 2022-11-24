@@ -47,6 +47,8 @@ class LearningResourcesRepository {
               image: data["list_of_videos"][i]["image"],
               name: data["list_of_videos"][i]["name"],
               url: data["list_of_videos"][i]["url"],
+              language: data["list_of_videos"][i]["language"],
+              duration: data["list_of_videos"][i]["duration"],
             ),
           );
         }

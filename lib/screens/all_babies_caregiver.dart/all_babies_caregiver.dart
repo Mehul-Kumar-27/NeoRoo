@@ -85,11 +85,13 @@ class _AllBabiesListState extends State<AllBabiesList> {
           listener: (context, state) {},
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            pushNewScreen(
+          onPressed: () async {
+            await pushNewScreen(
               context,
               screen: AddBaby(),
             );
+            BlocProvider.of<BabyDetailsCaregiverBloc>(context)
+                .add(LoadAllBabiesCaregiver());
           },
           backgroundColor: primaryBlue,
           child: Icon(

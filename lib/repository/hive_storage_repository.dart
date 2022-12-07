@@ -301,4 +301,19 @@ class HiveStorageRepository {
     }
     print("D");
   }
+  Future<void> addBaby(BabyDetailsCaregiver babyDetailsCaregiver)async{
+    List<BabyDetailsCaregiver>? babyDetailsCaregiverList;
+    if (!await Hive.boxExists("babies")) {
+      babyDetailsCaregiverList=[];
+    }
+    else if (!(await Hive.openBox("babies")).containsKey("list_of_babies")) {
+      babyDetailsCaregiverList=[];
+    }else{
+      Box box=await Hive.openBox("babies");
+      babyDetailsCaregiverList=await box.get("list_of_babies");
+    }
+    babyDetailsCaregiverList!.add(babyDetailsCaregiver);
+    Box box=await Hive.openBox("babies");
+    await box.put("list_of_babies",babyDetailsCaregiverList);
+  }
 }

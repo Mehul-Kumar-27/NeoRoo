@@ -169,4 +169,39 @@ class HiveStorageRepository {
     Box box=await Hive.openBox("babies");
     await box.put("list_of_babies",babyDetailsCaregiverList);
   }
+  Future<void> updateBaby(
+    String birthDate,
+        String birthTime,
+        String motherName,
+        double birthWeight,
+        double bodyLength,
+        double headCircumference,
+        String familyMemberGroup,
+        String caregiverGroup,
+        String birthDescription,
+        int index,
+  )async{
+    List<BabyDetailsCaregiver>? babyDetailsCaregiverList;
+    if (!await Hive.boxExists("babies")) {
+      babyDetailsCaregiverList=[];
+    }
+    else if (!(await Hive.openBox("babies")).containsKey("list_of_babies")) {
+      babyDetailsCaregiverList=[];
+    }else{
+      Box box=await Hive.openBox("babies");
+      babyDetailsCaregiverList=await box.get("list_of_babies");
+    }
+    babyDetailsCaregiverList![index].birthDate=birthDate;
+    babyDetailsCaregiverList[index].birthTime=birthTime;
+    babyDetailsCaregiverList[index].motherName=motherName;
+    babyDetailsCaregiverList[index].bodyLength=bodyLength;
+    babyDetailsCaregiverList[index].weight=birthWeight;
+    babyDetailsCaregiverList[index].headCircumference=headCircumference;
+    babyDetailsCaregiverList[index].familyMemberGroup=familyMemberGroup;
+    babyDetailsCaregiverList[index].caregiverGroup=caregiverGroup;
+    babyDetailsCaregiverList[index].birthNotes=birthDescription;
+    Box box=await Hive.openBox("babies");
+    await box.put("list_of_babies",babyDetailsCaregiverList);
+    print("Update done");
+  }
 }

@@ -10,6 +10,7 @@ import 'package:neoroo_app/bloc/authentication/select_organisation_bloc/select_o
 import 'package:neoroo_app/bloc/baby_details_family_member/baby_details_family_member_bloc.dart';
 import 'package:neoroo_app/bloc/learning_resources_bloc/learning_resources_bloc.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_bloc.dart';
+import 'package:neoroo_app/bloc/update_baby_bloc/update_baby_bloc.dart';
 import 'package:neoroo_app/models/baby_details_caregiver.dart';
 import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
@@ -123,10 +124,9 @@ class _MyAppState extends State<MyApp> {
               context.read<AddUpdateBabyRepository>(),
             ),
           ),
-          BlocProvider<LearningResourcesBloc>(
-            create: (context) => LearningResourcesBloc(
+          BlocProvider<UpdateBabyBloc>(
+            create: (context) => UpdateBabyBloc(
               context.read<HiveStorageRepository>(),
-              context.read<LearningResourcesRepository>(),
             ),
           ),
         ],

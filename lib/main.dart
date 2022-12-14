@@ -10,6 +10,7 @@ import 'package:neoroo_app/bloc/authentication/select_organisation_bloc/select_o
 import 'package:neoroo_app/bloc/baby_details_family_member/baby_details_family_member_bloc.dart';
 import 'package:neoroo_app/bloc/learning_resources_bloc/learning_resources_bloc.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_bloc.dart';
+import 'package:neoroo_app/bloc/update_baby_bloc/update_baby_bloc.dart';
 import 'package:neoroo_app/models/baby_details_caregiver.dart';
 import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
@@ -23,6 +24,7 @@ import 'package:neoroo_app/repository/baby_details_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:neoroo_app/repository/learning_resources_repository.dart';
 import 'package:neoroo_app/repository/more_options_repository.dart';
+import 'package:neoroo_app/repository/secure_storage_repository.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:neoroo_app/screens/main_screen/main_screen.dart';
@@ -123,17 +125,18 @@ class _MyAppState extends State<MyApp> {
               context.read<AddUpdateBabyRepository>(),
             ),
           ),
-          BlocProvider<LearningResourcesBloc>(
-            create: (context) => LearningResourcesBloc(
+          BlocProvider<UpdateBabyBloc>(
+            create: (context) => UpdateBabyBloc(
               context.read<HiveStorageRepository>(),
-              context.read<LearningResourcesRepository>(),
             ),
           ),
         ],
       ),
       providers: [
         RepositoryProvider<HiveStorageRepository>(
-          create: (context) => HiveStorageRepository(),
+          create: (context) => HiveStorageRepository(
+            SecureStorageRepository(),
+          ),
         ),
         RepositoryProvider<AuthenticationRepository>(
           create: (context) => AuthenticationRepository(

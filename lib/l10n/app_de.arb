@@ -61,5 +61,7 @@
             }
         }
     },
-    "emptyFieldsInRequest":"Bitte füllen Sie alle Felder aus"
+    "addBabySuccess":"Erfolgreiches Baby hinzugefügt",
+    "emptyField":"Bitte füllen Sie alle Felder aus",
+    "updateBabySuccess":"Erfolgreich aktualisierte Babydetails"
 }

@@ -15,6 +15,12 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
   }
   Future<void> login(LoginEvent event, Emitter<LoginState> emitter) async {
     emitter(LoginLoading());
+    Map<String, dynamic> canAuthenticate =
+        await authenticationRepository.isLocalAuthSupported();
+    if (!canAuthenticate["status"]) {
+      emitter(LocalAuthSupportError(canAuthenticate["message"]));
+      return;
+    }
     var result = await authenticationRepository.loginUser(
       event.username,
       event.password,

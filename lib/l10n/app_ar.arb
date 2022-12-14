@@ -63,5 +63,7 @@
             }
         }
     },
-    "emptyFieldsInRequest":"يرجى تعبئة جميع الحقول"
+    "addBabySuccess":"أضاف الطفل بنجاح",
+    "emptyField":"يرجى تعبئة جميع الحقول",
+    "updateBabySuccess":"تحديث تفاصيل الطفل بنجاح"
 }

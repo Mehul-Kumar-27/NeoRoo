@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neoroo_app/bloc/all_babies_bloc/all_babies_bloc.dart';
 import 'package:neoroo_app/bloc/all_babies_bloc/all_babies_events.dart';
 import 'package:neoroo_app/bloc/all_babies_bloc/all_babies_states.dart';
+import 'package:neoroo_app/models/baby_details_caregiver.dart';
 import 'package:neoroo_app/screens/add_baby/add_baby.dart';
 import 'package:neoroo_app/screens/all_babies_caregiver.dart/components/all_babies_caregiver_title.dart';
 import 'package:neoroo_app/screens/all_babies_caregiver.dart/components/baby_item.dart';
+import 'package:neoroo_app/screens/update_baby/update_baby.dart';
 import 'package:neoroo_app/utils/constants.dart';
 import 'package:neoroo_app/utils/empty_baby_page.dart';
 import 'package:neoroo_app/utils/error_page.dart';
@@ -24,6 +26,16 @@ class _AllBabiesListState extends State<AllBabiesList> {
     BlocProvider.of<BabyDetailsCaregiverBloc>(context)
         .add(LoadAllBabiesCaregiver());
     super.initState();
+  }
+
+  void takeToUpdatePage(BabyDetailsCaregiver babyDetailsCaregiver,int index) {
+    pushNewScreen(
+      context,
+      screen: UpdateBaby(
+        babyDetailsCaregiver: babyDetailsCaregiver,
+        index: index,
+      ),
+    );
   }
 
   @override
@@ -58,6 +70,7 @@ class _AllBabiesListState extends State<AllBabiesList> {
                         height: 10,
                       ),
                       itemBuilder: (context, index) => BabyItem(
+                        takeToUpdate: takeToUpdatePage,
                         birthWeight: state.babyDetailsCaregiver![index].weight,
                         dateOfBirth:
                             state.babyDetailsCaregiver![index].birthDate,
@@ -73,6 +86,9 @@ class _AllBabiesListState extends State<AllBabiesList> {
                                 "/api/fileResources/" +
                                 state.babyDetailsCaregiver![index].avatarId! +
                                 "/data",
+                        babyDetailsCaregiver:
+                            state.babyDetailsCaregiver![index],
+                        index: index,
                       ),
                       itemCount: state.babyDetailsCaregiver!.length,
                     ),

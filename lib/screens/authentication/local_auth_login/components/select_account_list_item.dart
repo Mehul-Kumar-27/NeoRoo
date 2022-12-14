@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:neoroo_app/utils/constants.dart';
+import 'package:neoroo_app/utils/api_config.dart' as APIConfig;
 
-class SelectAccountListItem extends StatelessWidget {
+class SelectAccountListItem extends StatefulWidget {
   final String username;
   final String serverURL;
-  final String? image;
+  final String? avatarId;
   final String name;
   final String password;
   final VoidCallback login;
   const SelectAccountListItem({
     Key? key,
-    required this.image,
+    required this.avatarId,
     required this.serverURL,
     required this.username,
     required this.name,
@@ -19,23 +20,48 @@ class SelectAccountListItem extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<SelectAccountListItem> createState() => _SelectAccountListItemState();
+}
+
+class _SelectAccountListItemState extends State<SelectAccountListItem> {
+  bool _isError=false;
+  @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(
         horizontal: 15,
       ),
-      onTap: login,
-      leading: CircleAvatar(
-        radius: 25,
-        backgroundColor: Colors.grey[300],
-        child: Icon(
-          Icons.person,
-          color: Colors.white,
-          size: 28,
-        ),
-      ),
+      onTap: widget.login,
+      leading: widget.avatarId == null||_isError
+          ? CircleAvatar(
+              radius: 25,
+              backgroundColor: Colors.grey[300],
+              child: Icon(
+                Icons.person,
+                color: Colors.white,
+                size: 28,
+              ),
+            )
+          : CircleAvatar(
+              radius: 25,
+              backgroundColor: Colors.grey[300],
+              backgroundImage: NetworkImage(
+                widget.serverURL + APIConfig.fileResources + "/${widget.avatarId!}" + "/data",
+                headers: {
+                  "authorization": APIConfig.authUtilFunction(
+                    widget.username,
+                    widget.password,
+                  ),
+                },
+              ),
+              onBackgroundImageError: (o,s){
+                setState(() {
+                  _isError=true;
+                });
+              },
+            ),
       title: Text(
-        name,
+        widget.name,
         style: TextStyle(
           color: Colors.black,
           fontFamily: openSans,
@@ -53,7 +79,7 @@ class SelectAccountListItem extends StatelessWidget {
             height: 5,
           ),
           Text(
-            serverURL,
+            widget.serverURL,
             style: TextStyle(
               color: Colors.grey,
               decoration: TextDecoration.underline,

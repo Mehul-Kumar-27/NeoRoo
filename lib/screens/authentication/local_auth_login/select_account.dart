@@ -89,7 +89,7 @@ class _SelectAccountState extends State<SelectAccount> {
                 Expanded(
                   child: ListView.builder(
                     itemBuilder: (context, index) => SelectAccountListItem(
-                      image: widget.data[keys[index]]!.length == 3
+                      avatarId: widget.data[keys[index]]!.length == 3
                           ? null
                           : widget.data[keys[index]]!.last,
                       serverURL: widget.data[keys[index]]![1],

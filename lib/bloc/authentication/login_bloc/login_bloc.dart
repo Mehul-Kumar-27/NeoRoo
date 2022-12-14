@@ -22,7 +22,10 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
       return;
     }
     var result = await authenticationRepository.loginUser(
-        event.username, event.password, event.serverURL);
+      event.username,
+      event.password,
+      event.serverURL,
+    );
     if (result is Map) {
       emitter(
         LoginLoaded(
@@ -30,7 +33,9 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
         ),
       );
     } else {
-      emitter(LoginGeneralError(result));
+      emitter(
+        LoginGeneralError(result),
+      );
     }
   }
 
@@ -40,15 +45,27 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
     Map<String, dynamic> canAuthenticate =
         await authenticationRepository.isLocalAuthSupported();
     if (!canAuthenticate["status"]) {
-      emitter(LocalAuthSupportError(canAuthenticate["message"]));
+      emitter(
+        LocalAuthSupportError(
+          canAuthenticate["message"],
+        ),
+      );
       return;
     }
     Map<String, dynamic> savedCredentials =
         await authenticationRepository.getSavedCredentials();
     if (!savedCredentials["status"]) {
-      emitter(LocalAuthSupportError(savedCredentials["message"]));
+      emitter(
+        LocalAuthSupportError(
+          savedCredentials["message"],
+        ),
+      );
       return;
     }
-    emitter(LocalAuthSuccess(savedCredentials["data"]));
+    emitter(
+      LocalAuthSuccess(
+        savedCredentials["data"],
+      ),
+    );
   }
 }

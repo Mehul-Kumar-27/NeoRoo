@@ -23,6 +23,14 @@ class AuthenticationRepository {
   });
 
   Future loginUser(String username, String password, String serverURL) async {
+    if (serverURL.trim().isEmpty ||
+        password.trim().isEmpty ||
+        username.trim().isEmpty) {
+      return CustomException(
+        AppLocalizations.of(context).emptyFieldsInRequest,
+        null,
+      );
+    }
     try {
       http.Response response =
           await authenticationClient.loginUser(username, password, serverURL);
@@ -49,7 +57,9 @@ class AuthenticationRepository {
               DHIS2Config.familyMemberGroup) {
             isCareGiver = false;
           } else {
-            userGroups.add(body["userGroups"][i]["id"]);
+            userGroups.add(
+              body["userGroups"][i]["id"],
+            );
           }
         }
         await hiveStorageRepository.setIsCareGiver(isCareGiver);
@@ -61,32 +71,50 @@ class AuthenticationRepository {
         await hiveStorageRepository.saveOrganisationURL(serverURL);
         await hiveStorageRepository.saveOrganisations(organisationUnits);
         return {
-          "profile":
-              Profile(avatarId, body["name"], password, username, body["id"]),
+          "profile": Profile(
+            avatarId,
+            body["name"],
+            password,
+            username,
+            body["id"],
+          ),
           "orgUnits": organisationUnits
         };
       }
       if (response.statusCode == 400) {
         return BadRequestException(
-            AppLocalizations.of(context).invalidRequest, response.statusCode);
+          AppLocalizations.of(context).invalidRequest,
+          response.statusCode,
+        );
       }
       if (response.statusCode == 401) {
         return UnauthorisedException(
-            AppLocalizations.of(context).unauthorized, response.statusCode);
+          AppLocalizations.of(context).unauthorized,
+          response.statusCode,
+        );
       }
       if (response.statusCode == 403) {
         return UnauthorisedException(
-            AppLocalizations.of(context).invalidInput, response.statusCode);
+          AppLocalizations.of(context).invalidInput,
+          response.statusCode,
+        );
       } else {
         return FetchDataException(
-            AppLocalizations.of(context).errorDuringCommunication, null);
+          AppLocalizations.of(context).errorDuringCommunication,
+          response.statusCode,
+        );
       }
     } on SocketException {
-      return FetchDataException(AppLocalizations.of(context).noInternet, null);
+      return FetchDataException(
+        AppLocalizations.of(context).noInternet,
+        null,
+      );
     } catch (e) {
       print(e);
       return FetchDataException(
-          AppLocalizations.of(context).errorDuringCommunication, null);
+        AppLocalizations.of(context).errorDuringCommunication,
+        null,
+      );
     }
   }
 
@@ -101,7 +129,11 @@ class AuthenticationRepository {
     for (int i = 0; i < organisationUnits.length; i++) {
       try {
         http.Response response = await authenticationClient.getOrganisationName(
-            organisationUnits[i], username, password, url);
+          organisationUnits[i],
+          username,
+          password,
+          url,
+        );
         if (response.statusCode != 200) {
           throw CustomException("x", null);
         } else {
@@ -115,7 +147,7 @@ class AuthenticationRepository {
     return [orgNames, organisationUnits];
   }
 
-  Future selectOrganisation(String id, String? name) async {
+  Future<void> selectOrganisation(String id, String? name) async {
     await hiveStorageRepository.saveSelectedOrganisation(id, name);
   }
 

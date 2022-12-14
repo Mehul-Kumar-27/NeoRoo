@@ -100,10 +100,12 @@ void main() {
         .thenAnswer((realInvocation) async => null);
     when(hiveStorageRepository.setIsCareGiver(any))
         .thenAnswer((realInvocation) async => null);
-    when(hiveStorageRepository.setIsCareGiver(any))
-        .thenAnswer((realInvocation) async => Future<void>.value(null),);
-    when(hiveStorageRepository.setUserGroups(any))
-        .thenAnswer((realInvocation) async => Future<void>.value(null),);
+    when(hiveStorageRepository.setIsCareGiver(any)).thenAnswer(
+      (realInvocation) async => Future<void>.value(null),
+    );
+    when(hiveStorageRepository.setUserGroups(any)).thenAnswer(
+      (realInvocation) async => Future<void>.value(null),
+    );
     authenticationRepository = AuthenticationRepository(
       hiveStorageRepository: hiveStorageRepository,
       authenticationClient: authenticationClient,
@@ -154,6 +156,34 @@ void main() {
       );
       expect((r as CustomException).statusCode, 401);
       expect((r).message, AppLocalizations.of(context).unauthorized);
+    },
+  );
+
+  testWidgets(
+    'Testing when input is empty',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Material(
+            child: Container(),
+          ),
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+          ],
+        ),
+      );
+      BuildContext context = tester.element(find.byType(Container));
+      authenticationRepository = AuthenticationRepository(
+        hiveStorageRepository: hiveStorageRepository,
+        authenticationClient: authenticationClient,
+        context: context,
+      );
+      var r = await authenticationRepository.loginUser(
+        '',
+        'Admin@123',
+        'https://bmgfdev.soic.iupui.edu',
+      );
+      expect((r as CustomException).statusCode, null);
     },
   );
   blocTest<LoginBloc, LoginState>(
@@ -242,6 +272,34 @@ void main() {
         CustomException(
           "Incorrect credentials",
           401,
+        ),
+      ),
+    ],
+  );
+
+  blocTest<LoginBloc, LoginState>(
+    'Testing when input is empty',
+    build: () {
+      mocks.MockAuthenticationRepository authenticationRepository =
+          mocks.MockAuthenticationRepository();
+      when(authenticationRepository.loginUser(any, any, any)).thenAnswer(
+        (x) => Future<CustomException>.value(
+          CustomException("Please fill in all fields",null),
+        ),
+      );
+      return LoginBloc(authenticationRepository, hiveStorageRepository);
+    },
+    act: (LoginBloc bloc) {
+      bloc.add(
+        LoginEvent("", "working", "testuser"),
+      );
+    },
+    expect: () => [
+      LoginLoading(),
+      LoginGeneralError(
+        CustomException(
+          "Please fill in all fields",
+          null,
         ),
       ),
     ],

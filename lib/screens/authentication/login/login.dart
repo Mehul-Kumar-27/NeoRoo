@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                 LogoLogin(),
                 TitleLogin(),
                 VerticalSpace(
-                  height: 45,
+                  height: 35,
                 ),
                 ServerURLFieldLogin(
                   controller: _serverURLController,
@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                   serverURLController: _serverURLController,
                 ),
                 VerticalSpace(
-                  height: 45,
+                  height: 35,
                 ),
                 LocalAuthOption(
                   onPressed: () {

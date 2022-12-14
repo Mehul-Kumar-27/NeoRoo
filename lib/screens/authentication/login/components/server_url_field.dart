@@ -19,9 +19,12 @@ class ServerURLFieldLogin extends StatelessWidget {
         keyboardType: TextInputType.url,
         cursorColor: primaryBlue,
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(
+            top: 16,
+            bottom: 16,
+          ),
           prefixIcon: Icon(
             CupertinoIcons.globe,
-            color: outlineGrey,
           ),
           hintText: AppLocalizations.of(context).serverURL,
           hintStyle: TextStyle(
@@ -29,13 +32,13 @@ class ServerURLFieldLogin extends StatelessWidget {
             fontFamily: openSans,
             fontSize: 16,
           ),
-          focusedBorder: UnderlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: primaryBlue,
               width: 1.75,
             ),
           ),
-          border: UnderlineInputBorder(
+          border: OutlineInputBorder(
             borderSide: BorderSide(
               color: outlineGrey,
               width: 1,

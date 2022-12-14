@@ -64,5 +64,8 @@
                 "example": "Jane"
             }
         }
-    }
+    },
+    "addBabySuccess":"Successfully added baby",
+    "emptyField":"Please fill in all fields",
+    "updateBabySuccess":"Successfully updated baby details"
 }

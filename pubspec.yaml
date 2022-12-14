@@ -48,7 +48,7 @@ dependencies:
   local_auth: ^2.1.0
   mockito: ^5.2.0
   image_picker: ^0.8.5+3
-  video_player: ^2.4.7
+  flutter_secure_storage: ^6.0.0
 
 dev_dependencies:
   flutter_test:

@@ -2,8 +2,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:neoroo_app/models/baby_details_caregiver.dart';
 import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
+import 'package:neoroo_app/repository/secure_storage_repository.dart';
 
 class HiveStorageRepository {
+  final SecureStorageRepository secureStorageRepository;
+  HiveStorageRepository(this.secureStorageRepository);
   static Future<bool> checkUserLoggedIn() async {
     Box box = await Hive.openBox("users");
     print(box.containsKey("user"));

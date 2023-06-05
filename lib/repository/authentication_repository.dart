@@ -11,7 +11,6 @@ import 'package:neoroo_app/utils/dhis2_config.dart' as DHIS2Config;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:neoroo_app/utils/dhis2_config.dart';
 
-
 class AuthenticationRepository {
   final HiveStorageRepository hiveStorageRepository;
   final AuthenticationClient authenticationClient;
@@ -32,11 +31,13 @@ class AuthenticationRepository {
       );
     }
     try {
+      print("This is the username $username");
       http.Response response =
           await authenticationClient.loginUser(username, password, serverURL);
       if (response.statusCode == 200) {
         Map body = jsonDecode(response.body);
-        String? avatarId;
+        print(body);
+        String avatarId ="" ;
         List<String> organisationUnits = [];
         if (body.containsKey("avatar")) {
           Map<String, dynamic> avatar = body["avatar"];
@@ -45,6 +46,8 @@ class AuthenticationRepository {
           }
         }
         var orgUnitList = body["organisationUnits"];
+        print(orgUnitList);
+
         for (int i = 0; i < orgUnitList.length; i++) {
           organisationUnits.add(orgUnitList[i]["id"]);
         }
@@ -62,22 +65,21 @@ class AuthenticationRepository {
             );
           }
         }
+        var userRoleId = body['userCredentials']['userRoles'][0];
+        String userRole = await authenticationClient.getUserRoleName(
+            userRoleId['id'], username, password, serverURL);
+
         await hiveStorageRepository.setIsCareGiver(isCareGiver);
         await hiveStorageRepository.setUserGroups(userGroups);
-        await hiveStorageRepository.saveUserProfile(
-            Profile(avatarId, body["name"], password, username, body["id"]));
+        await hiveStorageRepository.saveUserProfile(Profile(
+            body["name"], username, password, avatarId, body["id"], userRole));
         await hiveStorageRepository.saveCredentials(
             username, password, serverURL, avatarId, body["name"]);
         await hiveStorageRepository.saveOrganisationURL(serverURL);
         await hiveStorageRepository.saveOrganisations(organisationUnits);
         return {
           "profile": Profile(
-            avatarId,
-            body["name"],
-            password,
-            username,
-            body["id"],
-          ),
+              avatarId, body["name"], password, username, body["id"], userRole),
           "orgUnits": organisationUnits
         };
       }

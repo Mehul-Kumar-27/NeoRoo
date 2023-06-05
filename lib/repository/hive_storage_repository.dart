@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:neoroo_app/models/baby_details_caregiver.dart';
 import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
+import 'package:neoroo_app/models/tracked_attributes.dart';
 import 'package:neoroo_app/repository/secure_storage_repository.dart';
 
 class HiveStorageRepository {
@@ -27,8 +28,42 @@ class HiveStorageRepository {
       "users",
       encryptionCipher: HiveAesCipher(key),
     );
-    print(box.containsKey("user"));
-    return box.containsKey("user") && box.containsKey("selectedOrg");
+    bool isUserLoggedIn = false;
+    if (box.containsKey("loggedIn")) {
+      isUserLoggedIn = box.get("loggedIn");
+    }
+    print(box.containsKey("loggedIn"));
+    //return box.containsKey("user") && box.containsKey("selectedOrg");
+    return isUserLoggedIn;
+  }
+
+  saveLoginInformation() async {
+    List<int> key = await getKey();
+    Box box = await Hive.openBox(
+      "users",
+      encryptionCipher: HiveAesCipher(key),
+    );
+    await box.put("loggedIn", true);
+  }
+
+  Future<void> saveTrackedAttribute(TrackedAttributes trackedAttribute) async {
+    List<int> key = await getKey();
+    Box box =
+        await Hive.openBox("attributes", encryptionCipher: HiveAesCipher(key));
+    await box.put(trackedAttribute.trackedAttributeName, trackedAttribute);
+  }
+
+  Future<TrackedAttributes> getTarckedAttribute(
+      String trackedAttributeName) async {
+    List<int> key = await getKey();
+    Box box = await Hive.openBox(
+      "attributes",
+      encryptionCipher: HiveAesCipher(
+        key,
+      ),
+    );
+
+    return await box.get(trackedAttributeName);
   }
 
   Future<void> saveUserProfile(Profile profile) async {
@@ -101,6 +136,10 @@ class HiveStorageRepository {
         key,
       ),
     );
+    print("Save Credentials");
+    print(username);
+    print(password);
+    print(serverURL);
     await box.put(
         username,
         avatarId == null
@@ -302,54 +341,54 @@ class HiveStorageRepository {
     }
     print("D");
   }
-  Future<void> addBaby(BabyDetailsCaregiver babyDetailsCaregiver)async{
+
+  Future<void> addBaby(BabyDetailsCaregiver babyDetailsCaregiver) async {
     List<BabyDetailsCaregiver>? babyDetailsCaregiverList;
     if (!await Hive.boxExists("babies")) {
-      babyDetailsCaregiverList=[];
-    }
-    else if (!(await Hive.openBox("babies")).containsKey("list_of_babies")) {
-      babyDetailsCaregiverList=[];
-    }else{
-      Box box=await Hive.openBox("babies");
-      babyDetailsCaregiverList=await box.get("list_of_babies");
+      babyDetailsCaregiverList = [];
+    } else if (!(await Hive.openBox("babies")).containsKey("list_of_babies")) {
+      babyDetailsCaregiverList = [];
+    } else {
+      Box box = await Hive.openBox("babies");
+      babyDetailsCaregiverList = await box.get("list_of_babies");
     }
     babyDetailsCaregiverList!.add(babyDetailsCaregiver);
-    Box box=await Hive.openBox("babies");
-    await box.put("list_of_babies",babyDetailsCaregiverList);
+    Box box = await Hive.openBox("babies");
+    await box.put("list_of_babies", babyDetailsCaregiverList);
   }
+
   Future<void> updateBaby(
     String birthDate,
-        String birthTime,
-        String motherName,
-        double birthWeight,
-        double bodyLength,
-        double headCircumference,
-        String familyMemberGroup,
-        String caregiverGroup,
-        String birthDescription,
-        int index,
-  )async{
+    String birthTime,
+    String motherName,
+    double birthWeight,
+    double bodyLength,
+    double headCircumference,
+    String familyMemberGroup,
+    String caregiverGroup,
+    String birthDescription,
+    int index,
+  ) async {
     List<BabyDetailsCaregiver>? babyDetailsCaregiverList;
     if (!await Hive.boxExists("babies")) {
-      babyDetailsCaregiverList=[];
+      babyDetailsCaregiverList = [];
+    } else if (!(await Hive.openBox("babies")).containsKey("list_of_babies")) {
+      babyDetailsCaregiverList = [];
+    } else {
+      Box box = await Hive.openBox("babies");
+      babyDetailsCaregiverList = await box.get("list_of_babies");
     }
-    else if (!(await Hive.openBox("babies")).containsKey("list_of_babies")) {
-      babyDetailsCaregiverList=[];
-    }else{
-      Box box=await Hive.openBox("babies");
-      babyDetailsCaregiverList=await box.get("list_of_babies");
-    }
-    babyDetailsCaregiverList![index].birthDate=birthDate;
-    babyDetailsCaregiverList[index].birthTime=birthTime;
-    babyDetailsCaregiverList[index].motherName=motherName;
-    babyDetailsCaregiverList[index].bodyLength=bodyLength;
-    babyDetailsCaregiverList[index].weight=birthWeight;
-    babyDetailsCaregiverList[index].headCircumference=headCircumference;
-    babyDetailsCaregiverList[index].familyMemberGroup=familyMemberGroup;
-    babyDetailsCaregiverList[index].caregiverGroup=caregiverGroup;
-    babyDetailsCaregiverList[index].birthNotes=birthDescription;
-    Box box=await Hive.openBox("babies");
-    await box.put("list_of_babies",babyDetailsCaregiverList);
+    babyDetailsCaregiverList![index].birthDate = birthDate;
+    babyDetailsCaregiverList[index].birthTime = birthTime;
+    babyDetailsCaregiverList[index].motherName = motherName;
+    babyDetailsCaregiverList[index].bodyLength = bodyLength;
+    babyDetailsCaregiverList[index].weight = birthWeight;
+    babyDetailsCaregiverList[index].headCircumference = headCircumference;
+    babyDetailsCaregiverList[index].familyMemberGroup = familyMemberGroup;
+    babyDetailsCaregiverList[index].caregiverGroup = caregiverGroup;
+    babyDetailsCaregiverList[index].birthNotes = birthDescription;
+    Box box = await Hive.openBox("babies");
+    await box.put("list_of_babies", babyDetailsCaregiverList);
     print("Update done");
   }
 }

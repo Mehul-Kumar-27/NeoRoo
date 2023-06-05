@@ -19,6 +19,7 @@ class UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(baseURL);
     return Container(
       width: double.infinity,
       height: 70,
@@ -38,9 +39,9 @@ class UserInfo extends StatelessWidget {
                     size: 35,
                   )
                 : null,
-            backgroundImage: avatarId != null
+            backgroundImage: (avatarId != null && avatarId != "")
                 ? NetworkImage(
-                    baseURL + APIConfig.fileResources + "/$avatarId" + "/data",
+                    baseURL + APIConfig.fileResources + "/$avatarId" + "data",
                     headers: {
                         "authorization": authHeaderValue,
                       })

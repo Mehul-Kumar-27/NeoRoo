@@ -9,39 +9,39 @@ class UsernameFieldLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: 20,
-      ),
-      child: TextField(
-        cursorColor: primaryBlue,
-        controller: controller,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(
-            top: 16,
-            bottom: 16,
-          ),
-          prefixIcon: Icon(
-            Icons.person,
-          ),
-          hintText: AppLocalizations.of(context).username,
-          prefixIconColor: primaryBlue,
-          hintStyle: TextStyle(
-            color: outlineGrey,
-            fontSize: 16,
-            fontFamily: openSans,
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: primaryBlue,
-              width: 1.75,
+    return Material(
+      borderRadius: BorderRadius.circular(20),
+      elevation: 3,
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        decoration: BoxDecoration(
+            color: deepWhite, borderRadius: BorderRadius.circular(20)),
+        child: TextField(
+          controller: controller,
+          cursorColor: primaryBlue,
+          decoration: InputDecoration(
+            fillColor: deepWhite,
+            contentPadding: EdgeInsets.only(
+              top: 16,
+              bottom: 16,
             ),
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: outlineGrey,
-              width: 1,
+            prefixIcon: Icon(
+              Icons.person,
+              color: themepurple,
             ),
+            hintText: AppLocalizations.of(context).username,
+            hintStyle: TextStyle(
+              color: textGrey,
+              fontFamily: openSans,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide.none),
+            border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(20)),
           ),
         ),
       ),

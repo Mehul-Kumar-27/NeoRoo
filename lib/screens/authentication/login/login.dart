@@ -12,6 +12,7 @@ import 'package:neoroo_app/screens/authentication/login/components/login_title.d
 import 'package:neoroo_app/screens/authentication/login/components/logo.dart';
 import 'package:neoroo_app/screens/authentication/login/components/password_field.dart';
 import 'package:neoroo_app/screens/authentication/login/components/server_url_field.dart';
+import 'package:neoroo_app/screens/authentication/login/components/sign_up.dart';
 import 'package:neoroo_app/screens/authentication/login/components/username_field.dart';
 import 'package:neoroo_app/screens/authentication/select_organisation/select_organisation.dart';
 import 'package:neoroo_app/utils/constants.dart';
@@ -115,6 +116,7 @@ class _LoginPageState extends State<LoginPage> {
             color: primaryBlue,
           ),
           child: Scaffold(
+            backgroundColor: backGroundWhite,
             body: LoginHolder(
               children: [
                 Container(
@@ -150,6 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 LoginButton(
                   onPressed: () {
+                    //String serverURL = "http://10.0.2.2:8080/dhisyoutube";
                     BlocProvider.of<LoginBloc>(context).add(
                       LoginEvent(
                         _serverURLController.text,
@@ -173,7 +176,11 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
                 VerticalSpace(
-                  height: 20,
+                  height: 40,
+                ),
+                SignUpWidget(),
+                VerticalSpace(
+                  height: 40,
                 ),
               ],
             ),

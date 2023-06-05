@@ -21,21 +21,20 @@ class LocalAuthOption extends StatelessWidget {
         margin: EdgeInsets.symmetric(
           horizontal: 20,
         ),
-        height: 55,
+        height: 50,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: secondaryOrange.withOpacity(
-            0.15,
-          ),
+          color: deepWhite,
+          border: Border.all(color: themepurple, width: 2),
           borderRadius: BorderRadius.circular(
-            10,
+            50,
           ),
         ),
         child: Text(
           AppLocalizations.of(context).continueWithLocalAuth,
           style: TextStyle(
             fontFamily: openSans,
-            color: secondaryOrange.withOpacity(0.9),
+            color: black,
             fontWeight: FontWeight.w600,
             fontSize: 17,
           ),

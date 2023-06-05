@@ -109,6 +109,9 @@ flutter:
     - family: Open Sans
       fonts:
         - asset: fonts/OpenSans-VariableFont_wdth,wght.ttf
+    - family: Lato
+      fonts:
+        - asset: fonts\Lato-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -9,12 +9,14 @@ class TitleLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        AppLocalizations.of(context).title,
+        // AppLocalizations.of(context).title,
+        "Essential Neonatal Care",
         style: TextStyle(
-          fontFamily: openSans,
+          fontFamily: lato,
           color: secondaryOrange,
           fontWeight: FontWeight.bold,
-          fontSize: 19,
+          wordSpacing: 1,
+          fontSize: 20,
         ),
       ),
     );

@@ -24,7 +24,7 @@ class LoginButton extends StatelessWidget {
       ),
       child: Container(
         width: double.infinity,
-        height: 55,
+        height: 50,
         margin: EdgeInsets.symmetric(
           horizontal: 20,
         ),
@@ -32,16 +32,16 @@ class LoginButton extends StatelessWidget {
         child: Text(
           AppLocalizations.of(context).login,
           style: TextStyle(
-            fontFamily: openSans,
+            fontFamily: lato,
             fontSize: 18,
-            fontWeight: FontWeight.normal,
-            color: white,
+            fontWeight: FontWeight.bold,
+            color: deepWhite,
           ),
         ),
         decoration: BoxDecoration(
-          color: primaryBlue,
+          color: themepurple,
           borderRadius: BorderRadius.circular(
-            10,
+            50,
           ),
         ),
       ),

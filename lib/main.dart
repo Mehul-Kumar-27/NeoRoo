@@ -10,21 +10,24 @@ import 'package:neoroo_app/bloc/authentication/select_organisation_bloc/select_o
 import 'package:neoroo_app/bloc/baby_details_family_member/baby_details_family_member_bloc.dart';
 import 'package:neoroo_app/bloc/learning_resources_bloc/learning_resources_bloc.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_bloc.dart';
+import 'package:neoroo_app/bloc/server_bloc/server_bloc.dart';
 import 'package:neoroo_app/bloc/update_baby_bloc/update_baby_bloc.dart';
 import 'package:neoroo_app/models/baby_details_caregiver.dart';
 import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
+import 'package:neoroo_app/models/tracked_attributes.dart';
 import 'package:neoroo_app/network/add_update_baby_client.dart';
 import 'package:neoroo_app/network/authentication_client.dart';
 import 'package:neoroo_app/network/baby_details_client.dart';
 import 'package:neoroo_app/network/learning_resources_client.dart';
+import 'package:neoroo_app/network/server_client.dart';
 import 'package:neoroo_app/repository/add_update_baby_repository.dart';
 import 'package:neoroo_app/repository/authentication_repository.dart';
 import 'package:neoroo_app/repository/baby_details_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:neoroo_app/repository/learning_resources_repository.dart';
 import 'package:neoroo_app/repository/more_options_repository.dart';
-import 'package:neoroo_app/repository/secure_storage_repository.dart';
+import 'package:neoroo_app/repository/server_repository.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:neoroo_app/screens/main_screen/main_screen.dart';
@@ -40,6 +43,7 @@ Future<void> registerHive() async {
   Hive.registerAdapter(ProfileAdapter());
   Hive.registerAdapter(BabyDetailsFamilyMemberAdapter());
   Hive.registerAdapter(BabyDetailsCaregiverAdapter());
+  Hive.registerAdapter(TrackedAttributesAdapter());
   await Hive.openBox("users");
 }
 
@@ -130,6 +134,17 @@ class _MyAppState extends State<MyApp> {
               context.read<HiveStorageRepository>(),
             ),
           ),
+          BlocProvider<LearningResourcesBloc>(
+            create: (context) => LearningResourcesBloc(
+              context.read<HiveStorageRepository>(),
+              context.read<LearningResourcesRepository>(),
+            ),
+          ),
+          BlocProvider<ServerBloc>(
+              create: (context) => ServerBloc(
+                    context.read<ServerRepository>(),
+                    context.read<HiveStorageRepository>(),
+                  ))
         ],
       ),
       providers: [
@@ -170,6 +185,12 @@ class _MyAppState extends State<MyApp> {
             context.read<HiveStorageRepository>(),
           ),
         ),
+        RepositoryProvider<ServerRepository>(
+            create: (context) => ServerRepository(
+                  context.read<HiveStorageRepository>(),
+                  ServerClient(),
+                  navigatorKey.currentContext!,
+                ))
       ],
     );
   }

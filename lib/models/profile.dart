@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:hive/hive.dart';
+
 part 'profile.g.dart';
 
 @HiveType(typeId: 0)
@@ -13,5 +15,14 @@ class Profile {
   String? avatarId;
   @HiveField(4)
   String userId;
-  Profile(this.avatarId, this.name, this.password, this.username, this.userId);
+  @HiveField(5)
+  String userRole;
+  Profile(
+    this.name,
+    this.username,
+    this.password,
+    this.avatarId,
+    this.userId,
+    this.userRole,
+  );
 }

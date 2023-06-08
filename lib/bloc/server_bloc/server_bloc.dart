@@ -22,7 +22,7 @@ class ServerBloc extends Bloc<ServerBlocEvents, ServerBlocStates> {
       ConnectToServer event, Emitter<ServerBlocStates> emitter) async {
     emitter(ConnectingToServerState());
     String serverURL = await hiveStorageRepository.getOrganisationURL();
-    print("$serverURL this is the server url !!!!!!!!!!!!!!!!!!111" );
+    print("$serverURL this is the server url !!!!!!!!!!!!!!!!!!111");
     // Write the code to connect to the server basically authentication
     var response = await serverRepository.connectToServer();
     if (response == "Sucess") {
@@ -44,6 +44,10 @@ class ServerBloc extends Bloc<ServerBlocEvents, ServerBlocStates> {
         emitter(AttributesPrepared());
         //////
       } else if (attributesToPrepare.isNotEmpty) {
+        print("Im here");
+        for (var name in attributesToPrepare) {
+          print(name);
+        }
         emitter(PrepareAttributes());
         var prepareAttributeResponse =
             await serverRepository.prepareAttribute(attributesToPrepare);

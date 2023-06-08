@@ -87,22 +87,12 @@ class ServerRepository {
     try {
       var response =
           await serverClient.checkForAttribute(username, password, serverURL);
-      if (response.statusCode == 200) {
-        print(response.body);
-        print(response.statusCode);
-        final jsonResponse = jsonDecode(response.body);
-        List<dynamic> attributes = jsonResponse["trackedEntityAttributes"];
-        Map<String, String> attributePresent = {};
-
-        for (var attribute in attributes) {
-          String attributeName = attribute["displayName"];
-          String attributeId = attribute["id"];
-
-          attributePresent.addEntries([MapEntry(attributeName, attributeId)]);
-        }
+      if (response is Map<String, String>) {
+        Map<String, String> attributePresent = response;
 
         for (var attributeName in attributeNameList) {
           if (!attributePresent.containsKey(attributeName)) {
+            print(attributeName);
             attributeToPrepare.add(attributeName);
           } else {
             String attributeId = attributePresent[attributeName]!;
@@ -148,23 +138,12 @@ class ServerRepository {
     try {
       var response =
           await serverClient.checkForEntityTypes(username, password, serverURL);
-      if (response.statusCode == 200) {
-        print(response.body);
-        print(response.statusCode);
-        final jsonResponse = jsonDecode(response.body);
-        List<dynamic> trackedEntityTypes = jsonResponse["trackedEntityTypes"];
-
-        Map<String, String> trackedEntitiesPresent = {};
-
-        for (var entity in trackedEntityTypes) {
-          String entityName = entity["displayName"];
-          String entityID = entity["id"];
-
-          trackedEntitiesPresent.addEntries([MapEntry(entityName, entityID)]);
-        }
+      if (response is Map<String, String>) {
+        Map<String, String> trackedEntitiesPresent = response;
 
         for (var entityName in trackedEntityNameList) {
           if (!trackedEntitiesPresent.containsKey(entityName)) {
+            print(entityName);
             trackedEntityToPrepare.add(entityName);
           } else {
             String entityID = trackedEntitiesPresent[entityName]!;

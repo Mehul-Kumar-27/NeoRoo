@@ -41,7 +41,7 @@ class UserInfo extends StatelessWidget {
                 : null,
             backgroundImage: (avatarId != null && avatarId != "")
                 ? NetworkImage(
-                    baseURL + APIConfig.fileResources + "/$avatarId" + "data",
+                    baseURL + APIConfig.fileResources + "/$avatarId" + "/data",
                     headers: {
                         "authorization": authHeaderValue,
                       })

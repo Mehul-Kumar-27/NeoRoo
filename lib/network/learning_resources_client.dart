@@ -7,7 +7,7 @@ class LearningResourcesClient{
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     return http.Client().get(
-      Uri.parse(baseURL+APIConfig.fetchVideos),
+      Uri.parse(baseURL),
       headers: {'authorization': basicAuth}
     );
   }

@@ -150,7 +150,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         RepositoryProvider<HiveStorageRepository>(
           create: (context) => HiveStorageRepository(
-            SecureStorageRepository(),
+           
           ),
         ),
         RepositoryProvider<AuthenticationRepository>(

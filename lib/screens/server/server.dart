@@ -6,8 +6,8 @@ import 'package:neoroo_app/bloc/server_bloc/server_bloc.dart';
 import 'package:neoroo_app/bloc/server_bloc/server_bloc_events.dart';
 import 'package:neoroo_app/bloc/server_bloc/server_bloc_states.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
-import 'package:neoroo_app/screens/home/seperator.dart';
 import 'package:neoroo_app/screens/main_screen/main_screen.dart';
+import 'package:neoroo_app/screens/server/seperator.dart';
 
 class ServerScreen extends StatefulWidget {
   const ServerScreen({super.key});

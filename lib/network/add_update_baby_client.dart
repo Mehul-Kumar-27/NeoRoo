@@ -76,7 +76,7 @@ class BabyAddUpdateClient {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     return http.Client().post(
-      Uri.parse(serverURL + APIConfig.createTEI),
+      Uri.parse(serverURL),
       body: jsonEncode(
         {
           "trackedEntityType": DHIS2Config.trackedEntityType,

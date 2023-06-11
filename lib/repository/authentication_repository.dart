@@ -26,7 +26,7 @@ class AuthenticationRepository {
         password.trim().isEmpty ||
         username.trim().isEmpty) {
       return CustomException(
-        AppLocalizations.of(context).emptyFieldsInRequest,
+        "Please Fill all the details",
         null,
       );
     }

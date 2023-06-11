@@ -27,6 +27,7 @@ import 'package:neoroo_app/repository/baby_details_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:neoroo_app/repository/learning_resources_repository.dart';
 import 'package:neoroo_app/repository/more_options_repository.dart';
+import 'package:neoroo_app/repository/secure_storage_repository.dart';
 import 'package:neoroo_app/repository/server_repository.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -150,7 +151,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         RepositoryProvider<HiveStorageRepository>(
           create: (context) => HiveStorageRepository(
-           
+           SecureStorageRepository
           ),
         ),
         RepositoryProvider<AuthenticationRepository>(

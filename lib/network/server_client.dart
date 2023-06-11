@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:neoroo_app/models/tracked_attributes.dart';
 import 'package:neoroo_app/utils/api_config.dart' as APIConfig;
 
 import 'package:http/http.dart' as http;
@@ -19,45 +20,47 @@ class ServerClient {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
 
-    String nextPage = '$serverURL/api/trackedEntityAttributes?page=1';
-    Map<String, String> attributePresent = {};
+    String endPoint =
+        '$serverURL/api/trackedEntityAttributes.json?paging=false&fields=displayName,shortName,id';
 
-    while (nextPage != "") {
-      var response = await http.get(
-        Uri.parse(
-          nextPage,
-        ),
-        headers: {
-          'Authorization': basicAuth,
-        },
-      );
+    var response = await http.get(
+      Uri.parse(
+        endPoint,
+      ),
+      headers: {
+        'Authorization': basicAuth,
+      },
+    );
 
-      if (response.statusCode != 200) {
-        return response;
-      }
-      final jsonResponse = jsonDecode(response.body);
-
-      List<dynamic> attributes = jsonResponse["trackedEntityAttributes"];
-      for (var attribute in attributes) {
-        String attributeName = attribute["displayName"];
-        String attributeId = attribute["id"];
-        print("$attributeName - $attributeId");
-
-        attributePresent.addEntries([MapEntry(attributeName, attributeId)]);
-      }
-      String? next = jsonResponse["pager"]["nextPage"];
-      if (next == null) {
-        nextPage = "";
-      } else {
-        nextPage = next;
-      }
-
-      print(next);
-      print(nextPage);
+    if (response.statusCode != 200) {
+      return response;
     }
 
-    return attributePresent;
+    List<TrackedAttributes> listOfTrackedAttributesPresent = [];
+
+    final data = jsonDecode(response.body);
+    final trackedAttributes = data['trackedEntityAttributes'];
+
+    for (var attribute in trackedAttributes) {
+      final displayName = attribute['displayName'];
+      final shortName = attribute['shortName'];
+      final uid = attribute['id'];
+
+      TrackedAttributes trackedAttributes = TrackedAttributes(
+          trackedAttributeId: uid,
+          trackedAttributeName: displayName,
+          trackedAttributeShortName: shortName);
+      listOfTrackedAttributesPresent.add(trackedAttributes);
+
+      print('Display Name: $displayName');
+      print('Short Name: $shortName');
+      print('UID: $uid');
+      print('--------------------');
+    }
+
+    return listOfTrackedAttributesPresent;
   }
+
 
   Future checkForEntityTypes(
       String username, String password, String serverURL) async {
@@ -105,6 +108,7 @@ class ServerClient {
       String username,
       String password,
       String serverURL,
+      String attributeShortName,
       String attributeName,
       bool isunique) async {
     String endpoint = "$serverURL/api/trackedEntityAttributes";
@@ -112,7 +116,7 @@ class ServerClient {
     final auth = 'Basic ${base64Encode(utf8.encode('$username:$password'))}';
     final requestBody = jsonEncode({
       'name': attributeName,
-      'shortName': attributeName,
+      'shortName': attributeShortName,
       'valueType': 'TEXT',
       'aggregationType': 'NONE',
       'unique': isunique,

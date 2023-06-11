@@ -6,10 +6,12 @@ import 'package:neoroo_app/models/baby_details_caregiver.dart';
 import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
 import 'package:neoroo_app/models/tracked_attributes.dart';
-import 'package:neoroo_app/repository/secure_storage_repository.dart';
+
 
 class HiveStorageRepository {
   static final FlutterSecureStorage secureStorage = FlutterSecureStorage();
+
+  HiveStorageRepository(SecureStorageRepository);
   static Future<List<int>> getKey() async {
     if (await secureStorage.containsKey(key: "key")) {
       return base64Url.decode((await secureStorage.read(key: 'key'))!);
@@ -50,11 +52,11 @@ class HiveStorageRepository {
     List<int> key = await getKey();
     Box box =
         await Hive.openBox("attributes", encryptionCipher: HiveAesCipher(key));
-    await box.put(trackedAttribute.trackedAttributeName, trackedAttribute);
+    await box.put(trackedAttribute.trackedAttributeShortName, trackedAttribute);
   }
 
   Future<TrackedAttributes> getTarckedAttribute(
-      String trackedAttributeName) async {
+      String trackedAttributeShortName) async {
     List<int> key = await getKey();
     Box box = await Hive.openBox(
       "attributes",
@@ -63,7 +65,7 @@ class HiveStorageRepository {
       ),
     );
 
-    return await box.get(trackedAttributeName);
+    return await box.get(trackedAttributeShortName);
   }
 
   Future<void> saveUserProfile(Profile profile) async {

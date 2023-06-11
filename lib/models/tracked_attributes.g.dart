@@ -17,19 +17,22 @@ class TrackedAttributesAdapter extends TypeAdapter<TrackedAttributes> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return TrackedAttributes(
-      trackedAttributeNameId: fields[0] as String,
+      trackedAttributeId: fields[0] as String,
       trackedAttributeName: fields[1] as String,
+      trackedAttributeShortName: fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, TrackedAttributes obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.trackedAttributeNameId)
+      ..write(obj.trackedAttributeId)
       ..writeByte(1)
-      ..write(obj.trackedAttributeName);
+      ..write(obj.trackedAttributeName)
+      ..writeByte(2)
+      ..write(obj.trackedAttributeShortName);
   }
 
   @override

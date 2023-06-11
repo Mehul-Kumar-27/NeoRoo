@@ -75,7 +75,8 @@ class ServerRepository {
   }
 
   Future checkForAttributes() async {
-    List<String> attributeNameList = DHIS2Config.attributeNameList;
+    Map<String, String> neoRooShortNameMapRequired =
+        DHIS2Config.neoRooRequiredAttributes;
     List<String> attributeToPrepare = [];
     Profile profile = await hiveStorageRepository.getUserProfile();
 
@@ -85,21 +86,22 @@ class ServerRepository {
 
     // Write code to check for the attributes
     try {
+      // Get all the attributes that are present on the DHIS2 server
       var response =
           await serverClient.checkForAttribute(username, password, serverURL);
-      if (response is Map<String, String>) {
-        Map<String, String> attributePresent = response;
-
-        for (var attributeName in attributeNameList) {
-          if (!attributePresent.containsKey(attributeName)) {
-            print(attributeName);
-            attributeToPrepare.add(attributeName);
-          } else {
-            String attributeId = attributePresent[attributeName]!;
-            TrackedAttributes trackedAttributes = TrackedAttributes(
-                trackedAttributeNameId: attributeId,
-                trackedAttributeName: attributeName);
-            await hiveStorageRepository.saveTrackedAttribute(trackedAttributes);
+      if (response is List<TrackedAttributes>) {
+        List<TrackedAttributes> listOfTrackedAttributesPresentOnServer =
+            response;
+        for (var attributeShortName in neoRooShortNameMapRequired.keys) {
+          bool attributeFound = false;
+          for (var attribute in listOfTrackedAttributesPresentOnServer) {
+            if (attribute.trackedAttributeShortName == attributeShortName) {
+              await hiveStorageRepository.saveTrackedAttribute(attribute);
+              attributeFound = true;
+            }
+          }
+          if (attributeFound == false) {
+            attributeToPrepare.add(attributeShortName);
           }
         }
 
@@ -148,8 +150,9 @@ class ServerRepository {
           } else {
             String entityID = trackedEntitiesPresent[entityName]!;
             TrackedAttributes trackedAttributes = TrackedAttributes(
-                trackedAttributeNameId: entityID,
-                trackedAttributeName: entityName);
+                trackedAttributeId: entityID,
+                trackedAttributeName: entityName,
+                trackedAttributeShortName: entityName);
             await hiveStorageRepository.saveTrackedAttribute(trackedAttributes);
           }
         }
@@ -177,19 +180,21 @@ class ServerRepository {
     }
   }
 
-  Future prepareAttribute(List<String> attributesToPrepare) async {
+  Future prepareAttribute(List<String> attributesShortNamesToPrepare) async {
     Profile profile = await hiveStorageRepository.getUserProfile();
-
+    Map<String, String> neoRooShortNameMapRequired =
+        DHIS2Config.neoRooRequiredAttributes;
     String serverURL = await hiveStorageRepository.getOrganisationURL();
     String username = profile.username;
     String password = profile.password;
     // Write code to prepare the server
-    for (var attribute in attributesToPrepare) {
-      String attributeName = attribute;
+    for (var attribute in attributesShortNamesToPrepare) {
+      String attributeShortName = attribute;
+      String attributeName = neoRooShortNameMapRequired[attributeShortName]!;
       bool isunique = false;
       try {
-        var response = await serverClient.createTrackedEntityAttribute(
-            username, password, serverURL, attributeName, isunique);
+        var response = await serverClient.createTrackedEntityAttribute(username,
+            password, serverURL, attributeShortName, attributeName, isunique);
 
         if (response.statusCode == 201) {
           print(response.statusCode);
@@ -199,8 +204,9 @@ class ServerRepository {
           Map<dynamic, dynamic> attributeInformation = jsonResponse["response"];
           print(attributeInformation["uid"]);
           TrackedAttributes trackedAttributes = TrackedAttributes(
-              trackedAttributeNameId: attributeInformation["uid"],
-              trackedAttributeName: attributeName);
+              trackedAttributeId: attributeInformation["uid"],
+              trackedAttributeName: attributeName,
+              trackedAttributeShortName: attributeShortName);
           await hiveStorageRepository.saveTrackedAttribute(trackedAttributes);
         } else {
           print(response.body);
@@ -226,27 +232,26 @@ class ServerRepository {
     return true;
   }
 
-  getTrackedAttributeId(String attribute) async {
-    TrackedAttributes trackedAttributes =
-        await hiveStorageRepository.getTarckedAttribute(attribute);
-    String id = trackedAttributes.trackedAttributeNameId;
-    return id;
-  }
-
   getAttributeId() async {
     List<String> attributeID = [];
-    List<String> attributeNameList = DHIS2Config.attributeNameList;
+    List<String> attributeShortNameList = [];
 
-    for (var attributeName in attributeNameList) {
+    for (var attributeShortName in DHIS2Config.neoRooRequiredAttributes.keys) {
+      attributeShortNameList.add(attributeShortName);
+    }
+    for (var attributeName in attributeShortNameList) {
       TrackedAttributes trackedAttributes =
           await hiveStorageRepository.getTarckedAttribute(attributeName);
-      attributeID.add(trackedAttributes.trackedAttributeNameId);
+      print(trackedAttributes.trackedAttributeName);
+      print(trackedAttributes.trackedAttributeId);
+      print("\n");
+      attributeID.add(trackedAttributes.trackedAttributeId);
     }
     return attributeID;
   }
 
   Future prepareEntityTypes() async {
-    String trackedEntityName = "NeoRoo";
+    String trackedEntityName = DHIS2Config.trackedEntityNameList[0];
     List<String> attributeID = await getAttributeId();
     Profile profile = await hiveStorageRepository.getUserProfile();
 
@@ -262,10 +267,12 @@ class ServerRepository {
         print(response.statusCode);
         var jsonResponse = jsonDecode(response.body);
         Map<dynamic, dynamic> attributeInformation = jsonResponse["response"];
+        print(attributeInformation.toString());
         print(attributeInformation["uid"]);
         TrackedAttributes trackedAttributes = TrackedAttributes(
-            trackedAttributeNameId: attributeInformation["uid"],
-            trackedAttributeName: trackedEntityName);
+            trackedAttributeId: attributeInformation["uid"],
+            trackedAttributeName: trackedEntityName,
+            trackedAttributeShortName: trackedEntityName);
         await hiveStorageRepository.saveTrackedAttribute(trackedAttributes);
         return true;
       } else {

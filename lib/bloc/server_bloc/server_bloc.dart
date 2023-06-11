@@ -21,8 +21,7 @@ class ServerBloc extends Bloc<ServerBlocEvents, ServerBlocStates> {
   Future connectToServer(
       ConnectToServer event, Emitter<ServerBlocStates> emitter) async {
     emitter(ConnectingToServerState());
-    String serverURL = await hiveStorageRepository.getOrganisationURL();
-    print("$serverURL this is the server url !!!!!!!!!!!!!!!!!!111");
+
     // Write the code to connect to the server basically authentication
     var response = await serverRepository.connectToServer();
     if (response == "Sucess") {

@@ -3,17 +3,18 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i7;
+import 'dart:async' as _i8;
 
-import 'package:flutter/cupertino.dart' as _i6;
+import 'package:flutter/cupertino.dart' as _i7;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:neoroo_app/models/baby_details_caregiver.dart' as _i9;
-import 'package:neoroo_app/models/baby_details_family_member.dart' as _i8;
-import 'package:neoroo_app/models/profile.dart' as _i3;
-import 'package:neoroo_app/network/authentication_client.dart' as _i5;
-import 'package:neoroo_app/repository/authentication_repository.dart' as _i10;
-import 'package:neoroo_app/repository/hive_storage_repository.dart' as _i4;
+import 'package:neoroo_app/models/baby_details_caregiver.dart' as _i10;
+import 'package:neoroo_app/models/baby_details_family_member.dart' as _i9;
+import 'package:neoroo_app/models/profile.dart' as _i4;
+import 'package:neoroo_app/models/tracked_attributes.dart' as _i3;
+import 'package:neoroo_app/network/authentication_client.dart' as _i6;
+import 'package:neoroo_app/repository/authentication_repository.dart' as _i11;
+import 'package:neoroo_app/repository/hive_storage_repository.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -36,8 +37,9 @@ class _FakeResponse_0 extends _i1.SmartFake implements _i2.Response {
         );
 }
 
-class _FakeProfile_1 extends _i1.SmartFake implements _i3.Profile {
-  _FakeProfile_1(
+class _FakeTrackedAttributes_1 extends _i1.SmartFake
+    implements _i3.TrackedAttributes {
+  _FakeTrackedAttributes_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -46,9 +48,8 @@ class _FakeProfile_1 extends _i1.SmartFake implements _i3.Profile {
         );
 }
 
-class _FakeHiveStorageRepository_2 extends _i1.SmartFake
-    implements _i4.HiveStorageRepository {
-  _FakeHiveStorageRepository_2(
+class _FakeProfile_2 extends _i1.SmartFake implements _i4.Profile {
+  _FakeProfile_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -57,9 +58,9 @@ class _FakeHiveStorageRepository_2 extends _i1.SmartFake
         );
 }
 
-class _FakeAuthenticationClient_3 extends _i1.SmartFake
-    implements _i5.AuthenticationClient {
-  _FakeAuthenticationClient_3(
+class _FakeHiveStorageRepository_3 extends _i1.SmartFake
+    implements _i5.HiveStorageRepository {
+  _FakeHiveStorageRepository_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -68,8 +69,19 @@ class _FakeAuthenticationClient_3 extends _i1.SmartFake
         );
 }
 
-class _FakeBuildContext_4 extends _i1.SmartFake implements _i6.BuildContext {
-  _FakeBuildContext_4(
+class _FakeAuthenticationClient_4 extends _i1.SmartFake
+    implements _i6.AuthenticationClient {
+  _FakeAuthenticationClient_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeBuildContext_5 extends _i1.SmartFake implements _i7.BuildContext {
+  _FakeBuildContext_5(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -82,13 +94,13 @@ class _FakeBuildContext_4 extends _i1.SmartFake implements _i6.BuildContext {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthenticationClient extends _i1.Mock
-    implements _i5.AuthenticationClient {
+    implements _i6.AuthenticationClient {
   MockAuthenticationClient() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i7.Future<_i2.Response> loginUser(
+  _i8.Future<_i2.Response> loginUser(
     String? username,
     String? password,
     String? serverURL,
@@ -102,7 +114,7 @@ class MockAuthenticationClient extends _i1.Mock
             serverURL,
           ],
         ),
-        returnValue: _i7.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #loginUser,
@@ -113,9 +125,9 @@ class MockAuthenticationClient extends _i1.Mock
             ],
           ),
         )),
-      ) as _i7.Future<_i2.Response>);
+      ) as _i8.Future<_i2.Response>);
   @override
-  _i7.Future<_i2.Response> getOrganisationName(
+  _i8.Future<_i2.Response> getOrganisationName(
     String? id,
     String? username,
     String? password,
@@ -131,7 +143,7 @@ class MockAuthenticationClient extends _i1.Mock
             serverURL,
           ],
         ),
-        returnValue: _i7.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i8.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #getOrganisationName,
@@ -143,9 +155,9 @@ class MockAuthenticationClient extends _i1.Mock
             ],
           ),
         )),
-      ) as _i7.Future<_i2.Response>);
+      ) as _i8.Future<_i2.Response>);
   @override
-  _i7.Future<dynamic> getUserRoleName(
+  _i8.Future<dynamic> getUserRoleName(
     String? userRoleId,
     String? username,
     String? password,
@@ -161,69 +173,97 @@ class MockAuthenticationClient extends _i1.Mock
             serverURL,
           ],
         ),
-        returnValue: _i7.Future<dynamic>.value(),
-      ) as _i7.Future<dynamic>);
+        returnValue: _i8.Future<dynamic>.value(),
+      ) as _i8.Future<dynamic>);
 }
 
 /// A class which mocks [HiveStorageRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockHiveStorageRepository extends _i1.Mock
-    implements _i4.HiveStorageRepository {
+    implements _i5.HiveStorageRepository {
   MockHiveStorageRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i7.Future<void> saveUserProfile(_i3.Profile? profile) => (super.noSuchMethod(
+  _i8.Future<void> saveTrackedAttribute(
+          _i3.TrackedAttributes? trackedAttribute) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #saveTrackedAttribute,
+          [trackedAttribute],
+        ),
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
+  @override
+  _i8.Future<_i3.TrackedAttributes> getTarckedAttribute(
+          String? trackedAttributeName) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getTarckedAttribute,
+          [trackedAttributeName],
+        ),
+        returnValue:
+            _i8.Future<_i3.TrackedAttributes>.value(_FakeTrackedAttributes_1(
+          this,
+          Invocation.method(
+            #getTarckedAttribute,
+            [trackedAttributeName],
+          ),
+        )),
+      ) as _i8.Future<_i3.TrackedAttributes>);
+  @override
+  _i8.Future<void> saveUserProfile(_i4.Profile? profile) => (super.noSuchMethod(
         Invocation.method(
           #saveUserProfile,
           [profile],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i7.Future<_i3.Profile> getUserProfile() => (super.noSuchMethod(
+  _i8.Future<_i4.Profile> getUserProfile() => (super.noSuchMethod(
         Invocation.method(
           #getUserProfile,
           [],
         ),
-        returnValue: _i7.Future<_i3.Profile>.value(_FakeProfile_1(
+        returnValue: _i8.Future<_i4.Profile>.value(_FakeProfile_2(
           this,
           Invocation.method(
             #getUserProfile,
             [],
           ),
         )),
-      ) as _i7.Future<_i3.Profile>);
+      ) as _i8.Future<_i4.Profile>);
   @override
-  _i7.Future<void> saveOrganisationURL(String? url) => (super.noSuchMethod(
+  _i8.Future<void> saveOrganisationURL(String? url) => (super.noSuchMethod(
         Invocation.method(
           #saveOrganisationURL,
           [url],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i7.Future<String> getOrganisationURL() => (super.noSuchMethod(
+  _i8.Future<String> getOrganisationURL() => (super.noSuchMethod(
         Invocation.method(
           #getOrganisationURL,
           [],
         ),
-        returnValue: _i7.Future<String>.value(''),
-      ) as _i7.Future<String>);
+        returnValue: _i8.Future<String>.value(''),
+      ) as _i8.Future<String>);
   @override
-  _i7.Future<String?> getSelectedOrgName() => (super.noSuchMethod(
+  _i8.Future<String?> getSelectedOrgName() => (super.noSuchMethod(
         Invocation.method(
           #getSelectedOrgName,
           [],
         ),
-        returnValue: _i7.Future<String?>.value(),
-      ) as _i7.Future<String?>);
+        returnValue: _i8.Future<String?>.value(),
+      ) as _i8.Future<String?>);
   @override
-  _i7.Future<void> saveCredentials(
+  _i8.Future<void> saveCredentials(
     String? username,
     String? password,
     String? serverURL,
@@ -241,91 +281,91 @@ class MockHiveStorageRepository extends _i1.Mock
             name,
           ],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i7.Future<Map<String, List<String>>> getSavedCredentials() =>
+  _i8.Future<Map<String, List<String>>> getSavedCredentials() =>
       (super.noSuchMethod(
         Invocation.method(
           #getSavedCredentials,
           [],
         ),
-        returnValue: _i7.Future<Map<String, List<String>>>.value(
+        returnValue: _i8.Future<Map<String, List<String>>>.value(
             <String, List<String>>{}),
-      ) as _i7.Future<Map<String, List<String>>>);
+      ) as _i8.Future<Map<String, List<String>>>);
   @override
-  _i7.Future<void> saveOrganisations(List<String>? organisationList) =>
+  _i8.Future<void> saveOrganisations(List<String>? organisationList) =>
       (super.noSuchMethod(
         Invocation.method(
           #saveOrganisations,
           [organisationList],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i7.Future<List<String>> getSavedOrganisations() => (super.noSuchMethod(
+  _i8.Future<List<String>> getSavedOrganisations() => (super.noSuchMethod(
         Invocation.method(
           #getSavedOrganisations,
           [],
         ),
-        returnValue: _i7.Future<List<String>>.value(<String>[]),
-      ) as _i7.Future<List<String>>);
+        returnValue: _i8.Future<List<String>>.value(<String>[]),
+      ) as _i8.Future<List<String>>);
   @override
-  _i7.Future<String> getSelectedOrganisation() => (super.noSuchMethod(
+  _i8.Future<String> getSelectedOrganisation() => (super.noSuchMethod(
         Invocation.method(
           #getSelectedOrganisation,
           [],
         ),
-        returnValue: _i7.Future<String>.value(''),
-      ) as _i7.Future<String>);
+        returnValue: _i8.Future<String>.value(''),
+      ) as _i8.Future<String>);
   @override
-  _i7.Future<void> setIsCareGiver(bool? isCareGiver) => (super.noSuchMethod(
+  _i8.Future<void> setIsCareGiver(bool? isCareGiver) => (super.noSuchMethod(
         Invocation.method(
           #setIsCareGiver,
           [isCareGiver],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i7.Future<bool> getIsCareGiver() => (super.noSuchMethod(
+  _i8.Future<bool> getIsCareGiver() => (super.noSuchMethod(
         Invocation.method(
           #getIsCareGiver,
           [],
         ),
-        returnValue: _i7.Future<bool>.value(false),
-      ) as _i7.Future<bool>);
+        returnValue: _i8.Future<bool>.value(false),
+      ) as _i8.Future<bool>);
   @override
-  _i7.Future<void> setUserGroups(List<String>? userGroups) =>
+  _i8.Future<void> setUserGroups(List<String>? userGroups) =>
       (super.noSuchMethod(
         Invocation.method(
           #setUserGroups,
           [userGroups],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i7.Future<List<String>> getUserGroups() => (super.noSuchMethod(
+  _i8.Future<List<String>> getUserGroups() => (super.noSuchMethod(
         Invocation.method(
           #getUserGroups,
           [],
         ),
-        returnValue: _i7.Future<List<String>>.value(<String>[]),
-      ) as _i7.Future<List<String>>);
+        returnValue: _i8.Future<List<String>>.value(<String>[]),
+      ) as _i8.Future<List<String>>);
   @override
-  _i7.Future<void> logOutUser() => (super.noSuchMethod(
+  _i8.Future<void> logOutUser() => (super.noSuchMethod(
         Invocation.method(
           #logOutUser,
           [],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i7.Future<void> saveSelectedOrganisation(
+  _i8.Future<void> saveSelectedOrganisation(
     String? id,
     String? name,
   ) =>
@@ -337,61 +377,61 @@ class MockHiveStorageRepository extends _i1.Mock
             name,
           ],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i7.Future<void> storeBabyFamilyMember(
-          _i8.BabyDetailsFamilyMember? babyDetailsFamilyMember) =>
+  _i8.Future<void> storeBabyFamilyMember(
+          _i9.BabyDetailsFamilyMember? babyDetailsFamilyMember) =>
       (super.noSuchMethod(
         Invocation.method(
           #storeBabyFamilyMember,
           [babyDetailsFamilyMember],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i7.Future<_i8.BabyDetailsFamilyMember?> getBabyDetailsFamilyMember() =>
+  _i8.Future<_i9.BabyDetailsFamilyMember?> getBabyDetailsFamilyMember() =>
       (super.noSuchMethod(
         Invocation.method(
           #getBabyDetailsFamilyMember,
           [],
         ),
-        returnValue: _i7.Future<_i8.BabyDetailsFamilyMember?>.value(),
-      ) as _i7.Future<_i8.BabyDetailsFamilyMember?>);
+        returnValue: _i8.Future<_i9.BabyDetailsFamilyMember?>.value(),
+      ) as _i8.Future<_i9.BabyDetailsFamilyMember?>);
   @override
-  _i7.Future<List<_i9.BabyDetailsCaregiver>?> getBabyDetailsCaregiver() =>
+  _i8.Future<List<_i10.BabyDetailsCaregiver>?> getBabyDetailsCaregiver() =>
       (super.noSuchMethod(
         Invocation.method(
           #getBabyDetailsCaregiver,
           [],
         ),
-        returnValue: _i7.Future<List<_i9.BabyDetailsCaregiver>?>.value(),
-      ) as _i7.Future<List<_i9.BabyDetailsCaregiver>?>);
+        returnValue: _i8.Future<List<_i10.BabyDetailsCaregiver>?>.value(),
+      ) as _i8.Future<List<_i10.BabyDetailsCaregiver>?>);
   @override
-  _i7.Future<void> saveBabyDetailsCaregiver(
-          List<_i9.BabyDetailsCaregiver>? listOfBabies) =>
+  _i8.Future<void> saveBabyDetailsCaregiver(
+          List<_i10.BabyDetailsCaregiver>? listOfBabies) =>
       (super.noSuchMethod(
         Invocation.method(
           #saveBabyDetailsCaregiver,
           [listOfBabies],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i7.Future<void> addBaby(_i9.BabyDetailsCaregiver? babyDetailsCaregiver) =>
+  _i8.Future<void> addBaby(_i10.BabyDetailsCaregiver? babyDetailsCaregiver) =>
       (super.noSuchMethod(
         Invocation.method(
           #addBaby,
           [babyDetailsCaregiver],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i7.Future<void> updateBaby(
+  _i8.Future<void> updateBaby(
     String? birthDate,
     String? birthTime,
     String? motherName,
@@ -419,46 +459,46 @@ class MockHiveStorageRepository extends _i1.Mock
             index,
           ],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
 }
 
 /// A class which mocks [AuthenticationRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthenticationRepository extends _i1.Mock
-    implements _i10.AuthenticationRepository {
+    implements _i11.AuthenticationRepository {
   MockAuthenticationRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.HiveStorageRepository get hiveStorageRepository => (super.noSuchMethod(
+  _i5.HiveStorageRepository get hiveStorageRepository => (super.noSuchMethod(
         Invocation.getter(#hiveStorageRepository),
-        returnValue: _FakeHiveStorageRepository_2(
+        returnValue: _FakeHiveStorageRepository_3(
           this,
           Invocation.getter(#hiveStorageRepository),
         ),
-      ) as _i4.HiveStorageRepository);
+      ) as _i5.HiveStorageRepository);
   @override
-  _i5.AuthenticationClient get authenticationClient => (super.noSuchMethod(
+  _i6.AuthenticationClient get authenticationClient => (super.noSuchMethod(
         Invocation.getter(#authenticationClient),
-        returnValue: _FakeAuthenticationClient_3(
+        returnValue: _FakeAuthenticationClient_4(
           this,
           Invocation.getter(#authenticationClient),
         ),
-      ) as _i5.AuthenticationClient);
+      ) as _i6.AuthenticationClient);
   @override
-  _i6.BuildContext get context => (super.noSuchMethod(
+  _i7.BuildContext get context => (super.noSuchMethod(
         Invocation.getter(#context),
-        returnValue: _FakeBuildContext_4(
+        returnValue: _FakeBuildContext_5(
           this,
           Invocation.getter(#context),
         ),
-      ) as _i6.BuildContext);
+      ) as _i7.BuildContext);
   @override
-  _i7.Future<dynamic> loginUser(
+  _i8.Future<dynamic> loginUser(
     String? username,
     String? password,
     String? serverURL,
@@ -472,18 +512,18 @@ class MockAuthenticationRepository extends _i1.Mock
             serverURL,
           ],
         ),
-        returnValue: _i7.Future<dynamic>.value(),
-      ) as _i7.Future<dynamic>);
+        returnValue: _i8.Future<dynamic>.value(),
+      ) as _i8.Future<dynamic>);
   @override
-  _i7.Future<dynamic> getOrganisationListDetails() => (super.noSuchMethod(
+  _i8.Future<dynamic> getOrganisationListDetails() => (super.noSuchMethod(
         Invocation.method(
           #getOrganisationListDetails,
           [],
         ),
-        returnValue: _i7.Future<dynamic>.value(),
-      ) as _i7.Future<dynamic>);
+        returnValue: _i8.Future<dynamic>.value(),
+      ) as _i8.Future<dynamic>);
   @override
-  _i7.Future<void> selectOrganisation(
+  _i8.Future<void> selectOrganisation(
     String? id,
     String? name,
   ) =>
@@ -495,26 +535,26 @@ class MockAuthenticationRepository extends _i1.Mock
             name,
           ],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i7.Future<Map<String, dynamic>> isLocalAuthSupported() =>
+  _i8.Future<Map<String, dynamic>> isLocalAuthSupported() =>
       (super.noSuchMethod(
         Invocation.method(
           #isLocalAuthSupported,
           [],
         ),
         returnValue:
-            _i7.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i7.Future<Map<String, dynamic>>);
+            _i8.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i8.Future<Map<String, dynamic>>);
   @override
-  _i7.Future<Map<String, dynamic>> getSavedCredentials() => (super.noSuchMethod(
+  _i8.Future<Map<String, dynamic>> getSavedCredentials() => (super.noSuchMethod(
         Invocation.method(
           #getSavedCredentials,
           [],
         ),
         returnValue:
-            _i7.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i7.Future<Map<String, dynamic>>);
+            _i8.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i8.Future<Map<String, dynamic>>);
 }

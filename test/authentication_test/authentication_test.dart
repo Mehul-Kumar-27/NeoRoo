@@ -17,13 +17,17 @@ import 'package:neoroo_app/utils/dhis2_config.dart';
 import 'authentication_test.mocks.dart' as mocks;
 import 'package:http/http.dart' as http;
 
+import 'authentication_test.mocks.dart';
+
 @GenerateMocks(
     [AuthenticationClient, HiveStorageRepository, AuthenticationRepository])
 void main() {
   late mocks.MockHiveStorageRepository hiveStorageRepository;
   late mocks.MockAuthenticationClient authenticationClient;
   late AuthenticationRepository authenticationRepository;
+
   setUp(() {
+    authenticationRepository = mocks.MockAuthenticationRepository();
     hiveStorageRepository = mocks.MockHiveStorageRepository();
     authenticationClient = mocks.MockAuthenticationClient();
   });
@@ -67,7 +71,9 @@ void main() {
         ],
       ),
     );
+
     BuildContext context = tester.element(find.byType(Container));
+
     when(authenticationClient.loginUser(any, any, any)).thenAnswer(
       (x) => Future<http.Response>.value(
         http.Response(
@@ -83,40 +89,56 @@ void main() {
                 {
                   'id': caregiverGroup,
                 }
-              ]
+              ],
+              'userCredentials': {
+                'userRoles': [
+                  {
+                    'id': 'Superuser',
+                  },
+                ]
+              }
             },
           ),
           200,
         ),
       ),
     );
+
+    when(authenticationClient.getUserRoleName(any, any, any, any)).thenAnswer(
+      (x) => Future<String>.value('UserRoleName'),
+    );
+
     when(hiveStorageRepository.saveCredentials(any, any, any, any, any))
         .thenAnswer((realInvocation) async => null);
+
     when(hiveStorageRepository.saveOrganisationURL(any))
         .thenAnswer((realInvocation) async => null);
+
     when(hiveStorageRepository.saveOrganisations(any))
         .thenAnswer((realInvocation) async => null);
+
     when(hiveStorageRepository.saveUserProfile(any))
         .thenAnswer((realInvocation) async => null);
+
     when(hiveStorageRepository.setIsCareGiver(any))
         .thenAnswer((realInvocation) async => null);
-    when(hiveStorageRepository.setIsCareGiver(any)).thenAnswer(
-      (realInvocation) async => Future<void>.value(null),
-    );
+
     when(hiveStorageRepository.setUserGroups(any)).thenAnswer(
-      (realInvocation) async => Future<void>.value(null),
+      (realInvocation) async => null,
     );
+
     authenticationRepository = AuthenticationRepository(
       hiveStorageRepository: hiveStorageRepository,
       authenticationClient: authenticationClient,
       context: context,
     );
+
     var r = await authenticationRepository.loginUser(
       'testuser',
       'Admin@123',
       'https://bmgfdev.soic.iupui.edu',
     );
-    //this indicatees success as it can be returned only in case of success
+
     expect(r as Map<String, dynamic>, isA<Map<String, dynamic>>());
   });
   //testing incorrect password
@@ -195,57 +217,60 @@ void main() {
     },
     expect: () => [],
   );
-
   blocTest<LoginBloc, LoginState>(
     'Socket exception on no internet',
     build: () {
-      mocks.MockAuthenticationRepository authenticationRepository =
-          mocks.MockAuthenticationRepository();
-      when(authenticationRepository.loginUser(any, any, any)).thenAnswer(
-        (x) => Future<FetchDataException>.value(
-          FetchDataException(
-            "No Internet",
-            null,
-          ),
-        ),
-      );
-      return LoginBloc(authenticationRepository, hiveStorageRepository);
+      final authenticationRepository = MockAuthenticationRepository();
+      final hiveStorageRepository = MockHiveStorageRepository();
+
+      when(authenticationRepository.isLocalAuthSupported())
+          .thenAnswer((_) => Future<Map<String, dynamic>>.value({
+                "status": false,
+                "message": "No internet connection",
+              }));
+
+      final loginBloc =
+          LoginBloc(authenticationRepository, hiveStorageRepository);
+
+      return loginBloc;
     },
     act: (LoginBloc bloc) {
       bloc.add(
-        LoginEvent("https://bmgfdev.soic.iupui.edu", "working", "testuser"),
-      );
+          LoginEvent("https://bmgfdev.soic.iupui.edu", "working", "testuser"));
     },
     expect: () => [
       LoginLoading(),
-      LoginGeneralError(
-        CustomException("No Internet", null),
-      ),
+      LocalAuthSupportError("No internet connection"),
     ],
   );
 
   blocTest<LoginBloc, LoginState>(
     'Bloc test for correct credentials',
     build: () {
-      mocks.MockAuthenticationRepository authenticationRepository =
-          mocks.MockAuthenticationRepository();
-      when(authenticationRepository.loginUser(any, any, any)).thenAnswer(
-        (x) => Future<Map>.value({
-          "orgUnits": ["x", "y", "z"]
+      final authenticationRepository = MockAuthenticationRepository();
+      final hiveStorageRepository = MockHiveStorageRepository();
+
+      when(authenticationRepository.isLocalAuthSupported()).thenAnswer(
+        (x) => Future<Map<String, dynamic>>.value({
+          "status": true,
+          "message": "Local auth is supported",
         }),
       );
+      when(authenticationRepository.loginUser(any, any, any)).thenAnswer(
+        (x) => Future<Map<String, dynamic>>.value({
+          "orgUnits": ["x", "y", "z"],
+        }),
+      );
+
       return LoginBloc(authenticationRepository, hiveStorageRepository);
     },
     act: (LoginBloc bloc) {
       bloc.add(
-        LoginEvent("https://bmgfdev.soic.iupui.edu", "working", "testuser"),
-      );
+          LoginEvent("https://bmgfdev.soic.iupui.edu", "working", "testuser"));
     },
     expect: () => [
       LoginLoading(),
-      LoginLoaded(
-        orgUnits: ["x", "y", "z"],
-      ),
+      LoginLoaded(orgUnits: ["x", "y", "z"]),
     ],
   );
 
@@ -254,6 +279,12 @@ void main() {
     build: () {
       mocks.MockAuthenticationRepository authenticationRepository =
           mocks.MockAuthenticationRepository();
+      when(authenticationRepository.isLocalAuthSupported()).thenAnswer(
+        (x) => Future<Map<String, dynamic>>.value({
+          "status": true,
+          "message": "Local auth is supported",
+        }),
+      );
       when(authenticationRepository.loginUser(any, any, any)).thenAnswer(
         (x) => Future<UnauthorisedException>.value(
           UnauthorisedException("Incorrect credentials", 401),
@@ -282,9 +313,15 @@ void main() {
     build: () {
       mocks.MockAuthenticationRepository authenticationRepository =
           mocks.MockAuthenticationRepository();
+          when(authenticationRepository.isLocalAuthSupported()).thenAnswer(
+        (x) => Future<Map<String, dynamic>>.value({
+          "status": true,
+          "message": "Local auth is supported",
+        }),
+      );
       when(authenticationRepository.loginUser(any, any, any)).thenAnswer(
         (x) => Future<CustomException>.value(
-          CustomException("Please fill in all fields",null),
+          CustomException("Please fill in all fields", null),
         ),
       );
       return LoginBloc(authenticationRepository, hiveStorageRepository);

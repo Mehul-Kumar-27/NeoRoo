@@ -199,18 +199,18 @@ class MockHiveStorageRepository extends _i1.Mock
       ) as _i8.Future<void>);
   @override
   _i8.Future<_i3.TrackedAttributes> getTarckedAttribute(
-          String? trackedAttributeName) =>
+          String? trackedAttributeShortName) =>
       (super.noSuchMethod(
         Invocation.method(
           #getTarckedAttribute,
-          [trackedAttributeName],
+          [trackedAttributeShortName],
         ),
         returnValue:
             _i8.Future<_i3.TrackedAttributes>.value(_FakeTrackedAttributes_1(
           this,
           Invocation.method(
             #getTarckedAttribute,
-            [trackedAttributeName],
+            [trackedAttributeShortName],
           ),
         )),
       ) as _i8.Future<_i3.TrackedAttributes>);

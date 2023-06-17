@@ -28,9 +28,10 @@ class _AddBabyState extends State<AddBaby> {
   final TextEditingController birthWeight = TextEditingController();
   final TextEditingController bodyLength = TextEditingController();
   final TextEditingController headCircumference = TextEditingController();
-  final TextEditingController parentGroup = TextEditingController();
-  final TextEditingController caregiverGroup = TextEditingController();
+  final TextEditingController cribNumber = TextEditingController();
+  final TextEditingController wardNumber = TextEditingController();
   final TextEditingController birthDescription = TextEditingController();
+  final TextEditingController motherID = TextEditingController();
   final Map<String, XFile?> avatarDetails = {};
   final FocusNode birthDateFocus = FocusNode();
   final FocusNode birthTimeFocus = FocusNode();
@@ -67,7 +68,7 @@ class _AddBabyState extends State<AddBaby> {
   }
 
   void requestFocus(FocusNode focusNode, BuildContext current) {
-    BuildContext context=Scaffold.of(current).context;
+    BuildContext context = Scaffold.of(current).context;
     FocusScope.of(context).unfocus();
   }
 
@@ -94,6 +95,7 @@ class _AddBabyState extends State<AddBaby> {
                   ),
                   AddBabyMothersName(
                     mothersName: motherName,
+                    motherID: motherID,
                   ),
                   VerticalSpace(
                     height: 15,
@@ -146,15 +148,6 @@ class _AddBabyState extends State<AddBaby> {
                   VerticalSpace(
                     height: 15,
                   ),
-                  AddBabyParentGroup(
-                    parentGroup: parentGroup,
-                  ),
-                  VerticalSpace(
-                    height: 15,
-                  ),
-                  AddBabyCaregiverGroup(
-                    caregiverGroup: caregiverGroup,
-                  ),
                   VerticalSpace(
                     height: 15,
                   ),
@@ -162,28 +155,46 @@ class _AddBabyState extends State<AddBaby> {
                     description: birthDescription,
                   ),
                   VerticalSpace(
+                    height: 15,
+                  ),
+                  BabyWardCribNumber(
+                      controller: wardNumber, heading: "Baby Ward Number"),
+                  VerticalSpace(
+                    height: 15,
+                  ),
+                  BabyWardCribNumber(
+                      controller: cribNumber, heading: "Baby Crib Number"),
+                  VerticalSpace(
                     height: 30,
                   ),
-                  AddBabyButton(
-                    onPressed: () {
-                      BlocProvider.of<AddBabyBloc>(context).add(
-                        AddBabyEvent(
-                          motherName: motherName.text,
-                          birthDate: birthDate.text,
-                          image: avatarDetails["value"],
-                          birthTime: birthTime.text,
-                          birthWeight: birthWeight.text,
-                          headCircumference: headCircumference.text,
-                          bodyLength: bodyLength.text,
-                          birthDescription: birthDescription.text,
-                          caregiverGroup: caregiverGroup.text,
-                          familyMemberGroup: parentGroup.text,
-                          needResuscitation:
-                              needsResuscitation["value"] == false ? 0 : 1,
-                        ),
-                      );
-                    },
-                  ),
+                  AddBabyButton(onPressed: () {
+                    String infantID =
+                        "${DateTime.now().millisecondsSinceEpoch.toString()}${motherID.text}";
+
+                    BlocProvider.of<AddBabyBloc>(context).add(AddBabyEvent(
+                      birthDate.text,
+                      birthDescription.text,
+                      birthTime.text,
+                      birthWeight.text,
+                      bodyLength.text,
+                      cribNumber.text,
+                      "1234",
+                      headCircumference.text,
+                      avatarDetails["image"],
+                      (needsResuscitation["value"] == true) ? "Yes" : "No",
+                      wardNumber.text,
+                      birthWeight.text,
+                      motherName.text,
+                      motherID.text,
+                      "", //sts time
+                      "", //n sts time
+                      "", //infant temperature
+                      "", //infant heart rate
+                      "", //infant respiration rate
+                      "", //infant oxygen saturation
+                      infantID,
+                    ));
+                  }),
                   SizedBox(
                     height: 20,
                   ),
@@ -210,6 +221,9 @@ class _AddBabyState extends State<AddBaby> {
           );
         },
         listener: (context, state) {
+          if (state is AddBabyEmptyField) {
+            showSnackbarError("Please Enter All the Fields");
+          }
           if (state is AddBabyError) {
             showSnackbarError(state.exception.message);
           }
@@ -217,7 +231,7 @@ class _AddBabyState extends State<AddBaby> {
             showSnackbarSuccess(
               AppLocalizations.of(context).addBabySuccess,
             );
-            Navigator.of(context).pop();
+            // Navigator.of(context).pop();
           }
         },
       ),

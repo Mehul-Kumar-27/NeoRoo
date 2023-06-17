@@ -29,8 +29,10 @@ import 'package:neoroo_app/repository/learning_resources_repository.dart';
 import 'package:neoroo_app/repository/more_options_repository.dart';
 import 'package:neoroo_app/repository/secure_storage_repository.dart';
 import 'package:neoroo_app/repository/server_repository.dart';
+import 'package:neoroo_app/screens/add_baby/add_baby.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:neoroo_app/screens/home/home.dart';
 import 'package:neoroo_app/screens/main_screen/main_screen.dart';
 
 void main() async {
@@ -80,7 +82,7 @@ class _MyAppState extends State<MyApp> {
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           title: "NeoRoo",
-          home: isLoggedIn ? MainScreen() : LoginPage(),
+          home: isLoggedIn ? AddBaby() : LoginPage(),
           localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -150,9 +152,7 @@ class _MyAppState extends State<MyApp> {
       ),
       providers: [
         RepositoryProvider<HiveStorageRepository>(
-          create: (context) => HiveStorageRepository(
-           SecureStorageRepository
-          ),
+          create: (context) => HiveStorageRepository(SecureStorageRepository),
         ),
         RepositoryProvider<AuthenticationRepository>(
           create: (context) => AuthenticationRepository(

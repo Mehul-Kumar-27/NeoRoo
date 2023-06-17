@@ -1,93 +1,181 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import '../utils/api_config.dart' as APIConfig;
+
 import 'dart:convert';
-import '../utils/dhis2_config.dart' as DHIS2Config;
 
 class BabyAddUpdateClient {
   Future<http.Response> addBaby(
-    String birthTime,
-    String birthDate,
-    double headCircumference,
-    double birthWeight,
-    String birthNotes,
-    String motherName,
-    double bodyLength,
-    String familyMemberUserGroup,
-    String caregiverUserGroup,
-    int requireResuscitation,
-    String? avatarId,
-    String username,
-    String password,
-    String serverURL,
-    String orgId,
-  ) async {
+      String birthDate,
+      String birthNotes,
+      String birthTime,
+      String birthWeight,
+      String bodyLength,
+      String cribNumber,
+      String headCircumference,
+      String needResuscitation,
+      String wardNumber,
+      String presentWeight,
+      String motherName,
+      String motherId,
+      String stsTime,
+      String nstsTime,
+      String infantTemperature,
+      String infantHeartRate,
+      String infantRespiratoryRate,
+      String infantBloodOxygen,
+      String infantId,
+      String? avatarID,
+      String username,
+      String password,
+      String serverURL,
+      String organisationUnitID,
+      Map<String, String> attributesShortNameAndUID) async {
+    print(attributesShortNameAndUID["Birth_Date"]!);
+    print("Birth_Date");
+    print(attributesShortNameAndUID["Birth_Notes"]!);
+    print("Birth_Notes");
+    print(attributesShortNameAndUID["Birth Time"]!);
+    print("Birth Time");
+    print(attributesShortNameAndUID["Birth Weight"]!);
+    print("Birth Weight");
+
+    print(attributesShortNameAndUID["Body Length"]!);
+    print("Body Length");
+    print(attributesShortNameAndUID["NCN"]!);
+    print("NCN");
+    print(attributesShortNameAndUID["NeoRoo_Device_Id"]!);
+    print("NeoRoo_Device_Id");
+    print(attributesShortNameAndUID["Head Circumference"]!);
+    print("Head Circumference");
+    print(attributesShortNameAndUID["Require Resuscitation"]!);
+    print("Require Resuscitation");
+    print(attributesShortNameAndUID["Ward Number"]!);
+    print("Ward Number");
+    print(attributesShortNameAndUID["Present Weight"]!);
+    print("Present Weight");
+    print(attributesShortNameAndUID["Mother Name"]!);
+    print("Mother Name");
+    print(attributesShortNameAndUID["Mother Id"]!);
+    print("Mother Id");
+    print(attributesShortNameAndUID["STS_Time"]!);
+    print("STS_Time");
+    print(attributesShortNameAndUID["NSTS_Time"]!);
+    print("NSTS_Time");
+    print(attributesShortNameAndUID["Infant_Temperature"]!);
+    print("Infant_Temperature");
+    print(attributesShortNameAndUID["Infant_Heart_Rate"]!);
+    print("Infant_Heart_Rate");
+    print(attributesShortNameAndUID["Infant_Respiration_Rate"]!);
+    print("Infant_Respiratory_Rate");
+    print(attributesShortNameAndUID["Infant_Blood_Oxygen"]!);
+    print("Infant_Blood_Oxygen");
+    print(attributesShortNameAndUID["infant_ID"]!);
+    print("Infant_Id");
+    print(attributesShortNameAndUID["NeoRoo_TEI_avatar"]!);
+    print("Avatar_Id");
+    print(attributesShortNameAndUID["NeoRoo"]!);
+    print("NeoRoo");
+
     List attributes = [
       {
-        "attribute": DHIS2Config.birthTime,
-        "value": birthTime,
-      },
-      {
-        "attribute": DHIS2Config.headCircumference,
-        "value": headCircumference,
-      },
-      {
-        "attribute": DHIS2Config.birthNotes,
-        "value": birthNotes,
-      },
-      {
-        "attribute": DHIS2Config.birthWeight,
-        "value": birthWeight,
-      },
-      {
-        "attribute": DHIS2Config.motherName,
-        "value": motherName,
-      },
-      {
-        "attribute": DHIS2Config.bodyLength,
-        "value": bodyLength,
-      },
-      {
-        "attribute": DHIS2Config.birthDate,
+        "attribute": attributesShortNameAndUID["Birth_Date"]!,
         "value": birthDate,
       },
       {
-        "attribute": DHIS2Config.familyMemberUserGroup,
-        "value": familyMemberUserGroup,
+        "attribute": attributesShortNameAndUID["Birth_Notes"]!,
+        "value": birthNotes,
       },
       {
-        "attribute": DHIS2Config.caregiverUserGroup,
-        "value": caregiverUserGroup,
+        "attribute": attributesShortNameAndUID["Birth Time"]!,
+        "value": birthTime,
       },
       {
-        "attribute": DHIS2Config.requireResuscitation,
-        "value": requireResuscitation,
+        "attribute": attributesShortNameAndUID["Birth Weight"]!,
+        "value": birthWeight,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Body Length"]!,
+        "value": bodyLength,
+      },
+      {
+        "attribute": attributesShortNameAndUID["NCN"]!,
+        "value": cribNumber,
+      },
+      {
+        "attribute": attributesShortNameAndUID["NeoRoo_Device_Id"]!,
+        "value": "NeoRoo_Device_Id",
+      },
+      {
+        "attribute": attributesShortNameAndUID["Head Circumference"]!,
+        "value": headCircumference,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Require Resuscitation"]!,
+        "value": needResuscitation,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Ward Number"]!,
+        "value": wardNumber,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Present Weight"]!,
+        "value": presentWeight,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Mother Name"]!,
+        "value": motherName,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Mother Id"]!,
+        "value": motherId,
+      },
+      {
+        "attribute": attributesShortNameAndUID["STS_Time"]!,
+        "value": stsTime,
+      },
+      {
+        "attribute": attributesShortNameAndUID["NSTS_Time"]!,
+        "value": nstsTime,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Infant_Temperature"]!,
+        "value": infantTemperature,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Infant_Heart_Rate"]!,
+        "value": infantHeartRate,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Infant_Respiration_Rate"]!,
+        "value": infantRespiratoryRate,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Infant_Blood_Oxygen"]!,
+        "value": infantBloodOxygen,
+      },
+      {
+        "attribute": attributesShortNameAndUID["infant_ID"]!,
+        "value": infantId,
       },
     ];
-    if (avatarId != null) {
+    if (avatarID != null) {
       attributes.add(
         {
-          "attribute": DHIS2Config.avatarIdAttribute,
-          "value": avatarId,
+          "attribute": attributesShortNameAndUID["NeoRoo_TEI_avatar"]!,
+          "value": avatarID,
         },
       );
     }
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     return http.Client().post(
-      Uri.parse(serverURL),
+      Uri.parse("$serverURL/api/trackedEntityInstances"),
       body: jsonEncode(
         {
-          "trackedEntityType": DHIS2Config.trackedEntityType,
-          "orgUnit": orgId,
+          "trackedEntityType": attributesShortNameAndUID["NeoRoo"]!,
+          "orgUnit": organisationUnitID,
           "attributes": attributes,
-          "enrollments": [
-            {
-              "orgUnit": orgId,
-              "program": DHIS2Config.trackerProgramId,
-            }
-          ]
         },
       ),
       headers: {'authorization': basicAuth, "Content-Type": "application/json"},
@@ -112,5 +200,28 @@ class BabyAddUpdateClient {
     request.headers['authorization'] = basicAuth;
     request.fields["domain"] = "USER_AVATAR";
     return http.Response.fromStream(await request.send());
+  }
+
+  Future<http.Response> searchMother(
+      String username, String password, String serverURL) async {
+    print(username);
+    print(password);
+    print("$serverURL ,bsdvsvbsdkdvbsdkbvskdbvskjddbvkjsvjwgfejkgsfjkgs");
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    String userRoleName = "Family Member";
+
+    String endpoint =
+        "$serverURL/api/users.json?paging=false&filter=userCredentials.userRoles.name:eq:$userRoleName&fields=id,name,userCredentials[username]";
+    print(endpoint);
+    var response = await http.get(
+      Uri.parse(endpoint),
+      headers: {
+        'Authorization': basicAuth,
+      },
+    );
+    print(response.statusCode);
+    print(response.body);
+    return response;
   }
 }

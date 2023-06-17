@@ -193,6 +193,9 @@ class ServerRepository {
       String attributeName = neoRooShortNameMapRequired[attributeShortName]!;
       bool isunique = false;
       try {
+        if (attributeShortName == "infant_ID") {
+          isunique = true;
+        }
         var response = await serverClient.createTrackedEntityAttribute(username,
             password, serverURL, attributeShortName, attributeName, isunique);
 
@@ -273,7 +276,9 @@ class ServerRepository {
             trackedAttributeId: attributeInformation["uid"],
             trackedAttributeName: trackedEntityName,
             trackedAttributeShortName: trackedEntityName);
+
         await hiveStorageRepository.saveTrackedAttribute(trackedAttributes);
+
         return true;
       } else {
         print(response.body);

@@ -1,14 +1,25 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:neoroo_app/utils/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:neoroo_app/bloc/add_baby_bloc/add_baby_bloc.dart';
+import 'package:neoroo_app/bloc/add_baby_bloc/add_baby_events.dart';
+import 'package:neoroo_app/bloc/add_baby_bloc/add_baby_states.dart';
+import 'package:neoroo_app/models/infant_mother.dart';
+import 'package:neoroo_app/utils/constants.dart';
 import 'package:neoroo_app/utils/vertical_space.dart';
 
 class AddBabyMothersName extends StatelessWidget {
   final TextEditingController mothersName;
-  const AddBabyMothersName({Key? key, required this.mothersName,})
-      : super(key: key);
+  final TextEditingController motherID;
+  const AddBabyMothersName({
+    Key? key,
+    required this.mothersName,
+    required this.motherID,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +41,78 @@ class AddBabyMothersName extends StatelessWidget {
           VerticalSpace(
             height: 5,
           ),
+          InkWell(
+            onTap: () {
+              showSlideUpDialog(context, motherID, mothersName);
+            },
+            child: TextField(
+              enabled: false,
+              cursorColor: primaryBlue,
+              controller: mothersName,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                hintText: AppLocalizations.of(context).motherName,
+                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: outlineGrey,
+                  ),
+                ),
+                prefixIcon: Icon(
+                  Icons.pregnant_woman,
+                  color: outlineGrey,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BabyWardCribNumber extends StatelessWidget {
+  final TextEditingController controller;
+  final String heading;
+  const BabyWardCribNumber({
+    Key? key,
+    required this.controller,
+    required this.heading,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 10,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            heading,
+            style: TextStyle(
+              fontFamily: openSans,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+            ),
+          ),
+          VerticalSpace(
+            height: 5,
+          ),
           TextField(
+            enabled: true,
             cursorColor: primaryBlue,
-            controller: mothersName,
+            controller: controller,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(
                 horizontal: 10,
                 vertical: 5,
               ),
-              hintText: AppLocalizations.of(context).motherName,
+              hintText: heading,
               border: OutlineInputBorder(),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
@@ -46,7 +120,7 @@ class AddBabyMothersName extends StatelessWidget {
                 ),
               ),
               prefixIcon: Icon(
-                Icons.pregnant_woman,
+                Icons.local_hospital_rounded,
                 color: outlineGrey,
               ),
             ),
@@ -55,6 +129,146 @@ class AddBabyMothersName extends StatelessWidget {
       ),
     );
   }
+}
+
+class SlideUpDialog extends StatefulWidget {
+  final Widget child;
+
+  SlideUpDialog({required this.child});
+
+  @override
+  _SlideUpDialogState createState() => _SlideUpDialogState();
+}
+
+class _SlideUpDialogState extends State<SlideUpDialog>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<Offset> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    );
+    _animation = Tween<Offset>(
+      begin: const Offset(0.0, 1.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    ));
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SlideTransition(
+      position: _animation,
+      child: widget.child,
+    );
+  }
+}
+
+void showSlideUpDialog(BuildContext context, TextEditingController motherID,
+    TextEditingController motherName) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      TextEditingController searchController = TextEditingController();
+      BlocProvider.of<AddBabyBloc>(context).add(GetMotherEvent());
+      List<Mother> motherONServer = [];
+      return SlideUpDialog(
+        child: BlocConsumer<AddBabyBloc, AddBabyStates>(
+          listener: (context, state) {
+            if (state is SearchMotherState) {
+              motherONServer = state.motherList;
+            }
+          },
+          builder: (context, state) {
+            return Dialog(
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.close),
+                    ),
+                    TextField(
+                      cursorColor: primaryBlue,
+                      controller: searchController,
+                      onChanged: (String motherNameFromTextField) {
+                        if (state is SearchMotherState) {
+                          BlocProvider.of<AddBabyBloc>(context).add(
+                              SearchInMotherList(
+                                  motherNameFromTextField, state.motherList));
+                        }
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
+                        hintText: "Search Mother",
+                        border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: outlineGrey,
+                          ),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.pregnant_woman,
+                          color: outlineGrey,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: (state is SearchMotherInitialState)
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : ListView.builder(
+                              itemCount: motherONServer.length,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    motherName.text =
+                                        motherONServer[index].displayName;
+                                    motherID.text =
+                                        motherONServer[index].motherID;
+                                    Navigator.pop(context);
+                                  },
+                                  child: ListTile(
+                                    leading: const Icon(Icons.person),
+                                    title:
+                                        Text(motherONServer[index].displayName),
+                                    subtitle:
+                                        Text(motherONServer[index].motherID),
+                                  ),
+                                );
+                              }),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    },
+  );
 }
 
 class AddBabyBirthDate extends StatefulWidget {
@@ -93,12 +307,12 @@ class _AddBabyBirthDateState extends State<AddBabyBirthDate> {
           ),
           GestureDetector(
             onTap: () async {
-              DateTime? selectedDate=await showDatePicker(
+              DateTime? selectedDate = await showDatePicker(
                 context: context,
                 initialDate: DateTime.now(),
                 firstDate: DateTime.now().subtract(
                   Duration(
-                    days: 30*9,
+                    days: 30 * 9,
                   ),
                 ),
                 lastDate: DateTime.now().add(
@@ -107,13 +321,14 @@ class _AddBabyBirthDateState extends State<AddBabyBirthDate> {
                   ),
                 ),
               );
-              if(selectedDate==null){
+              if (selectedDate == null) {
                 setState(() {
                   widget.birthDate.clear();
                 });
-              }else{
+              } else {
                 setState(() {
-                  widget.birthDate.text="${selectedDate.day<10?"0":""}${selectedDate.day}-${selectedDate.month<10?"0":""}${selectedDate.month}-${selectedDate.year}";
+                  widget.birthDate.text =
+                      "${selectedDate.day < 10 ? "0" : ""}${selectedDate.day}-${selectedDate.month < 10 ? "0" : ""}${selectedDate.month}-${selectedDate.year}";
                 });
               }
             },
@@ -336,7 +551,8 @@ class _AddBabyBirthWeightState extends State<AddBabyBirthWeight> {
                                           .toStringAsFixed(1);
                                 } else {
                                   widget.birthWeight.text =
-                                      (double.parse(widget.birthWeight.text)*453.6)
+                                      (double.parse(widget.birthWeight.text) *
+                                              453.6)
                                           .toStringAsFixed(1);
                                 }
                               },

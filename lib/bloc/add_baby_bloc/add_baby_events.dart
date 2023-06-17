@@ -1,30 +1,65 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:image_picker/image_picker.dart';
+
+import 'package:neoroo_app/models/infant_mother.dart';
 
 class AddBabyEvents {}
 
 class AddBabyEvent extends AddBabyEvents {
-  final String motherName;
   final String birthDate;
-  final XFile? image;
+  final String birthNotes;
   final String birthTime;
   final String birthWeight;
   final String bodyLength;
+  final String cribNumber;
+  final String neoDeviceID;
   final String headCircumference;
-  final int needResuscitation;
-  final String familyMemberGroup;
-  final String caregiverGroup;
-  final String birthDescription;
-  AddBabyEvent({
-    required this.motherName,
-    required this.birthDate,
-    required this.image,
-    required this.birthTime,
-    required this.birthWeight,
-    required this.headCircumference,
-    required this.bodyLength,
-    required this.birthDescription,
-    required this.caregiverGroup,
-    required this.familyMemberGroup,
-    required this.needResuscitation,
-  });
+  final XFile? image;
+  final String needResuscitation;
+  final String wardNumber;
+  final String presentWeight;
+  final String motherName;
+  final String motherId;
+  final String stsTime;
+  final String nstsTime;
+  final String infantTemperature;
+  final String infantHeartRate;
+  final String infantRespirationRate;
+  final String infantBloodOxygen;
+  final String infantId;
+
+  AddBabyEvent(
+      this.birthDate,
+      this.birthNotes,
+      this.birthTime,
+      this.birthWeight,
+      this.bodyLength,
+      this.cribNumber,
+      this.neoDeviceID,
+      this.headCircumference,
+      this.image,
+      this.needResuscitation,
+      this.wardNumber,
+      this.presentWeight,
+      this.motherName,
+      this.motherId,
+      this.stsTime,
+      this.nstsTime,
+      this.infantTemperature,
+      this.infantHeartRate,
+      this.infantRespirationRate,
+      this.infantBloodOxygen,
+      this.infantId);
+}
+
+class GetMotherEvent extends AddBabyEvents {}
+
+class SearchInMotherList extends AddBabyEvents {
+  final String motherName;
+  final List<Mother> motherList;
+
+  SearchInMotherList(
+    this.motherName,
+    this.motherList,
+  );
 }

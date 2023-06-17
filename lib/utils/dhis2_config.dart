@@ -22,19 +22,24 @@ final Map<String, String> neoRooRequiredAttributes = {
   "Birth Time": "NeoRoo_Birth_Time",
   "Birth Weight": "NeoRoo_Birth_Weight",
   "Body Length": "NeoRoo_Body_Length",
-  "Caregiver User Group": "Caregiver User Group",
   "NCN":"NeoRoo_Crib_Number",
   "NeoRoo_Device_Id": "NeoRoo_Device_Id",
-  "Family Member User Group": "NeoRoo_Family_Member_User_Group",
   "Head Circumference": "NeoRoo_Head_Circumference",
   "Require Resuscitation": "NeoRoo_Require_Resuscitation",
   "NeoRoo_TEI_avatar": "NeoRoo_TEI_avatar",
-  "NeoRoo_TEI_breathe_normal": "NeoRoo_TEI_breathe_normal",
-  "NeoRoo_TEI_created_by": "NeoRoo_TEI_created_by",
   "Ward Number": "NeoRoo_Ward_Number",
   "Present Weight": "NeoRoo_Weight_of_baby_normal",
   "Mother Name": "NeoRoo_mother_name",
-  "Mother Id": "NeoRoo_mother_id"
+  "Mother Id": "NeoRoo_mother_id",
+  "STS_Time": "NeoRoo_STS",
+  "NSTS_Time":"NeoRoo_NSTS",
+  "Infant_Temperature": "NeoRoo_Temperature",
+  "Infant_Heart_Rate": "NeoRoo_HeartRate",
+  "Infant_Respiration_Rate": "NeoRoo_RespiratoryRate",
+  "Infant_Blood_Oxygen": "NeoRoo_BloodOxygen",
+  "Goals": "NeoRoo_Goals",
+  "todo": "ToDo",
+  "infant_ID": "NeoRoo_InfantID"
 };
 
 const List<String> trackedEntityNameList = ["NeoRoo"];

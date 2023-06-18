@@ -1,8 +1,9 @@
 import 'dart:io';
+
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-
 import 'dart:convert';
+import 'package:http_parser/http_parser.dart';
 
 class BabyAddUpdateClient {
   Future<http.Response> addBaby(
@@ -31,52 +32,6 @@ class BabyAddUpdateClient {
       String serverURL,
       String organisationUnitID,
       Map<String, String> attributesShortNameAndUID) async {
-    print(attributesShortNameAndUID["Birth_Date"]!);
-    print("Birth_Date");
-    print(attributesShortNameAndUID["Birth_Notes"]!);
-    print("Birth_Notes");
-    print(attributesShortNameAndUID["Birth Time"]!);
-    print("Birth Time");
-    print(attributesShortNameAndUID["Birth Weight"]!);
-    print("Birth Weight");
-
-    print(attributesShortNameAndUID["Body Length"]!);
-    print("Body Length");
-    print(attributesShortNameAndUID["NCN"]!);
-    print("NCN");
-    print(attributesShortNameAndUID["NeoRoo_Device_Id"]!);
-    print("NeoRoo_Device_Id");
-    print(attributesShortNameAndUID["Head Circumference"]!);
-    print("Head Circumference");
-    print(attributesShortNameAndUID["Require Resuscitation"]!);
-    print("Require Resuscitation");
-    print(attributesShortNameAndUID["Ward Number"]!);
-    print("Ward Number");
-    print(attributesShortNameAndUID["Present Weight"]!);
-    print("Present Weight");
-    print(attributesShortNameAndUID["Mother Name"]!);
-    print("Mother Name");
-    print(attributesShortNameAndUID["Mother Id"]!);
-    print("Mother Id");
-    print(attributesShortNameAndUID["STS_Time"]!);
-    print("STS_Time");
-    print(attributesShortNameAndUID["NSTS_Time"]!);
-    print("NSTS_Time");
-    print(attributesShortNameAndUID["Infant_Temperature"]!);
-    print("Infant_Temperature");
-    print(attributesShortNameAndUID["Infant_Heart_Rate"]!);
-    print("Infant_Heart_Rate");
-    print(attributesShortNameAndUID["Infant_Respiration_Rate"]!);
-    print("Infant_Respiratory_Rate");
-    print(attributesShortNameAndUID["Infant_Blood_Oxygen"]!);
-    print("Infant_Blood_Oxygen");
-    print(attributesShortNameAndUID["infant_ID"]!);
-    print("Infant_Id");
-    print(attributesShortNameAndUID["NeoRoo_TEI_avatar"]!);
-    print("Avatar_Id");
-    print(attributesShortNameAndUID["NeoRoo"]!);
-    print("NeoRoo");
-
     List attributes = [
       {
         "attribute": attributesShortNameAndUID["Birth_Date"]!,
@@ -182,31 +137,28 @@ class BabyAddUpdateClient {
     );
   }
 
-  Future<http.Response> uploadImage(
+  Future<http.Response> uploadImageToDhis2(
       XFile image, String username, String password, String serverURL) async {
+    String extension = image.path.split(".").last;
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     http.MultipartRequest request = http.MultipartRequest(
       'POST',
-      Uri.parse(serverURL),
+      Uri.parse("$serverURL/api/fileResources"),
     );
     request.files.add(
-      http.MultipartFile.fromBytes(
-        'file',
-        File(image.path).readAsBytesSync(),
-        filename: image.path.split("/").last,
-      ),
+      http.MultipartFile.fromBytes('file', File(image.path).readAsBytesSync(),
+          filename: image.path.split("/").last,
+          contentType: MediaType('image', extension)),
     );
     request.headers['authorization'] = basicAuth;
     request.fields["domain"] = "USER_AVATAR";
+
     return http.Response.fromStream(await request.send());
   }
 
   Future<http.Response> searchMother(
       String username, String password, String serverURL) async {
-    print(username);
-    print(password);
-    print("$serverURL ,bsdvsvbsdkdvbsdkbvskdbvskjddbvkjsvjwgfejkgsfjkgs");
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     String userRoleName = "Family Member";

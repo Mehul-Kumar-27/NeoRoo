@@ -51,7 +51,7 @@ class AddUpdateBabyRepository {
     try {
       if (avatarFile != null) {
         http.Response imageUploadResponse = await babyAddUpdateClient
-            .uploadImage(avatarFile, username, password, serverURL);
+            .uploadImageToDhis2(avatarFile, username, password, serverURL);
         print(imageUploadResponse.statusCode);
         print(imageUploadResponse.body);
         if (imageUploadResponse.statusCode == 401 ||
@@ -62,7 +62,7 @@ class AddUpdateBabyRepository {
               imageUploadResponse.statusCode,
             ),
           );
-        } else if (imageUploadResponse.statusCode != 200) {
+        } else if (imageUploadResponse.statusCode == 200) {
           return Right(
             FetchDataException(
               AppLocalizations.of(context).errorDuringCommunication,
@@ -72,21 +72,13 @@ class AddUpdateBabyRepository {
         } else {
           avatarId = jsonDecode(imageUploadResponse.body)["response"]
               ["fileResource"]["id"];
+          print("\n");
+          print(avatarId);
         }
       }
-      print("Hello I am here !!!!!!!!!!11");
+
       Map<String, String> attributesShortNameAndUID =
           await trackedAttributesAndUID();
-      for (var key in attributesShortNameAndUID.keys) {
-        if (key == "NeoRoo") {
-          print("NeoRoo");
-
-          print("\n");
-        }
-        print(key + " " + attributesShortNameAndUID[key]!);
-      }
-
-      print("\n");
 
       http.Response response = await babyAddUpdateClient.addBaby(
         birthDate,
@@ -119,8 +111,7 @@ class AddUpdateBabyRepository {
       if (response.statusCode == 200) {
         var responseBody = jsonDecode(response.body);
         print(responseBody);
-        
-        
+
         return Left(true);
       }
       if (response.statusCode == 401 || response.statusCode == 403) {

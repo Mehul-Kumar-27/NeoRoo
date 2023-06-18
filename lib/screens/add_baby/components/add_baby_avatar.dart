@@ -135,13 +135,3 @@ class _BabyDetailsAvatarState extends State<BabyDetailsAvatar> {
     );
   }
 }
-/*
-backgroundImage: imageURL == null
-                ? null
-                : NetworkImage(
-                    imageURL!,
-                    headers: {
-                      "authorization": auth,
-                    },
-                  ),
- */

@@ -96,6 +96,7 @@ class _MyAppState extends State<MyApp> {
           BlocProvider<FetchBabyBloc>(
             create: (context) => FetchBabyBloc(
               context.read<FetchBabyRepository>(),
+              context.read<HiveStorageRepository>()
             ),
           ),
           BlocProvider<LoginBloc>(

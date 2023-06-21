@@ -24,7 +24,7 @@ class ServerRepository {
 
   Future connectToServer() async {
     Profile profile = await hiveStorageRepository.getUserProfile();
-
+    
     String serverURL = await hiveStorageRepository.getOrganisationURL();
     String username = profile.username;
     String password = profile.password;

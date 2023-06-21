@@ -33,13 +33,19 @@ class InfantAdapter extends TypeAdapter<Infant> {
       neoOxygenSaturation: fields[13] as String,
       neoSTS: fields[14] as String,
       neoNSTS: fields[15] as String,
+      infantTrackedInstanceID: fields[16] as String,
+      cribNumber: fields[17] as String,
+      wardNumber: fields[18] as String,
+      presentWeight: fields[19] as String,
+      neoDeviceID: fields[20] as String,
+      avatarID: fields[21] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Infant obj) {
     writer
-      ..writeByte(16)
+      ..writeByte(22)
       ..writeByte(0)
       ..write(obj.infantId)
       ..writeByte(1)
@@ -71,7 +77,19 @@ class InfantAdapter extends TypeAdapter<Infant> {
       ..writeByte(14)
       ..write(obj.neoSTS)
       ..writeByte(15)
-      ..write(obj.neoNSTS);
+      ..write(obj.neoNSTS)
+      ..writeByte(16)
+      ..write(obj.infantTrackedInstanceID)
+      ..writeByte(17)
+      ..write(obj.cribNumber)
+      ..writeByte(18)
+      ..write(obj.wardNumber)
+      ..writeByte(19)
+      ..write(obj.presentWeight)
+      ..writeByte(20)
+      ..write(obj.neoDeviceID)
+      ..writeByte(21)
+      ..write(obj.avatarID);
   }
 
   @override

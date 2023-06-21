@@ -8,6 +8,7 @@ import 'package:neoroo_app/bloc/authentication/local_auth_login_bloc/local_authe
 import 'package:neoroo_app/bloc/authentication/login_bloc/login_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/select_organisation_bloc/select_organisation_bloc.dart';
 import 'package:neoroo_app/bloc/baby_details_family_member/baby_details_family_member_bloc.dart';
+import 'package:neoroo_app/bloc/fetch_baby_bloc/fetch_baby_bloc.dart';
 import 'package:neoroo_app/bloc/learning_resources_bloc/learning_resources_bloc.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_bloc.dart';
 import 'package:neoroo_app/bloc/server_bloc/server_bloc.dart';
@@ -19,11 +20,13 @@ import 'package:neoroo_app/models/tracked_attributes.dart';
 import 'package:neoroo_app/network/add_update_baby_client.dart';
 import 'package:neoroo_app/network/authentication_client.dart';
 import 'package:neoroo_app/network/baby_details_client.dart';
+import 'package:neoroo_app/network/fetch_baby_client.dart';
 import 'package:neoroo_app/network/learning_resources_client.dart';
 import 'package:neoroo_app/network/server_client.dart';
 import 'package:neoroo_app/repository/add_update_baby_repository.dart';
 import 'package:neoroo_app/repository/authentication_repository.dart';
 import 'package:neoroo_app/repository/baby_details_repository.dart';
+import 'package:neoroo_app/repository/fetch_baby_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:neoroo_app/repository/learning_resources_repository.dart';
 import 'package:neoroo_app/repository/more_options_repository.dart';
@@ -32,7 +35,6 @@ import 'package:neoroo_app/repository/server_repository.dart';
 import 'package:neoroo_app/screens/add_baby/add_baby.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:neoroo_app/screens/home/home.dart';
 import 'package:neoroo_app/screens/main_screen/main_screen.dart';
 
 void main() async {
@@ -82,7 +84,7 @@ class _MyAppState extends State<MyApp> {
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           title: "NeoRoo",
-          home: isLoggedIn ? AddBaby() : LoginPage(),
+          home: isLoggedIn ? MainScreen() : LoginPage(),
           localizationsDelegates: [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -91,6 +93,11 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
         providers: [
+          BlocProvider<FetchBabyBloc>(
+            create: (context) => FetchBabyBloc(
+              context.read<FetchBabyRepository>(),
+            ),
+          ),
           BlocProvider<LoginBloc>(
             create: (context) => LoginBloc(
               context.read<AuthenticationRepository>(),
@@ -177,6 +184,12 @@ class _MyAppState extends State<MyApp> {
             babyAddUpdateClient: BabyAddUpdateClient(),
             hiveStorageRepository: context.read<HiveStorageRepository>(),
             context: navigatorKey.currentContext!,
+          ),
+        ),
+        RepositoryProvider<FetchBabyRepository>(
+          create: (context) => FetchBabyRepository(
+            fetchBabyClient: FetchBabyClient(),
+            hiveStorageRepository: context.read<HiveStorageRepository>(),
           ),
         ),
         RepositoryProvider(

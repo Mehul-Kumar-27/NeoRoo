@@ -7,8 +7,10 @@ import 'package:neoroo_app/utils/vertical_space.dart';
 
 class UpdateBabyMothersName extends StatelessWidget {
   final TextEditingController mothersName;
-  const UpdateBabyMothersName({Key? key, required this.mothersName,})
-      : super(key: key);
+  const UpdateBabyMothersName({
+    Key? key,
+    required this.mothersName,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class UpdateBabyMothersName extends StatelessWidget {
             height: 5,
           ),
           TextField(
+            enabled: false,
             cursorColor: primaryBlue,
             controller: mothersName,
             decoration: InputDecoration(
@@ -93,12 +96,12 @@ class _UpdateBabyBirthDateState extends State<UpdateBabyBirthDate> {
           ),
           GestureDetector(
             onTap: () async {
-              DateTime? selectedDate=await showDatePicker(
+              DateTime? selectedDate = await showDatePicker(
                 context: context,
                 initialDate: DateTime.now(),
                 firstDate: DateTime.now().subtract(
                   Duration(
-                    days: 30*9,
+                    days: 30 * 9,
                   ),
                 ),
                 lastDate: DateTime.now().add(
@@ -107,13 +110,14 @@ class _UpdateBabyBirthDateState extends State<UpdateBabyBirthDate> {
                   ),
                 ),
               );
-              if(selectedDate==null){
+              if (selectedDate == null) {
                 setState(() {
                   widget.birthDate.clear();
                 });
-              }else{
+              } else {
                 setState(() {
-                  widget.birthDate.text="${selectedDate.day<10?"0":""}${selectedDate.day}-${selectedDate.month<10?"0":""}${selectedDate.month}-${selectedDate.year}";
+                  widget.birthDate.text =
+                      "${selectedDate.day < 10 ? "0" : ""}${selectedDate.day}-${selectedDate.month < 10 ? "0" : ""}${selectedDate.month}-${selectedDate.year}";
                 });
               }
             },
@@ -336,7 +340,8 @@ class _UpdateBabyBirthWeightState extends State<UpdateBabyBirthWeight> {
                                           .toStringAsFixed(1);
                                 } else {
                                   widget.birthWeight.text =
-                                      (double.parse(widget.birthWeight.text)*453.6)
+                                      (double.parse(widget.birthWeight.text) *
+                                              453.6)
                                           .toStringAsFixed(1);
                                 }
                               },
@@ -518,7 +523,8 @@ class UpdateBabyHeadCircumference extends StatefulWidget {
       _UpdateBabyHeadCircumferenceState();
 }
 
-class _UpdateBabyHeadCircumferenceState extends State<UpdateBabyHeadCircumference> {
+class _UpdateBabyHeadCircumferenceState
+    extends State<UpdateBabyHeadCircumference> {
   String _selectedUnit = "cm";
   @override
   Widget build(BuildContext context) {
@@ -669,9 +675,21 @@ class UpdateBabyNeedResuscitation extends StatefulWidget {
       _UpdateBabyNeedResuscitationState();
 }
 
-class _UpdateBabyNeedResuscitationState extends State<UpdateBabyNeedResuscitation> {
-  String selectedValue = "no";
+class _UpdateBabyNeedResuscitationState
+    extends State<UpdateBabyNeedResuscitation> {
+  late String selectedValue;
+
   @override
+  void initState() {
+    if (widget.needsResuscitationValue['value'] == true) {
+      selectedValue = 'yes';
+    } else {
+      selectedValue = 'no';
+    }
+
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(
@@ -815,7 +833,8 @@ class UpdateBabyCaregiverGroup extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<UpdateBabyCaregiverGroup> createState() => _UpdateBabyCaregiverGroupState();
+  State<UpdateBabyCaregiverGroup> createState() =>
+      _UpdateBabyCaregiverGroupState();
 }
 
 class _UpdateBabyCaregiverGroupState extends State<UpdateBabyCaregiverGroup> {

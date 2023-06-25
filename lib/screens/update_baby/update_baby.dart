@@ -6,6 +6,8 @@ import 'package:neoroo_app/bloc/update_baby_bloc/update_baby_bloc.dart';
 import 'package:neoroo_app/bloc/update_baby_bloc/update_baby_events.dart';
 import 'package:neoroo_app/bloc/update_baby_bloc/update_baby_states.dart';
 import 'package:neoroo_app/models/baby_details_caregiver.dart';
+import 'package:neoroo_app/models/infant_model.dart';
+import 'package:neoroo_app/screens/add_baby/components/add_baby_input.dart';
 import 'package:neoroo_app/screens/update_baby/components/update_baby_avatar.dart';
 import 'package:neoroo_app/screens/update_baby/components/update_baby_birth_description.dart';
 import 'package:neoroo_app/screens/update_baby/components/update_baby_button.dart';
@@ -13,14 +15,12 @@ import 'package:neoroo_app/screens/update_baby/components/update_baby_input.dart
 import 'package:neoroo_app/screens/update_baby/components/update_baby_title.dart';
 import 'package:neoroo_app/utils/constants.dart';
 import 'package:neoroo_app/utils/vertical_space.dart';
-import './components/update_baby_input.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UpdateBaby extends StatefulWidget {
-  final BabyDetailsCaregiver babyDetailsCaregiver;
+  final Infant infant;
   final int index;
-  const UpdateBaby(
-      {Key? key, required this.babyDetailsCaregiver, required this.index})
+  const UpdateBaby({Key? key, required this.infant, required this.index})
       : super(key: key);
 
   @override
@@ -34,9 +34,10 @@ class _UpdateBabyState extends State<UpdateBaby> {
   final TextEditingController birthWeight = TextEditingController();
   final TextEditingController bodyLength = TextEditingController();
   final TextEditingController headCircumference = TextEditingController();
-  final TextEditingController parentGroup = TextEditingController();
-  final TextEditingController caregiverGroup = TextEditingController();
+  final TextEditingController cribNumber = TextEditingController();
+  final TextEditingController wardNumber = TextEditingController();
   final TextEditingController birthDescription = TextEditingController();
+  final TextEditingController motherID = TextEditingController();
   final Map<String, XFile?> avatarDetails = {};
   final FocusNode birthDateFocus = FocusNode();
   final FocusNode birthTimeFocus = FocusNode();
@@ -73,10 +74,26 @@ class _UpdateBabyState extends State<UpdateBaby> {
   }
 
   @override
+  void initState() {
+    motherName.text = widget.infant.moterName;
+    motherID.text = widget.infant.motherUsername;
+    birthDate.text = widget.infant.dateOfBirth;
+    birthTime.text = widget.infant.timeOfBirth;
+    birthWeight.text = widget.infant.birthWeight;
+    bodyLength.text = widget.infant.bodyLength.toString();
+    headCircumference.text = widget.infant.headCircumference.toString();
+    birthDescription.text = widget.infant.birthNotes;
+    cribNumber.text = widget.infant.cribNumber;
+    wardNumber.text = widget.infant.wardNumber;
+
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocConsumer<UpdateBabyBloc, UpdateBabyStates>(
         listener: (context, state) {
+          print(state);
           if (state is UpdateBabyEmptyField) {
             showSnackbarError(
               AppLocalizations.of(context).emptyField,
@@ -109,8 +126,7 @@ class _UpdateBabyState extends State<UpdateBaby> {
                   height: 20,
                 ),
                 UpdateBabyMothersName(
-                  mothersName: motherName
-                    ..text = widget.babyDetailsCaregiver.motherName,
+                  mothersName: motherName,
                 ),
                 VerticalSpace(
                   height: 15,
@@ -118,8 +134,7 @@ class _UpdateBabyState extends State<UpdateBaby> {
                 GestureDetector(
                   onTap: () {},
                   child: UpdateBabyBirthDate(
-                    birthDate: birthDate
-                      ..text = widget.babyDetailsCaregiver.birthDate,
+                    birthDate: birthDate,
                     birthDateFocus: birthDateFocus,
                   ),
                 ),
@@ -129,8 +144,7 @@ class _UpdateBabyState extends State<UpdateBaby> {
                 GestureDetector(
                   onTap: () {},
                   child: UpdateBabyBirthTime(
-                    birthTime: birthTime
-                      ..text = widget.babyDetailsCaregiver.birthTime,
+                    birthTime: birthTime,
                     birthTimeFocus: birthTimeFocus,
                   ),
                 ),
@@ -138,51 +152,48 @@ class _UpdateBabyState extends State<UpdateBaby> {
                   height: 15,
                 ),
                 UpdateBabyBirthWeight(
-                  birthWeight: birthWeight
-                    ..text = widget.babyDetailsCaregiver.weight.toString(),
+                  birthWeight: birthWeight,
                 ),
                 VerticalSpace(
                   height: 15,
                 ),
                 UpdateBabyBodyLength(
                   bodyLength: bodyLength
-                    ..text = widget.babyDetailsCaregiver.bodyLength.toString(),
+                    ..text = widget.infant.bodyLength.toString(),
                 ),
                 VerticalSpace(
                   height: 15,
                 ),
                 UpdateBabyHeadCircumference(
-                  headCircumference: headCircumference
-                    ..text = widget.babyDetailsCaregiver.headCircumference
-                        .toString(),
+                  headCircumference: headCircumference,
                 ),
                 VerticalSpace(
                   height: 15,
                 ),
                 UpdateBabyNeedResuscitation(
                   needsResuscitationValue: needsResuscitation
-                    ..["value"] = widget.babyDetailsCaregiver.needResuscitation,
-                ),
-                VerticalSpace(
-                  height: 15,
-                ),
-                UpdateBabyParentGroup(
-                  parentGroup: parentGroup
-                    ..text = widget.babyDetailsCaregiver.familyMemberGroup,
-                ),
-                VerticalSpace(
-                  height: 15,
-                ),
-                UpdateBabyCaregiverGroup(
-                  caregiverGroup: caregiverGroup
-                    ..text = widget.babyDetailsCaregiver.caregiverGroup,
+                    ..["value"] =
+                        (widget.infant.resuscitation == "Yes") ? true : false,
                 ),
                 VerticalSpace(
                   height: 15,
                 ),
                 UpdateBabyBirthDescription(
                   description: birthDescription
-                    ..text = widget.babyDetailsCaregiver.birthNotes,
+                    ..text = widget.infant.birthNotes,
+                ),
+                VerticalSpace(
+                  height: 15,
+                ),
+                BabyWardCribNumber(
+                    controller: wardNumber, heading: "Baby Ward Number"),
+                VerticalSpace(
+                  height: 15,
+                ),
+                BabyWardCribNumber(
+                    controller: cribNumber, heading: "Baby Crib Number"),
+                VerticalSpace(
+                  height: 30,
                 ),
                 VerticalSpace(
                   height: 30,
@@ -191,17 +202,30 @@ class _UpdateBabyState extends State<UpdateBaby> {
                   onPressed: () {
                     BlocProvider.of<UpdateBabyBloc>(context).add(
                       UpdateBabyEvent(
-                        motherName: motherName.text,
-                        birthDate: birthDate.text,
-                        index: widget.index,
-                        birthTime: birthTime.text,
-                        birthWeight: birthWeight.text,
-                        headCircumference: headCircumference.text,
-                        bodyLength: bodyLength.text,
-                        birthDescription: birthDescription.text,
-                        caregiverGroup: caregiverGroup.text,
-                        familyMemberGroup: parentGroup.text,
-                        needResuscitation: needsResuscitation["value"]! ? 1 : 0,
+                        birthDate.text,
+                        birthDescription.text,
+                        birthTime.text,
+                        birthWeight.text,
+                        bodyLength.text,
+                        cribNumber.text,
+                        widget.infant.neoDeviceID, // Neo Device ID
+                        headCircumference.text,
+                        widget.infant.avatarID,
+                        (needsResuscitation["value"] == true) ? "Yes" : "No",
+                        wardNumber.text,
+                        birthWeight.text,
+                        motherName.text,
+                        motherID.text,
+                        widget.infant.neoSTS, //sts time
+                        widget.infant.neoNSTS, //n sts time
+                        widget.infant.neoTemperature, //infant temperature
+                        widget.infant.neoHeartRate, //infant heart rate
+                        widget.infant
+                            .neoRespiratoryRate, //infant respiration rate
+                        widget.infant
+                            .neoOxygenSaturation, //infant oxygen saturation
+                        widget.infant.infantId,
+                        widget.infant.infantTrackedInstanceID,
                       ),
                     );
                   },

@@ -28,14 +28,14 @@ class _AllBabiesListState extends State<AllBabiesList> {
     super.initState();
   }
 
-  void takeToUpdatePage(BabyDetailsCaregiver babyDetailsCaregiver,int index) {
-    pushNewScreen(
-      context,
-      screen: UpdateBaby(
-        babyDetailsCaregiver: babyDetailsCaregiver,
-        index: index,
-      ),
-    );
+  void takeToUpdatePage(BabyDetailsCaregiver babyDetailsCaregiver, int index) {
+    // pushNewScreen(
+    //   context,
+    //   screen: UpdateBaby(
+    //     infant: babyDetailsCaregiver,
+    //     index: index,
+    //   ),
+    // );
   }
 
   @override

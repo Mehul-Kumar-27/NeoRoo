@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:image_picker/image_picker.dart';
+import 'package:neoroo_app/models/infant_model.dart';
 
 import 'package:neoroo_app/models/infant_mother.dart';
 
@@ -63,3 +64,4 @@ class SearchInMotherList extends AddBabyEvents {
     this.motherList,
   );
 }
+

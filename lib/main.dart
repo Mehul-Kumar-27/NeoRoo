@@ -143,6 +143,7 @@ class _MyAppState extends State<MyApp> {
           BlocProvider<UpdateBabyBloc>(
             create: (context) => UpdateBabyBloc(
               context.read<HiveStorageRepository>(),
+              context.read<AddUpdateBabyRepository>(),
             ),
           ),
           BlocProvider<LearningResourcesBloc>(

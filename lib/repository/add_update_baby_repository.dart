@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neoroo_app/exceptions/custom_exception.dart';
 import 'package:http/http.dart' as http;
+import 'package:neoroo_app/models/infant_model.dart';
 import 'package:neoroo_app/models/infant_mother.dart';
 import 'package:neoroo_app/models/profile.dart';
 import 'package:neoroo_app/models/tracked_attributes.dart';
@@ -115,6 +116,8 @@ class AddUpdateBabyRepository {
         return Left(true);
       }
       if (response.statusCode == 401 || response.statusCode == 403) {
+        var responseBody = jsonDecode(response.body);
+        print(responseBody);
         return Right(
           UnauthorisedException(
             AppLocalizations.of(context).unauthorized,
@@ -122,6 +125,8 @@ class AddUpdateBabyRepository {
           ),
         );
       } else {
+        var responseBody = jsonDecode(response.body);
+        print(responseBody);
         print(response.statusCode);
         return Right(
           FetchDataException(
@@ -157,6 +162,34 @@ class AddUpdateBabyRepository {
         motherInServer.add(mother);
       }
       return Left(motherInServer);
+    } else {
+      return Right(
+        FetchDataException(
+          AppLocalizations.of(context).errorDuringCommunication,
+          null,
+        ),
+      );
+    }
+  }
+
+  Future<Either<bool, CustomException>> updateBaby(Infant infant) async {
+    Map<String, String> attributesShortNameAndUID =
+        await trackedAttributesAndUID();
+    Profile profile = await hiveStorageRepository.getUserProfile();
+    String username = profile.username;
+    String password = profile.password;
+    String serverURL = await hiveStorageRepository.getOrganisationURL();
+    String organizationUnitID =
+        await hiveStorageRepository.getSelectedOrganisation();
+    http.Response response = await babyAddUpdateClient.updateBaby(
+        infant,
+        username,
+        password,
+        organizationUnitID,
+        serverURL,
+        attributesShortNameAndUID);
+    if (response.statusCode == 200) {
+      return Left(true);
     } else {
       return Right(
         FetchDataException(

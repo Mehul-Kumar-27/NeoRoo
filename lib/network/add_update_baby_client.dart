@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 import 'package:http_parser/http_parser.dart';
+import 'package:neoroo_app/models/infant_model.dart';
 
 class BabyAddUpdateClient {
   Future<http.Response> addBaby(
@@ -58,7 +59,7 @@ class BabyAddUpdateClient {
       },
       {
         "attribute": attributesShortNameAndUID["NeoRoo_Device_Id"]!,
-        "value": "NeoRoo_Device_Id",
+        "value": "Dummy",
       },
       {
         "attribute": attributesShortNameAndUID["Head Circumference"]!,
@@ -86,27 +87,27 @@ class BabyAddUpdateClient {
       },
       {
         "attribute": attributesShortNameAndUID["STS_Time"]!,
-        "value": stsTime,
+        "value": "Dummy",
       },
       {
         "attribute": attributesShortNameAndUID["NSTS_Time"]!,
-        "value": nstsTime,
+        "value": "Dummy",
       },
       {
         "attribute": attributesShortNameAndUID["Infant_Temperature"]!,
-        "value": infantTemperature,
+        "value": "Dummy",
       },
       {
         "attribute": attributesShortNameAndUID["Infant_Heart_Rate"]!,
-        "value": infantHeartRate,
+        "value": "Dummy",
       },
       {
         "attribute": attributesShortNameAndUID["Infant_Respiration_Rate"]!,
-        "value": infantRespiratoryRate,
+        "value": "Dummy",
       },
       {
         "attribute": attributesShortNameAndUID["Infant_Blood_Oxygen"]!,
-        "value": infantBloodOxygen,
+        "value": "Dummy",
       },
       {
         "attribute": attributesShortNameAndUID["infant_ID"]!,
@@ -118,6 +119,13 @@ class BabyAddUpdateClient {
         {
           "attribute": attributesShortNameAndUID["NeoRoo_TEI_avatar"]!,
           "value": avatarID,
+        },
+      );
+    } else {
+      attributes.add(
+        {
+          "attribute": attributesShortNameAndUID["NeoRoo_TEI_avatar"]!,
+          "value": "Dummy",
         },
       );
     }
@@ -173,6 +181,117 @@ class BabyAddUpdateClient {
     );
     print(response.statusCode);
     print(response.body);
+    return response;
+  }
+
+  Future<http.Response> updateBaby(
+      Infant infant,
+      String username,
+      String password,
+      String organisationUnitID,
+      String serverURL,
+      Map<String, String> attributesShortNameAndUID) async {
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    String endpoint =
+        "$serverURL/api/trackedEntityInstances/${infant.infantTrackedInstanceID}";
+    List attributes = [
+      {
+        "attribute": attributesShortNameAndUID["Birth_Date"]!,
+        "value": infant.dateOfBirth,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Birth_Notes"]!,
+        "value": infant.birthNotes,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Birth Time"]!,
+        "value": infant.timeOfBirth,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Birth Weight"]!,
+        "value": infant.birthWeight,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Body Length"]!,
+        "value": infant.bodyLength,
+      },
+      {
+        "attribute": attributesShortNameAndUID["NCN"]!,
+        "value": infant.cribNumber,
+      },
+      {
+        "attribute": attributesShortNameAndUID["NeoRoo_Device_Id"]!,
+        "value": "NeoRoo_Device_Id",
+      },
+      {
+        "attribute": attributesShortNameAndUID["Head Circumference"]!,
+        "value": infant.headCircumference,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Require Resuscitation"]!,
+        "value": infant.resuscitation,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Ward Number"]!,
+        "value": infant.wardNumber,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Present Weight"]!,
+        "value": infant.presentWeight,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Mother Name"]!,
+        "value": infant.moterName,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Mother Id"]!,
+        "value": infant.motherUsername,
+      },
+      {
+        "attribute": attributesShortNameAndUID["STS_Time"]!,
+        "value": infant.neoSTS,
+      },
+      {
+        "attribute": attributesShortNameAndUID["NSTS_Time"]!,
+        "value": infant.neoNSTS,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Infant_Temperature"]!,
+        "value": infant.neoTemperature,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Infant_Heart_Rate"]!,
+        "value": infant.neoHeartRate,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Infant_Respiration_Rate"]!,
+        "value": infant.neoRespiratoryRate,
+      },
+      {
+        "attribute": attributesShortNameAndUID["Infant_Blood_Oxygen"]!,
+        "value": infant.neoOxygenSaturation,
+      },
+      {
+        "attribute": attributesShortNameAndUID["infant_ID"]!,
+        "value": infant.infantId,
+      },
+      {
+        "attribute": attributesShortNameAndUID["NeoRoo_TEI_avatar"]!,
+        "value": "Dummy",
+      },
+    ];
+
+    Map<String, dynamic> requestBody = {
+      "orgUnit": organisationUnitID,
+      "attributes": attributes
+    };
+    final response = await http.put(
+      Uri.parse(endpoint),
+      headers: {'Authorization': basicAuth, 'Content-Type': 'application/json'},
+      body: jsonEncode(requestBody),
+    );
+
     return response;
   }
 }

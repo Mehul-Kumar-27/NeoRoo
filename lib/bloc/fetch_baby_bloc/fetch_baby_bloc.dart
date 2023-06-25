@@ -40,8 +40,6 @@ class FetchBabyBloc extends Bloc<FetchBabyEvents, FetchBabyStates> {
       } else {
         emitter(FetchInfantFromServerSuccess(infantList));
       }
-
-      emitter(FetchInfantFromServerSuccess(infantList));
     } catch (e) {
       emitter(FetchInfantFromServerError(e.toString()));
     }

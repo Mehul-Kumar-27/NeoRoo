@@ -201,7 +201,9 @@ class _AddBabyState extends State<AddBaby> {
                   Align(
                     alignment: Alignment.center,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        showECEBinfatSheet(context);
+                      },
                       child: Text(
                         "Pull from ECEB",
                         style: TextStyle(
@@ -232,6 +234,15 @@ class _AddBabyState extends State<AddBaby> {
               AppLocalizations.of(context).addBabySuccess,
             );
             // Navigator.of(context).pop();
+          }
+          if (state is EcebInfantSelectedState) {
+            setState(() {
+              birthDescription.text = state.infant.birthNotes;
+              motherName.text = state.infant.moterName;
+              motherID.text = state.infant.motherUsername;
+              birthDate.text = state.infant.dateOfBirth;
+              birthTime.text = state.infant.timeOfBirth;
+            });
           }
         },
       ),

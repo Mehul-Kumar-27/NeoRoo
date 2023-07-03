@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:neoroo_app/bloc/add_baby_bloc/add_baby_bloc.dart';
 import 'package:neoroo_app/bloc/add_baby_bloc/add_baby_events.dart';
 import 'package:neoroo_app/bloc/add_baby_bloc/add_baby_states.dart';
+import 'package:neoroo_app/models/infant_model.dart';
 import 'package:neoroo_app/models/infant_mother.dart';
 import 'package:neoroo_app/utils/constants.dart';
 import 'package:neoroo_app/utils/vertical_space.dart';
@@ -256,6 +257,96 @@ void showSlideUpDialog(BuildContext context, TextEditingController motherID,
                                         Text(motherONServer[index].displayName),
                                     subtitle:
                                         Text(motherONServer[index].motherID),
+                                  ),
+                                );
+                              }),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    },
+  );
+}
+
+void showECEBinfatSheet(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      TextEditingController searchController = TextEditingController();
+      BlocProvider.of<AddBabyBloc>(context).add(GetInfantsFromEceb());
+      List<Infant> ecebInfantOnServer = [];
+      return SlideUpDialog(
+        child: BlocConsumer<AddBabyBloc, AddBabyStates>(
+          listener: (context, state) {
+            if (state is FetchBabyFromECEBSucess) {
+              ecebInfantOnServer = state.ecebInfantsOnServer;
+            }
+          },
+          builder: (context, state) {
+            return Dialog(
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.close),
+                    ),
+                    TextField(
+                      cursorColor: primaryBlue,
+                      controller: searchController,
+                      onChanged: (String infantDataFromTextField) {
+                        BlocProvider.of<AddBabyBloc>(context).add(
+                            SearchInfantFromECEBList(
+                                infantData: infantDataFromTextField,
+                                ecebInfantSearchList: ecebInfantOnServer));
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
+                        hintText: "Search Infant",
+                        border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: outlineGrey,
+                          ),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.child_care,
+                          color: outlineGrey,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: (state is FetchInfantFromECEBInitialState)
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : ListView.builder(
+                              itemCount: ecebInfantOnServer.length,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    BlocProvider.of<AddBabyBloc>(context).add(
+                                        EcebInfantSelected(
+                                            infant: ecebInfantOnServer[index]));
+                                  },
+                                  child: ListTile(
+                                    leading: const Icon(Icons.person),
+                                    title: Text(
+                                        ecebInfantOnServer[index].moterName),
+                                    subtitle: Text(
+                                        ecebInfantOnServer[index].dateOfBirth),
                                   ),
                                 );
                               }),

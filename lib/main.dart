@@ -21,11 +21,13 @@ import 'package:neoroo_app/network/add_update_baby_client.dart';
 import 'package:neoroo_app/network/authentication_client.dart';
 import 'package:neoroo_app/network/baby_details_client.dart';
 import 'package:neoroo_app/network/fetch_baby_client.dart';
+import 'package:neoroo_app/network/fetch_from_eceb.dart';
 import 'package:neoroo_app/network/learning_resources_client.dart';
 import 'package:neoroo_app/network/server_client.dart';
 import 'package:neoroo_app/repository/add_update_baby_repository.dart';
 import 'package:neoroo_app/repository/authentication_repository.dart';
 import 'package:neoroo_app/repository/baby_details_repository.dart';
+import 'package:neoroo_app/repository/eceb_to_neoroo_repository.dart';
 import 'package:neoroo_app/repository/fetch_baby_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:neoroo_app/repository/learning_resources_repository.dart';
@@ -95,9 +97,8 @@ class _MyAppState extends State<MyApp> {
         providers: [
           BlocProvider<FetchBabyBloc>(
             create: (context) => FetchBabyBloc(
-              context.read<FetchBabyRepository>(),
-              context.read<HiveStorageRepository>()
-            ),
+                context.read<FetchBabyRepository>(),
+                context.read<HiveStorageRepository>()),
           ),
           BlocProvider<LoginBloc>(
             create: (context) => LoginBloc(
@@ -136,9 +137,9 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider<AddBabyBloc>(
             create: (context) => AddBabyBloc(
-              context.read<HiveStorageRepository>(),
-              context.read<AddUpdateBabyRepository>(),
-            ),
+                context.read<HiveStorageRepository>(),
+                context.read<AddUpdateBabyRepository>(),
+                context.read<ECEBtoNeoRooRepository>()),
           ),
           BlocProvider<UpdateBabyBloc>(
             create: (context) => UpdateBabyBloc(
@@ -187,6 +188,12 @@ class _MyAppState extends State<MyApp> {
             hiveStorageRepository: context.read<HiveStorageRepository>(),
             context: navigatorKey.currentContext!,
           ),
+        ),
+        RepositoryProvider<ECEBtoNeoRooRepository>(
+          create: (context) => ECEBtoNeoRooRepository(
+              context.read<HiveStorageRepository>(),
+              FetchBabyFromECEBClient(),
+              context),
         ),
         RepositoryProvider<FetchBabyRepository>(
           create: (context) => FetchBabyRepository(

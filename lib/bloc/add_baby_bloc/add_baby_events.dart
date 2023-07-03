@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:image_picker/image_picker.dart';
-import 'package:neoroo_app/models/infant_model.dart';
 
+import 'package:neoroo_app/models/infant_model.dart';
 import 'package:neoroo_app/models/infant_mother.dart';
 
 class AddBabyEvents {}
@@ -65,3 +65,20 @@ class SearchInMotherList extends AddBabyEvents {
   );
 }
 
+class SearchInfantFromECEBList extends AddBabyEvents {
+  final String infantData;
+  final List<Infant> ecebInfantSearchList;
+  SearchInfantFromECEBList({
+    required this.infantData,
+    required this.ecebInfantSearchList,
+  });
+}
+
+class GetInfantsFromEceb extends AddBabyEvents {}
+
+class EcebInfantSelected extends AddBabyEvents {
+  final Infant infant;
+  EcebInfantSelected({
+    required this.infant,
+  });
+}

@@ -19,3 +19,5 @@ class UnauthorisedException extends CustomException {
 class InvalidInputException extends CustomException {
   InvalidInputException(super.message, super.statusCode);
 }
+
+

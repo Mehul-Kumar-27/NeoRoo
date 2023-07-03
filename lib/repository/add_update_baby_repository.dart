@@ -138,7 +138,10 @@ class AddUpdateBabyRepository {
     } catch (e) {
       print(e);
 
-      return Left(true);
+      return Right(FetchDataException(
+        e.toString(),
+        404,
+      ));
     }
   }
 

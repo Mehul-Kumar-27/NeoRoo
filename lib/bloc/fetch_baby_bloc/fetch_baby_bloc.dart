@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neoroo_app/bloc/add_baby_bloc/add_baby_events.dart';
 
 import 'package:neoroo_app/bloc/fetch_baby_bloc/fetch_baby_events.dart';
 import 'package:neoroo_app/bloc/fetch_baby_bloc/fetch_baby_states.dart';
@@ -18,16 +19,17 @@ class FetchBabyBloc extends Bloc<FetchBabyEvents, FetchBabyStates> {
     this.hiveStorageRepository,
   ) : super(FetchBabyInitialState()) {
     on<GetInfantsFromServer>(getInfantsFromServer);
+    on<SearchInfants>(searchInInfantList);
   }
 
   Future<void> getInfantsFromServer(
       GetInfantsFromServer event, Emitter<FetchBabyStates> emitter) async {
     emitter(FetchBabyInitialState());
     Profile profile = await hiveStorageRepository.getUserProfile();
-    print("1");
+
     try {
       final list = await fetchBabyRepository.getInfantsFromServer().toList();
-      print("2");
+
       List<Infant> infantList = list[0];
       if (profile.userRole == "Family Member") {
         List<Infant> familyMemberInfant = [];
@@ -43,5 +45,22 @@ class FetchBabyBloc extends Bloc<FetchBabyEvents, FetchBabyStates> {
     } catch (e) {
       emitter(FetchInfantFromServerError(e.toString()));
     }
+  }
+
+  Future<void> searchInInfantList(
+      SearchInfants event, Emitter<FetchBabyStates> emitter) async {
+          emitter(FetchInfantFromServerSuccess(event.infantList));
+    List<Infant> infantSearchResult = [];
+
+    for (var infant in event.infantList) {
+      if (infant.moterName.toLowerCase().contains(event.query.toLowerCase()) ||
+          infant.dateOfBirth
+              .toLowerCase()
+              .contains(event.query.toLowerCase()) ||
+          infant.wardNumber.toLowerCase().contains(event.query.toLowerCase())) {
+        infantSearchResult.add(infant);
+      }
+    }
+    emitter(SearchInfantList(infants: infantSearchResult));
   }
 }

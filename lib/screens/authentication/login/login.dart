@@ -152,11 +152,11 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 LoginButton(
                   onPressed: () {
-                    // String serverURL = "https://bmgfdev.soic.iupui.edu/";
+                    String serverURL = "https://bmgfdev.soic.iupui.edu/";
                     BlocProvider.of<LoginBloc>(context).add(
                       LoginEvent(
-                        // serverURL,
-                        _serverURLController.text,
+                        serverURL,
+                        // _serverURLController.text,
                         _passwordController.text,
                         _usernameController.text,
                       ),

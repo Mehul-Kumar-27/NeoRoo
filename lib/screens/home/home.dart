@@ -16,11 +16,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController _searchController = TextEditingController();
+
   @override
   void initState() {
     BlocProvider.of<FetchBabyBloc>(context).add(GetInfantsFromServer(context));
     super.initState();
   }
+
+  List<Infant> infantsOnServer = [];
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +43,16 @@ class _HomeScreenState extends State<HomeScreen> {
               if (state.infantList.isEmpty) {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text("No Data To Show")));
+              } else {
+                infantsOnServer = state.infantList;
+              }
+            }
+            if (state is SearchInfantList) {
+              if (state.infants.isEmpty) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text("No Data To Show")));
+              } else {
+                infantsOnServer = state.infants;
               }
             }
           },
@@ -50,36 +64,52 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             }
-            if (state is FetchInfantFromServerSuccess) {
-              return RefreshIndicator(
-                onRefresh: () => getData(),
-                child: Column(
-                  children: [
-                    Expanded(
-                        child: ListView.builder(
-                            itemCount: state.infantList.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => UpdateBaby(
-                                              infant: state.infantList[index],
-                                              index: index)));
-                                },
-                                child: InfantWidget(
-                                    infant: state.infantList[index]),
-                              );
-                            })),
-                  ],
-                ),
-              );
-            }
-            return Container(
-              child: Center(
-                child: Text("Error Occured !!"),
+
+            return RefreshIndicator(
+              onRefresh: () => getData(),
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _searchController,
+                            onChanged: (String searchQuery) {
+                              if (state is FetchInfantFromServerSuccess) {
+                                BlocProvider.of<FetchBabyBloc>(context).add(
+                                    SearchInfants(
+                                        query: searchQuery,
+                                        infantList: state.infantList));
+                              }
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Enter your search query',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      child: ListView.builder(
+                          itemCount: infantsOnServer.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UpdateBaby(
+                                            infant: infantsOnServer[index],
+                                            index: index)));
+                              },
+                              child:
+                                  InfantWidget(infant: infantsOnServer[index]),
+                            );
+                          })),
+                ],
               ),
             );
           },

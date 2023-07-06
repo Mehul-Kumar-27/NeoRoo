@@ -24,7 +24,7 @@ class ServerRepository {
 
   Future connectToServer() async {
     Profile profile = await hiveStorageRepository.getUserProfile();
-    
+
     String serverURL = await hiveStorageRepository.getOrganisationURL();
     String username = profile.username;
     String password = profile.password;
@@ -77,6 +77,8 @@ class ServerRepository {
   Future checkForAttributes() async {
     Map<String, String> neoRooShortNameMapRequired =
         DHIS2Config.neoRooRequiredAttributes;
+    Map<String, String> ecebShortNameMapRequired =
+        DHIS2Config.ecebRequiredAttributeList;
     List<String> attributeToPrepare = [];
     Profile profile = await hiveStorageRepository.getUserProfile();
 
@@ -102,6 +104,15 @@ class ServerRepository {
           }
           if (attributeFound == false) {
             attributeToPrepare.add(attributeShortName);
+          }
+        }
+
+        ///This section is for attributes for the ECEB Program
+        for (var ecebAttributeShortName in ecebShortNameMapRequired.keys) {
+          for (var attribute in listOfTrackedAttributesPresentOnServer) {
+            if (attribute.trackedAttributeShortName == ecebAttributeShortName) {
+              await hiveStorageRepository.saveTrackedAttribute(attribute);
+            }
           }
         }
 
@@ -148,6 +159,17 @@ class ServerRepository {
             print(entityName);
             trackedEntityToPrepare.add(entityName);
           } else {
+            String entityID = trackedEntitiesPresent[entityName]!;
+            TrackedAttributes trackedAttributes = TrackedAttributes(
+                trackedAttributeId: entityID,
+                trackedAttributeName: entityName,
+                trackedAttributeShortName: entityName);
+            await hiveStorageRepository.saveTrackedAttribute(trackedAttributes);
+          }
+        }
+
+        for (var entityName in trackedEntitiesPresent.keys) {
+          if (entityName == DHIS2Config.ecebEntityName) {
             String entityID = trackedEntitiesPresent[entityName]!;
             TrackedAttributes trackedAttributes = TrackedAttributes(
                 trackedAttributeId: entityID,

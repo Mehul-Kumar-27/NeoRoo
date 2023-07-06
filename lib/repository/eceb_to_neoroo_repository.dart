@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:neoroo_app/models/infant_model.dart';
 import 'package:neoroo_app/models/profile.dart';
+import 'package:neoroo_app/models/tracked_attributes.dart';
 import 'package:neoroo_app/network/fetch_from_eceb.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:neoroo_app/utils/dhis2_config.dart' as DHIS2Config;
@@ -31,12 +32,13 @@ class ECEBtoNeoRooRepository {
     String serverURL = await hiveStorageRepository.getOrganisationURL();
     String username = profile.username;
     String password = profile.password;
-    String trackedEntityId = DHIS2Config.ecebEntity;
+    TrackedAttributes ecebTrackedEntity = await hiveStorageRepository
+        .getTarckedAttribute(DHIS2Config.ecebEntityName);
 
     List<Infant> ecebInfantList = [];
     try {
       http.Response response = await fetchBabyFromECEBClient.getInfantsFromECEB(
-          username, password, serverURL, organisatioUnit, trackedEntityId);
+          username, password, serverURL, organisatioUnit, ecebTrackedEntity.trackedAttributeId);
       if (response.statusCode == 200) {
         Map<String, dynamic> mapData = jsonDecode(response.body);
         List<dynamic> infantList = mapData['trackedEntityInstances'];
@@ -49,15 +51,15 @@ class ECEBtoNeoRooRepository {
           String id = '';
           for (var element in attributeList) {
             String displayName = element['displayName'];
-            if (displayName == DHIS2Config.eCEB_birth_description_TEI) {
+            if (displayName == "ECEB_birth_description_TEI") {
               birthNotes = element['value'];
-            } else if (displayName == DHIS2Config.eCEB_TEI_Mother_Name) {
+            } else if (displayName == "ECEB_TEI_Mother_Name") {
               motherName = element['value'];
-            } else if (displayName == DHIS2Config.eCEB_TEI_Ward_Name) {
+            } else if (displayName == "ECEB_TEI_Ward_Name") {
               wardNumber = element['value'];
-            } else if (displayName == DHIS2Config.eceb_TEI_BirthDate_Time) {
+            } else if (displayName == "ECEB_TEI_BirthDate_Time") {
               birthDateTime = element['value'];
-            } else if (displayName == DHIS2Config.eCEB_TEI_Identifier) {
+            } else if (displayName == "ECEB_TEI_Identifier") {
               id = element['value'];
             }
           }
@@ -115,9 +117,9 @@ class ECEBtoNeoRooRepository {
       }
     } catch (e) {
       return Right(FetchDataException(
-          e.toString(),
-          404,
-        ));
+        e.toString(),
+        404,
+      ));
     }
   }
 }

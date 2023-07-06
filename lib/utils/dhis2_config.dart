@@ -14,16 +14,7 @@ const trackerProgramId = "Nsieup9fiQp";
 const avatarIdAttribute = "pr3gQ05Qf6q";
 const trackedEntityType = "Dnn2nc0kiud";
 
-const eceb_TEI_BirthDate_Time = 'ZEi7UfVy21n';
-const eceb_TEI_Classification = 'ivo84s6Uv29';
-const eCEB_TEI_Gender = 'wJU7PfVaK3U';
-const eCEB_TEI_Identifier = 'g5zW8Ojnd98';
-const eCEB_TEI_Mother_Name = 'Q5el38rO0bG';
-const eCEB_TEI_Ward_Name = 'HKmbmXfiDJB';
-const eCEB_TEI_babies_delivered = 'IVNp5un0dGa';
-const eCEB_TEI_mode_of_delivery = 'JH16XsPOvJr';
-const eCEB_birth_description_TEI = 'ECxlV3Cdocu';
-const ecebEntity = 'gBy25NmwMRc';
+
 
 final Map<String, String> neoRooRequiredAttributes = {
   "Birth_Date": "NeoRoo_Birth_Date",
@@ -52,3 +43,14 @@ final Map<String, String> neoRooRequiredAttributes = {
 };
 
 const List<String> trackedEntityNameList = ["NeoRoo"];
+
+final Map<String, String> ecebRequiredAttributeList = {
+  "ECEB_TEI_BirthDate_Time": "ECEB_TEI_BirthDate_Time",
+  "ECEB_TEI_Classification": "ECEB_TEI_Classification",
+  "Identifier": "ECEB_TEI_Identifier",
+  "ECEB_TEI_Mother_Name": "ECEB_TEI_Mother_Name",
+  "ECEB_TEI_Ward_Name": "ECEB_TEI_Ward_Name",
+  "ebdt": "ECEB_birth_description_TEI"
+};
+
+final String ecebEntityName = "Newborn";

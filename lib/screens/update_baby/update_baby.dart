@@ -8,6 +8,7 @@ import 'package:neoroo_app/bloc/update_baby_bloc/update_baby_states.dart';
 import 'package:neoroo_app/models/baby_details_caregiver.dart';
 import 'package:neoroo_app/models/infant_model.dart';
 import 'package:neoroo_app/screens/add_baby/components/add_baby_input.dart';
+import 'package:neoroo_app/screens/bluethooth_screen/bluethooth_scan.dart';
 import 'package:neoroo_app/screens/update_baby/components/update_baby_avatar.dart';
 import 'package:neoroo_app/screens/update_baby/components/update_baby_birth_description.dart';
 import 'package:neoroo_app/screens/update_baby/components/update_baby_button.dart';
@@ -240,14 +241,34 @@ class _UpdateBabyState extends State<UpdateBaby> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
-                        onTap: () {},
-                        child: Text(
-                          "Pull from ECEB",
-                          style: TextStyle(
-                            fontFamily: openSans,
-                            color: secondaryOrange,
-                            fontSize: 16,
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BluethoothScan()));
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 90,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                    offset: Offset(0, 3), color: Colors.purple)
+                              ]),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.bluetooth,
+                                  color: Colors.blueAccent,
+                                ),
+                                Text("Scan")
+                              ],
+                            ),
                           ),
                         ),
                       ),

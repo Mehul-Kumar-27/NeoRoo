@@ -8,6 +8,7 @@ import 'package:neoroo_app/bloc/authentication/local_auth_login_bloc/local_authe
 import 'package:neoroo_app/bloc/authentication/login_bloc/login_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/select_organisation_bloc/select_organisation_bloc.dart';
 import 'package:neoroo_app/bloc/baby_details_family_member/baby_details_family_member_bloc.dart';
+import 'package:neoroo_app/bloc/bluetooth_bloc/ble_bloc.dart';
 import 'package:neoroo_app/bloc/fetch_baby_bloc/fetch_baby_bloc.dart';
 import 'package:neoroo_app/bloc/learning_resources_bloc/learning_resources_bloc.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_bloc.dart';
@@ -140,6 +141,9 @@ class _MyAppState extends State<MyApp> {
                 context.read<HiveStorageRepository>(),
                 context.read<AddUpdateBabyRepository>(),
                 context.read<ECEBtoNeoRooRepository>()),
+          ),
+          BlocProvider<BluetoothControllerBloc>(
+            create: (context) => BluetoothControllerBloc(),
           ),
           BlocProvider<UpdateBabyBloc>(
             create: (context) => UpdateBabyBloc(

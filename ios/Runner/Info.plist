@@ -43,7 +43,24 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
+  <key>CADisableMinimumFrameDurationOnPhone</key>
+  <true/>
+
+  <!-- Bluetooth permissions -->
+  <key>NSBluetoothAlwaysUsageDescription</key>
+  <string>Our app needs access to Bluetooth to scan and connect to nearby devices.</string>
+
+  <!-- Location permissions -->
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>Our app needs access to your location when the app is in use to provide location-based services.</string>
+
+  <!-- Fingerprint permission -->
+  <key>NSFaceIDUsageDescription</key>
+  <string>Our app needs access to Face ID or Touch ID to authenticate you.</string>
+
+  <!-- Internet permission -->
+  <!-- No need to add anything for this permission as it is granted by default on iOS -->
+  
 </dict>
 </plist>
+

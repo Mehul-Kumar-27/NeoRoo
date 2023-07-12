@@ -36,8 +36,13 @@ class OnCallDoctorsRepository {
         DateTime currentDate = DateTime.now();
         String weekDayName = _getWeekdayName(currentDate);
         Map<String, dynamic> scheduleOfDoctors = jsonDecode(response.body);
-        List<dynamic> todaySchedule = scheduleOfDoctors[weekDayName];
-        return todaySchedule;
+        if (scheduleOfDoctors[weekDayName] != null) {
+          List<dynamic> todaySchedule = scheduleOfDoctors[weekDayName];
+          return todaySchedule;
+        } else {
+          List<dynamic> todaySchedule = [];
+          return todaySchedule;
+        }
       }
       if (response.statusCode == 400) {
         return BadRequestException(

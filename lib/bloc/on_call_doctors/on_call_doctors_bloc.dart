@@ -7,14 +7,18 @@ class OnCallDoctorsBloc extends Bloc<OnCallDoctorsEvent, OnCallDoctorsState> {
   final OnCallDoctorsRepository onCallDoctorsRepository;
   OnCallDoctorsBloc(this.onCallDoctorsRepository)
       : super(OnCallDoctorsInitial()) {
-    on<GetOnCallDoctors>((event, emit) {});
+    on<GetOnCallDoctors>(getOnCallDoctors);
   }
 
   Future<void> getOnCallDoctors(
       GetOnCallDoctors event, Emitter<OnCallDoctorsState> emitter) async {
+    print("1");
     var response = await onCallDoctorsRepository.getOnCallDoctors();
     if (response is List) {
       emitter(OnCallDoctorsSucessState(response));
+    } else if (response == null) {
+      List<dynamic> onCallDoctorsList = [];
+            emitter(OnCallDoctorsSucessState(onCallDoctorsList));
     } else {
       emitter(OnCallDoctorsErrorState(response));
     }

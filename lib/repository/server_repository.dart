@@ -79,6 +79,8 @@ class ServerRepository {
         DHIS2Config.neoRooRequiredAttributes;
     Map<String, String> ecebShortNameMapRequired =
         DHIS2Config.ecebRequiredAttributeList;
+    Map<String, String> onCallDoctorsAttributeList =
+        DHIS2Config.onCallDoctorsAttributeList;
     List<String> attributeToPrepare = [];
     Profile profile = await hiveStorageRepository.getUserProfile();
 
@@ -111,6 +113,15 @@ class ServerRepository {
         for (var ecebAttributeShortName in ecebShortNameMapRequired.keys) {
           for (var attribute in listOfTrackedAttributesPresentOnServer) {
             if (attribute.trackedAttributeShortName == ecebAttributeShortName) {
+              await hiveStorageRepository.saveTrackedAttribute(attribute);
+            }
+          }
+        }
+
+        // This Section is for the On call doctors
+        for (var onCallDoctorsShortName in onCallDoctorsAttributeList.keys) {
+          for (var attribute in listOfTrackedAttributesPresentOnServer) {
+            if (attribute.trackedAttributeShortName == onCallDoctorsShortName) {
               await hiveStorageRepository.saveTrackedAttribute(attribute);
             }
           }
@@ -168,8 +179,21 @@ class ServerRepository {
           }
         }
 
+        /// This section is for the eceb program
         for (var entityName in trackedEntitiesPresent.keys) {
           if (entityName == DHIS2Config.ecebEntityName) {
+            String entityID = trackedEntitiesPresent[entityName]!;
+            TrackedAttributes trackedAttributes = TrackedAttributes(
+                trackedAttributeId: entityID,
+                trackedAttributeName: entityName,
+                trackedAttributeShortName: entityName);
+            await hiveStorageRepository.saveTrackedAttribute(trackedAttributes);
+          }
+        }
+
+        /// This section is for the on call doctor program
+        for (var entityName in trackedEntitiesPresent.keys) {
+          if (entityName == DHIS2Config.onCallDoctorsProgramsName) {
             String entityID = trackedEntitiesPresent[entityName]!;
             TrackedAttributes trackedAttributes = TrackedAttributes(
                 trackedAttributeId: entityID,

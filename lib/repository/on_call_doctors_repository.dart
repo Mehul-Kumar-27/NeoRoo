@@ -6,6 +6,7 @@ import 'package:neoroo_app/models/profile.dart';
 import 'package:neoroo_app/models/tracked_attributes.dart';
 import 'package:neoroo_app/network/on_call_doctors_client.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
+import 'package:neoroo_app/utils/dhis2_config.dart' as DHIS2Config;
 
 class OnCallDoctorsRepository {
   final HiveStorageRepository hiveStorageRepository;
@@ -21,8 +22,8 @@ class OnCallDoctorsRepository {
     String serverURL = await hiveStorageRepository.getOrganisationURL();
     String username = profile.username;
     String password = profile.password;
-    TrackedAttributes onCallDoctorEntity =
-        await hiveStorageRepository.getTarckedAttribute("OnCall");
+    TrackedAttributes onCallDoctorEntity = await hiveStorageRepository
+        .getTarckedAttribute(DHIS2Config.onCallDoctorsProgramsName);
     try {
       var response = await onCallDoctorsClient.getOnCallDoctors(
           username,

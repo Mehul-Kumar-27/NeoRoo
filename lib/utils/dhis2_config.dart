@@ -14,8 +14,6 @@ const trackerProgramId = "Nsieup9fiQp";
 const avatarIdAttribute = "pr3gQ05Qf6q";
 const trackedEntityType = "Dnn2nc0kiud";
 
-
-
 final Map<String, String> neoRooRequiredAttributes = {
   "Birth_Date": "NeoRoo_Birth_Date",
   "Birth_Notes": "NeoRoo_Birth_Notes",
@@ -53,4 +51,10 @@ final Map<String, String> ecebRequiredAttributeList = {
   "ebdt": "ECEB_birth_description_TEI"
 };
 
+final Map<String, String> onCallDoctorsAttributeList = {
+  "On Call Doctor List": "On Call Doctor List",
+  "Organization Unit": "Organization Unit"
+};
+
 final String ecebEntityName = "Newborn";
+final String onCallDoctorsProgramsName = "On Call Doctor";

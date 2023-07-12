@@ -12,6 +12,7 @@ import 'package:neoroo_app/bloc/bluetooth_bloc/ble_bloc.dart';
 import 'package:neoroo_app/bloc/fetch_baby_bloc/fetch_baby_bloc.dart';
 import 'package:neoroo_app/bloc/learning_resources_bloc/learning_resources_bloc.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_bloc.dart';
+import 'package:neoroo_app/bloc/on_call_doctors/on_call_doctors_bloc.dart';
 import 'package:neoroo_app/bloc/server_bloc/server_bloc.dart';
 import 'package:neoroo_app/bloc/update_baby_bloc/update_baby_bloc.dart';
 import 'package:neoroo_app/models/baby_details_caregiver.dart';
@@ -24,6 +25,7 @@ import 'package:neoroo_app/network/baby_details_client.dart';
 import 'package:neoroo_app/network/fetch_baby_client.dart';
 import 'package:neoroo_app/network/fetch_from_eceb.dart';
 import 'package:neoroo_app/network/learning_resources_client.dart';
+import 'package:neoroo_app/network/on_call_doctors_client.dart';
 import 'package:neoroo_app/network/server_client.dart';
 import 'package:neoroo_app/repository/add_update_baby_repository.dart';
 import 'package:neoroo_app/repository/authentication_repository.dart';
@@ -33,6 +35,7 @@ import 'package:neoroo_app/repository/fetch_baby_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:neoroo_app/repository/learning_resources_repository.dart';
 import 'package:neoroo_app/repository/more_options_repository.dart';
+import 'package:neoroo_app/repository/on_call_doctors_repository.dart';
 import 'package:neoroo_app/repository/secure_storage_repository.dart';
 import 'package:neoroo_app/repository/server_repository.dart';
 import 'package:neoroo_app/screens/add_baby/add_baby.dart';
@@ -130,6 +133,11 @@ class _MyAppState extends State<MyApp> {
               context.read<HiveStorageRepository>(),
             ),
           ),
+          BlocProvider<OnCallDoctorsBloc>(
+            create: (context) => OnCallDoctorsBloc(
+              context.read<OnCallDoctorsRepository>(),
+            ),
+          ),
           BlocProvider<BabyDetailsCaregiverBloc>(
             create: (context) => BabyDetailsCaregiverBloc(
               context.read<BabyDetailsRepository>(),
@@ -167,6 +175,13 @@ class _MyAppState extends State<MyApp> {
       providers: [
         RepositoryProvider<HiveStorageRepository>(
           create: (context) => HiveStorageRepository(SecureStorageRepository),
+        ),
+          RepositoryProvider<OnCallDoctorsRepository>(
+          create: (context) => OnCallDoctorsRepository(
+            context.read<HiveStorageRepository>(),
+            OnCallDoctorsClient(),
+            navigatorKey.currentContext!,
+          ),
         ),
         RepositoryProvider<AuthenticationRepository>(
           create: (context) => AuthenticationRepository(

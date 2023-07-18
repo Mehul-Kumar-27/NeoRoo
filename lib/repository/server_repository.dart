@@ -81,6 +81,7 @@ class ServerRepository {
         DHIS2Config.ecebRequiredAttributeList;
     Map<String, String> onCallDoctorsAttributeList =
         DHIS2Config.onCallDoctorsAttributeList;
+    Map<String, String> toDoAttributeList = DHIS2Config.toDoAttributeList;
     List<String> attributeToPrepare = [];
     Profile profile = await hiveStorageRepository.getUserProfile();
 
@@ -122,6 +123,15 @@ class ServerRepository {
         for (var onCallDoctorsShortName in onCallDoctorsAttributeList.keys) {
           for (var attribute in listOfTrackedAttributesPresentOnServer) {
             if (attribute.trackedAttributeShortName == onCallDoctorsShortName) {
+              await hiveStorageRepository.saveTrackedAttribute(attribute);
+            }
+          }
+        }
+
+        // This Section is for the todo section of the application.
+        for (var toDoAttributeShortName in toDoAttributeList.keys) {
+          for (var attribute in listOfTrackedAttributesPresentOnServer) {
+            if (attribute.trackedAttributeShortName == toDoAttributeShortName) {
               await hiveStorageRepository.saveTrackedAttribute(attribute);
             }
           }
@@ -194,6 +204,17 @@ class ServerRepository {
         /// This section is for the on call doctor program
         for (var entityName in trackedEntitiesPresent.keys) {
           if (entityName == DHIS2Config.onCallDoctorsProgramsName) {
+            String entityID = trackedEntitiesPresent[entityName]!;
+            TrackedAttributes trackedAttributes = TrackedAttributes(
+                trackedAttributeId: entityID,
+                trackedAttributeName: entityName,
+                trackedAttributeShortName: entityName);
+            await hiveStorageRepository.saveTrackedAttribute(trackedAttributes);
+          }
+        }
+        // This Section is for the ToDo Section
+        for (var entityName in trackedEntitiesPresent.keys) {
+          if (entityName == DHIS2Config.toDoEntityName) {
             String entityID = trackedEntitiesPresent[entityName]!;
             TrackedAttributes trackedAttributes = TrackedAttributes(
                 trackedAttributeId: entityID,

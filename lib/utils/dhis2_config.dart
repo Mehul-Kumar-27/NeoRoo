@@ -59,3 +59,13 @@ final Map<String, String> onCallDoctorsAttributeList = {
 
 final String ecebEntityName = "Newborn";
 final String onCallDoctorsProgramsName = "On Call Doctor";
+
+final Map<String, String> toDoAttributeList = {
+  "ToDo Id": "ToDo Id",
+  "ToDo Title": "ToDo Title",
+  "ToDo body": "ToDo body",
+  "ToDo tag": "ToDo tag",
+  "ToDo time": "ToDo time"
+};
+
+final String toDoEntityName = "ToDo";

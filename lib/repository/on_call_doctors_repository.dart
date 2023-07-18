@@ -24,6 +24,8 @@ class OnCallDoctorsRepository {
     String password = profile.password;
     TrackedAttributes onCallDoctorEntity = await hiveStorageRepository
         .getTarckedAttribute(DHIS2Config.onCallDoctorsProgramsName);
+    TrackedAttributes onCallDoctorListAttribute =
+        await hiveStorageRepository.getTarckedAttribute("On Call Doctor List");
     try {
       var response = await onCallDoctorsClient.getOnCallDoctors(
           username,
@@ -35,14 +37,24 @@ class OnCallDoctorsRepository {
       if (response.statusCode == 200) {
         DateTime currentDate = DateTime.now();
         String weekDayName = _getWeekdayName(currentDate);
-        Map<String, dynamic> scheduleOfDoctors = jsonDecode(response.body);
-        if (scheduleOfDoctors[weekDayName] != null) {
-          List<dynamic> todaySchedule = scheduleOfDoctors[weekDayName];
-          return todaySchedule;
-        } else {
-          List<dynamic> todaySchedule = [];
-          return todaySchedule;
-        }
+        Map<String, dynamic> responseMap = jsonDecode(response.body);
+        List<dynamic> trackedEntityInstances =
+            responseMap['trackedEntityInstances'];
+        List<dynamic> attributes = trackedEntityInstances[0]['attributes'];
+        Map<String, dynamic> onCallDoctorAttribute = attributes.firstWhere(
+            (attr) =>
+                attr['attribute'] ==
+                onCallDoctorListAttribute.trackedAttributeId,
+            orElse: () => null);
+        String onCallDoctorListValue = onCallDoctorAttribute['value'];
+
+        // Parse the nested JSON object
+        Map<String, dynamic> onCallDoctorList =
+            jsonDecode(onCallDoctorListValue);
+
+        // Access the doctor list for a specific day (e.g., Monday)
+        List<dynamic> todaysList = onCallDoctorList[weekDayName];
+        print(todaysList);
       }
       if (response.statusCode == 400) {
         return BadRequestException(

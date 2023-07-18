@@ -53,7 +53,8 @@ final Map<String, String> ecebRequiredAttributeList = {
 
 final Map<String, String> onCallDoctorsAttributeList = {
   "On Call Doctor List": "On Call Doctor List",
-  "Organization Unit": "Organization Unit"
+  "Organization Unit": "Organization Unit",
+  "On Call Doctor List ID": "On Call Doctor List ID"
 };
 
 final String ecebEntityName = "Newborn";

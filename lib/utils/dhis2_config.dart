@@ -65,7 +65,8 @@ final Map<String, String> toDoAttributeList = {
   "ToDo Title": "ToDo Title",
   "ToDo body": "ToDo body",
   "ToDo tag": "ToDo tag",
-  "ToDo time": "ToDo time"
+  "ToDo time": "ToDo time",
+  "User Id": "User Id"
 };
 
 final String toDoEntityName = "ToDo";

@@ -30,7 +30,7 @@ class BabyAddUpdateClient {
       String username,
       String password,
       String serverURL,
-      String organisationUnitID,
+      String organizationUnitID,
       Map<String, String> attributesShortNameAndUID) async {
     List attributes = [
       {
@@ -136,7 +136,7 @@ class BabyAddUpdateClient {
       body: jsonEncode(
         {
           "trackedEntityType": attributesShortNameAndUID["NeoRoo"]!,
-          "orgUnit": organisationUnitID,
+          "orgUnit": organizationUnitID,
           "attributes": attributes,
         },
       ),

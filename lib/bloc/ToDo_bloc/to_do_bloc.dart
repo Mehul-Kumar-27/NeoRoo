@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
-
 import 'package:neoroo_app/bloc/ToDo_bloc/to_do_events.dart';
 import 'package:neoroo_app/bloc/ToDo_bloc/to_do_states.dart';
 import 'package:neoroo_app/exceptions/custom_exception.dart';
@@ -21,7 +19,7 @@ class ToDoBloc extends Bloc<ToDoEvent, ToDoState> {
         event.toDoBody.isEmpty ||
         event.toDoId.isEmpty ||
         event.toDoTitle.isEmpty) {
-      emitter(AddToFailedState(
+      emitter(AddToDoFailedState(
           exception: FetchDataException("Please fill all details", 404)));
     } else {
       Either<bool, CustomException> response = await toDoRepository.addToDo(
@@ -34,7 +32,25 @@ class ToDoBloc extends Bloc<ToDoEvent, ToDoState> {
           (l) => {
                 if (l == true) {emitter(AddDoToSucessState())}
               },
-          (r) => {emitter(AddToFailedState(exception: r))});
+          (r) => {emitter(AddToDoFailedState(exception: r))});
+    }
+  }
+
+  Future updateToDo(UpdateToDoEvent event, Emitter<ToDoState> emitter) async {
+    if (event.toDo.toDoTitle.isEmpty ||
+        event.toDo.username.isEmpty ||
+        event.toDo.todoTrackedInstanceId.isEmpty ||
+        event.toDo.toDoBody.isEmpty) {
+      emitter(UpdateToDoFailedState(
+          exception: FetchDataException("Please fill all details", 404)));
+    } else {
+      Either<bool, CustomException> response =
+          await toDoRepository.updateToDo(event.toDo);
+      response.fold(
+          (l) => {
+                if (l == true) {emitter(UpdateToDoSucessState())}
+              },
+          (r) => {emitter(UpdateToDoFailedState(exception: r))});
     }
   }
 }

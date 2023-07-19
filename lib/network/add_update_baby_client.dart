@@ -188,7 +188,7 @@ class BabyAddUpdateClient {
       Infant infant,
       String username,
       String password,
-      String organisationUnitID,
+      String organizationUnitID,
       String serverURL,
       Map<String, String> attributesShortNameAndUID) async {
     String basicAuth =
@@ -283,7 +283,7 @@ class BabyAddUpdateClient {
     ];
 
     Map<String, dynamic> requestBody = {
-      "orgUnit": organisationUnitID,
+      "orgUnit": organizationUnitID,
       "attributes": attributes
     };
     final response = await http.put(

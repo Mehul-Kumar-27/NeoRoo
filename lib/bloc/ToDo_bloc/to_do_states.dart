@@ -3,13 +3,22 @@ import 'package:neoroo_app/exceptions/custom_exception.dart';
 
 class ToDoState {}
 
-class ToDoInitial extends ToDoState{}
+class ToDoInitial extends ToDoState {}
 
-class AddDoToSucessState extends ToDoState{}
+class AddDoToSucessState extends ToDoState {}
 
-class AddToFailedState extends ToDoState {
- final CustomException exception;
-  AddToFailedState({
+class AddToDoFailedState extends ToDoState {
+  final CustomException exception;
+  AddToDoFailedState({
+    required this.exception,
+  });
+}
+
+class UpdateToDoSucessState extends ToDoState {}
+
+class UpdateToDoFailedState extends ToDoState {
+  final CustomException exception;
+  UpdateToDoFailedState({
     required this.exception,
   });
 }

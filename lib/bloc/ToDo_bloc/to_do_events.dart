@@ -24,3 +24,10 @@ class UpdateToDoEvent extends ToDoEvent {
     required this.toDo,
   });
 }
+
+class DeleteToDoEvent extends ToDoEvent {
+  final ToDo toDo;
+  DeleteToDoEvent({
+    required this.toDo,
+  });
+}

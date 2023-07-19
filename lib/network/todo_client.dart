@@ -87,4 +87,19 @@ class AddUpdateDeleteToDoClient {
 
     return response;
   }
+
+  Future<http.Response> deleteToDo(String username, String password,
+      String organizationUnitID, String serverURL, ToDo toDo) async {
+    String endpointUrl =
+        '$serverURL/api/33/trackedEntityInstances/${toDo.todoTrackedInstanceId}';
+    final authHeader =
+        'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+    return await http.delete(
+      Uri.parse(endpointUrl),
+      headers: {
+        'Authorization': authHeader,
+        'Content-Type': 'application/json'
+      },
+    );
+  }
 }

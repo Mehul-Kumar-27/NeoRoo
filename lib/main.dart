@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:neoroo_app/bloc/ToDo_bloc/to_do_bloc.dart';
 import 'package:neoroo_app/bloc/add_baby_bloc/add_baby_bloc.dart';
 import 'package:neoroo_app/bloc/all_babies_bloc/all_babies_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/local_auth_login_bloc/local_authentication_bloc.dart';
@@ -27,6 +28,7 @@ import 'package:neoroo_app/network/fetch_from_eceb.dart';
 import 'package:neoroo_app/network/learning_resources_client.dart';
 import 'package:neoroo_app/network/on_call_doctors_client.dart';
 import 'package:neoroo_app/network/server_client.dart';
+import 'package:neoroo_app/network/todo_client.dart';
 import 'package:neoroo_app/repository/add_update_baby_repository.dart';
 import 'package:neoroo_app/repository/authentication_repository.dart';
 import 'package:neoroo_app/repository/baby_details_repository.dart';
@@ -38,6 +40,7 @@ import 'package:neoroo_app/repository/more_options_repository.dart';
 import 'package:neoroo_app/repository/on_call_doctors_repository.dart';
 import 'package:neoroo_app/repository/secure_storage_repository.dart';
 import 'package:neoroo_app/repository/server_repository.dart';
+import 'package:neoroo_app/repository/todo_repository.dart';
 import 'package:neoroo_app/screens/add_baby/add_baby.dart';
 import 'package:neoroo_app/screens/authentication/login/login.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -169,14 +172,18 @@ class _MyAppState extends State<MyApp> {
               create: (context) => ServerBloc(
                     context.read<ServerRepository>(),
                     context.read<HiveStorageRepository>(),
-                  ))
+                  )),
+          BlocProvider<ToDoBloc>(
+              create: (context) => ToDoBloc(
+                    context.read<ToDoRepository>(),
+                  )),
         ],
       ),
       providers: [
         RepositoryProvider<HiveStorageRepository>(
           create: (context) => HiveStorageRepository(SecureStorageRepository),
         ),
-          RepositoryProvider<OnCallDoctorsRepository>(
+        RepositoryProvider<OnCallDoctorsRepository>(
           create: (context) => OnCallDoctorsRepository(
             context.read<HiveStorageRepository>(),
             OnCallDoctorsClient(),
@@ -232,7 +239,13 @@ class _MyAppState extends State<MyApp> {
                   context.read<HiveStorageRepository>(),
                   ServerClient(),
                   navigatorKey.currentContext!,
-                ))
+                )),
+        RepositoryProvider<ToDoRepository>(
+            create: (context) => ToDoRepository(
+              hiveStorageRepository: context.read<HiveStorageRepository>(),
+              addUpdateDeleteToDoClient: AddUpdateDeleteToDoClient(),
+              context: context
+            ))
       ],
     );
   }

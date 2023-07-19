@@ -22,3 +22,12 @@ class UpdateToDoFailedState extends ToDoState {
     required this.exception,
   });
 }
+
+class DeleteToDoSucess extends ToDoState{}
+
+class DeleteToDoFailedState extends ToDoState {
+  final CustomException exception;
+  DeleteToDoFailedState({
+    required this.exception,
+  });
+}

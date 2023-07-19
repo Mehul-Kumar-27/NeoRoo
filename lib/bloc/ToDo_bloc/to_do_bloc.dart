@@ -12,6 +12,7 @@ class ToDoBloc extends Bloc<ToDoEvent, ToDoState> {
     this.toDoRepository,
   ) : super(ToDoInitial()) {
     on<AddToDoEvent>(addToDoEvent);
+    on<UpdateToDoEvent>(updateToDo);
   }
 
   Future addToDoEvent(AddToDoEvent event, Emitter<ToDoState> emitter) async {
@@ -52,5 +53,15 @@ class ToDoBloc extends Bloc<ToDoEvent, ToDoState> {
               },
           (r) => {emitter(UpdateToDoFailedState(exception: r))});
     }
+  }
+
+  Future deleteToDo(DeleteToDoEvent event, Emitter<ToDoState> emitter) async {
+    Either<bool, CustomException> response =
+        await toDoRepository.deleteToDo(event.toDo);
+    response.fold(
+        (l) => {
+              if (l == true) {emitter(UpdateToDoSucessState())}
+            },
+        (r) => {emitter(UpdateToDoFailedState(exception: r))});
   }
 }

@@ -138,6 +138,52 @@ class ToDoRepository {
     }
   }
 
+  Future<Either<bool, CustomException>> deleteToDo(ToDo toDo) async {
+    try {
+      Profile profile = await hiveStorageRepository.getUserProfile();
+      String organizationUnitID =
+          await hiveStorageRepository.getSelectedOrganisation();
+      String serverURL = await hiveStorageRepository.getOrganisationURL();
+      String username = profile.username;
+      String password = profile.password;
+      http.Response response = await addUpdateDeleteToDoClient.deleteToDo(
+          username, password, organizationUnitID, serverURL, toDo);
+      if (response.statusCode == 200) {
+        var responseBody = jsonDecode(response.body);
+        print(responseBody);
+
+        return Left(true);
+      }
+      if (response.statusCode == 401 || response.statusCode == 403) {
+        var responseBody = jsonDecode(response.body);
+        print(responseBody);
+        return Right(
+          UnauthorisedException(
+            AppLocalizations.of(context).unauthorized,
+            response.statusCode,
+          ),
+        );
+      } else {
+        var responseBody = jsonDecode(response.body);
+        print(responseBody);
+        print(response.statusCode);
+        return Right(
+          FetchDataException(
+            AppLocalizations.of(context).errorDuringCommunication,
+            null,
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
+
+      return Right(FetchDataException(
+        e.toString(),
+        404,
+      ));
+    }
+  }
+
   Future<Map<String, String>> trackedAttributesAndUID() async {
     Map<String, String> trackedAttributesAndUID = {};
     Map<String, String> toDoAttributes = DHIS2Config.toDoAttributeList;

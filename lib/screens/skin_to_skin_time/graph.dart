@@ -52,15 +52,11 @@ class _ChartWidgetState extends State<ChartWidget> {
     List<Data> nskinToSkinList = kmcList[0];
 
     for (var element in skinToSkinList) {
-      setState(() {
-        totalSkinToSkin = totalNSkinToSkin + element.hours;
-      });
+      totalSkinToSkin = totalSkinToSkin + element.hours;
     }
 
     for (var element in nskinToSkinList) {
-      setState(() {
-        totalNSkinToSkin = totalNSkinToSkin + element.hours;
-      });
+      totalNSkinToSkin = totalNSkinToSkin + element.hours;
     }
   }
 
@@ -68,8 +64,8 @@ class _ChartWidgetState extends State<ChartWidget> {
   void initState() {
     setState(() {
       goalDataList = prepareGoalGraph(widget.data[1]);
+      getTotalKMCHours(widget.data);
     });
-    getTotalKMCHours(widget.data);
 
     super.initState();
   }

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -32,7 +33,9 @@ class _ChartWidgetState extends State<ChartWidget> {
     }
   }
 
-  List<Data> goalDataList=  [];
+  List<Data> goalDataList = [];
+  double totalSkinToSkin = 0;
+  double totalNSkinToSkin = 0;
 
   List<Data> prepareGoalGraph(List<Data> dataList) {
     List<Data> goalData = [];
@@ -44,12 +47,30 @@ class _ChartWidgetState extends State<ChartWidget> {
     return goalData;
   }
 
+  getTotalKMCHours(List<List<Data>> kmcList) {
+    List<Data> skinToSkinList = kmcList[1];
+    List<Data> nskinToSkinList = kmcList[0];
+
+    for (var element in skinToSkinList) {
+      setState(() {
+        totalSkinToSkin = totalNSkinToSkin + element.hours;
+      });
+    }
+
+    for (var element in nskinToSkinList) {
+      setState(() {
+        totalNSkinToSkin = totalNSkinToSkin + element.hours;
+      });
+    }
+  }
+
   @override
   void initState() {
     setState(() {
-       goalDataList = prepareGoalGraph(widget.data[1]);
+      goalDataList = prepareGoalGraph(widget.data[1]);
     });
-   
+    getTotalKMCHours(widget.data);
+
     super.initState();
   }
 
@@ -59,17 +80,25 @@ class _ChartWidgetState extends State<ChartWidget> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 17.0, left: 18),
+            padding: const EdgeInsets.only(
+                bottom: 17.0, left: 18, right: 18, top: 8),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Hours',
-                  style: TextStyle(
-                      fontFamily: "Roboto Mono",
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400),
+                Padding(
+                  padding: const EdgeInsets.only(top: 43.0),
+                  child: Text(
+                    'Hours',
+                    style: TextStyle(
+                        fontFamily: "Roboto Mono",
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400),
+                  ),
                 ),
+                TotalKmcHoursWidget(
+                  totalSkinToSkin: totalSkinToSkin,
+                  totalNSkinToSkin: totalNSkinToSkin,
+                )
               ],
             ),
           ),
@@ -80,7 +109,8 @@ class _ChartWidgetState extends State<ChartWidget> {
               legend: Legend(isVisible: true, position: LegendPosition.bottom),
               backgroundColor: Colors.white,
               primaryXAxis: CategoryAxis(
-                  title: AxisTitle(text: "Day", alignment: ChartAlignment.far)),
+                  title:
+                      AxisTitle(text: "Days", alignment: ChartAlignment.far)),
               primaryYAxis: NumericAxis(
                 maximum: 24,
                 minimum: 0,
@@ -101,7 +131,7 @@ class _ChartWidgetState extends State<ChartWidget> {
                   isVisibleInLegend: false,
                   markerSettings:
                       MarkerSettings(height: 2, width: 2, isVisible: true),
-                  color: Colors.grey.shade500,
+                  color: Color.fromRGBO(196, 196, 196, 1),
                   name: "Non Skin-Skin",
                   dataSource: widget.data[0],
                   xValueMapper: (Data data, _) => getWeekDayName(data.date),
@@ -123,9 +153,84 @@ class _ChartWidgetState extends State<ChartWidget> {
   }
 }
 
+class TotalKmcHoursWidget extends StatelessWidget {
+  const TotalKmcHoursWidget({
+    Key? key,
+    required this.totalSkinToSkin,
+    required this.totalNSkinToSkin,
+  }) : super(key: key);
+
+  final double totalSkinToSkin;
+  final double totalNSkinToSkin;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 173,
+      height: 60,
+      decoration: BoxDecoration(color: Color.fromRGBO(239, 231, 243, 1)),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0, left: 13),
+            child: Row(
+              children: [
+                Text(
+                  "Total KMC hours",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 13.0, right: 13, top: 10),
+            child: Row(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: 8,
+                      width: 8,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromRGBO(110, 42, 127, 1)),
+                    ),
+                    SizedBox(
+                      width: 7,
+                    ),
+                    Text("$totalSkinToSkin")
+                  ],
+                ),
+                SizedBox(
+                  width: 11,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      height: 8,
+                      width: 8,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromRGBO(196, 196, 196, 1)),
+                    ),
+                    SizedBox(
+                      width: 7,
+                    ),
+                    Text("$totalNSkinToSkin")
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class Data {
   final String date;
-  final int hours;
+  final double hours;
 
   Data({required this.date, required this.hours});
 }

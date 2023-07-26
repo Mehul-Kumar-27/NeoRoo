@@ -13,7 +13,7 @@ class SkinToSkinTimeScreen extends StatefulWidget {
 
 class _SkinToSkinTimeScreenState extends State<SkinToSkinTimeScreen> {
   List<Data> data1 = [
-    Data(date: '2023-07-23', hours: 8),
+    Data(date: '2023-07-23', hours: 8.5),
     Data(date: '2023-07-24', hours: 14),
     Data(date: '2023-07-25', hours: 10),
     Data(date: '2023-07-26', hours: 6),

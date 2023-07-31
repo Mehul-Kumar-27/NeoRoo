@@ -1,11 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:neoroo_app/models/infant_model.dart';
+import 'package:neoroo_app/screens/skin_to_skin_time/edit_dialog.dart';
 
 
 class LinearCalendarWidget extends StatefulWidget {
+  final Infant infant;
   const LinearCalendarWidget({
     Key? key,
+    required this.infant,
   }) : super(key: key);
   @override
   _LinearCalendarWidgetState createState() => _LinearCalendarWidgetState();
@@ -70,7 +74,9 @@ class _LinearCalendarWidgetState extends State<LinearCalendarWidget> {
               Row(
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      showEditGoalDialog(context, widget.infant);
+                    },
                     child: Container(
                       width: 70,
                       height: 24,
@@ -183,3 +189,18 @@ class _LinearCalendarWidgetState extends State<LinearCalendarWidget> {
     );
   }
 }
+
+
+
+void showEditGoalDialog(BuildContext context, Infant infant) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+          child: EditDialog(
+        infant: infant,
+      ));
+    },
+  );
+}
+

@@ -39,13 +39,14 @@ class InfantAdapter extends TypeAdapter<Infant> {
       presentWeight: fields[19] as String,
       neoDeviceID: fields[20] as String,
       avatarID: fields[21] as String,
+      goals: fields[22] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Infant obj) {
     writer
-      ..writeByte(22)
+      ..writeByte(23)
       ..writeByte(0)
       ..write(obj.infantId)
       ..writeByte(1)
@@ -89,7 +90,9 @@ class InfantAdapter extends TypeAdapter<Infant> {
       ..writeByte(20)
       ..write(obj.neoDeviceID)
       ..writeByte(21)
-      ..write(obj.avatarID);
+      ..write(obj.avatarID)
+      ..writeByte(22)
+      ..write(obj.goals);
   }
 
   @override

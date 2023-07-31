@@ -24,7 +24,7 @@ class FetchBabyBloc extends Bloc<FetchBabyEvents, FetchBabyStates> {
 
   Future<void> getInfantsFromServer(
       GetInfantsFromServer event, Emitter<FetchBabyStates> emitter) async {
-    emitter(FetchBabyInitialState());
+    emitter(FetchBabyTriggeredState());
     Profile profile = await hiveStorageRepository.getUserProfile();
 
     try {
@@ -49,7 +49,7 @@ class FetchBabyBloc extends Bloc<FetchBabyEvents, FetchBabyStates> {
 
   Future<void> searchInInfantList(
       SearchInfants event, Emitter<FetchBabyStates> emitter) async {
-          emitter(FetchInfantFromServerSuccess(event.infantList));
+    emitter(FetchInfantFromServerSuccess(event.infantList));
     List<Infant> infantSearchResult = [];
 
     for (var infant in event.infantList) {

@@ -60,6 +60,7 @@ class UpdateBabyBloc extends Bloc<UpdateBabyEvents, UpdateBabyStates> {
         wardNumber: updateBabyEvent.wardNumber,
         presentWeight: updateBabyEvent.presentWeight,
         neoDeviceID: updateBabyEvent.neoDeviceID,
+        goals: updateBabyEvent.goals,
         avatarID: updateBabyEvent.avatarID);
     Either<bool, CustomException> updateBabyRespponse =
         await addUpdateBabyRepository.updateBaby(infant);

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class UpdateBabyEvents {}
 
 class UpdateBabyEvent extends UpdateBabyEvents {
@@ -23,6 +24,7 @@ class UpdateBabyEvent extends UpdateBabyEvents {
   final String infantBloodOxygen;
   final String infantId;
   final String infantTrackedInstanceID;
+  final String goals;
 
   UpdateBabyEvent(
     this.birthDate,
@@ -47,5 +49,6 @@ class UpdateBabyEvent extends UpdateBabyEvents {
     this.infantBloodOxygen,
     this.infantId,
     this.infantTrackedInstanceID,
+    this.goals,
   );
 }

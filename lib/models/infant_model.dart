@@ -48,31 +48,33 @@ class Infant {
   late String neoDeviceID;
   @HiveField(21)
   late String avatarID;
+  @HiveField(22)
+  late String goals;
 
-  Infant({
-    required this.infantId,
-    required this.moterName,
-    required this.motherUsername,
-    required this.dateOfBirth,
-    required this.timeOfBirth,
-    required this.birthWeight,
-    required this.bodyLength,
-    required this.headCircumference,
-    required this.birthNotes,
-    required this.resuscitation,
-    required this.neoTemperature,
-    required this.neoHeartRate,
-    required this.neoRespiratoryRate,
-    required this.neoOxygenSaturation,
-    required this.neoSTS,
-    required this.neoNSTS,
-    required this.infantTrackedInstanceID,
-    required this.cribNumber,
-    required this.wardNumber,
-    required this.presentWeight,
-    required this.neoDeviceID,
-    required this.avatarID,
-  });
+  Infant(
+      {required this.infantId,
+      required this.moterName,
+      required this.motherUsername,
+      required this.dateOfBirth,
+      required this.timeOfBirth,
+      required this.birthWeight,
+      required this.bodyLength,
+      required this.headCircumference,
+      required this.birthNotes,
+      required this.resuscitation,
+      required this.neoTemperature,
+      required this.neoHeartRate,
+      required this.neoRespiratoryRate,
+      required this.neoOxygenSaturation,
+      required this.neoSTS,
+      required this.neoNSTS,
+      required this.infantTrackedInstanceID,
+      required this.cribNumber,
+      required this.wardNumber,
+      required this.presentWeight,
+      required this.neoDeviceID,
+      required this.avatarID,
+      required this.goals});
 
   Infant.fromJson(Map<String, dynamic> json) {
     List<dynamic> attributeList = json['attributes'];
@@ -122,6 +124,8 @@ class Infant {
         neoOxygenSaturation = element['value'];
       } else if (displayName == "NeoRoo_InfantID") {
         infantId = element['value'];
+      } else if (displayName == "NeoRoo_Goals") {
+        goals = element['value'];
       } else {
         print("Unknown attribute: $displayName");
       }

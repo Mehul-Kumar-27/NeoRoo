@@ -203,31 +203,31 @@ class _UpdateBabyState extends State<UpdateBaby> {
                   onPressed: () {
                     BlocProvider.of<UpdateBabyBloc>(context).add(
                       UpdateBabyEvent(
-                        birthDate.text,
-                        birthDescription.text,
-                        birthTime.text,
-                        birthWeight.text,
-                        bodyLength.text,
-                        cribNumber.text,
-                        widget.infant.neoDeviceID, // Neo Device ID
-                        headCircumference.text,
-                        widget.infant.avatarID,
-                        (needsResuscitation["value"] == true) ? "Yes" : "No",
-                        wardNumber.text,
-                        birthWeight.text,
-                        motherName.text,
-                        motherID.text,
-                        widget.infant.neoSTS, //sts time
-                        widget.infant.neoNSTS, //n sts time
-                        widget.infant.neoTemperature, //infant temperature
-                        widget.infant.neoHeartRate, //infant heart rate
-                        widget.infant
-                            .neoRespiratoryRate, //infant respiration rate
-                        widget.infant
-                            .neoOxygenSaturation, //infant oxygen saturation
-                        widget.infant.infantId,
-                        widget.infant.infantTrackedInstanceID,
-                      ),
+                          birthDate.text,
+                          birthDescription.text,
+                          birthTime.text,
+                          birthWeight.text,
+                          bodyLength.text,
+                          cribNumber.text,
+                          widget.infant.neoDeviceID, // Neo Device ID
+                          headCircumference.text,
+                          widget.infant.avatarID,
+                          (needsResuscitation["value"] == true) ? "Yes" : "No",
+                          wardNumber.text,
+                          birthWeight.text,
+                          motherName.text,
+                          motherID.text,
+                          widget.infant.neoSTS, //sts time
+                          widget.infant.neoNSTS, //n sts time
+                          widget.infant.neoTemperature, //infant temperature
+                          widget.infant.neoHeartRate, //infant heart rate
+                          widget.infant
+                              .neoRespiratoryRate, //infant respiration rate
+                          widget.infant
+                              .neoOxygenSaturation, //infant oxygen saturation
+                          widget.infant.infantId,
+                          widget.infant.infantTrackedInstanceID,
+                          widget.infant.goals),
                     );
                   },
                 ),

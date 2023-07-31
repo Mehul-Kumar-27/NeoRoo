@@ -86,6 +86,7 @@ class ECEBtoNeoRooRepository {
               wardNumber: wardNumber,
               presentWeight: '',
               neoDeviceID: 'Dummy',
+              goals: "",
               avatarID: '');
           ecebInfantList.add(ecebInfant);
         }

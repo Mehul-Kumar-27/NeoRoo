@@ -5,6 +5,7 @@ import 'package:neoroo_app/models/infant_model.dart';
 class FetchBabyStates {}
 
 class FetchBabyInitialState extends FetchBabyStates {}
+class FetchBabyTriggeredState extends FetchBabyStates{}
 
 class FetchInfantFromServerSuccess extends FetchBabyStates {
   final List<Infant> infantList;

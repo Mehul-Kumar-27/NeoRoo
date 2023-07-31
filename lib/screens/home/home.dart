@@ -1,12 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:neoroo_app/utils/dhis2_config.dart' as DHIS2Config;
 import 'package:neoroo_app/bloc/fetch_baby_bloc/fetch_baby_bloc.dart';
 import 'package:neoroo_app/bloc/fetch_baby_bloc/fetch_baby_events.dart';
 import 'package:neoroo_app/bloc/fetch_baby_bloc/fetch_baby_states.dart';
 import 'package:neoroo_app/models/infant_model.dart';
 import 'package:neoroo_app/screens/update_baby/update_baby.dart';
+import 'package:neoroo_app/utils/text_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -32,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         body: BlocConsumer<FetchBabyBloc, FetchBabyStates>(
           listener: (context, state) {
+            print("This is home page");
+            print(state);
             if (state is FetchInfantFromServerError) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -57,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           },
           builder: (context, state) {
-            if (state is FetchBabyInitialState) {
+            if (state is FetchBabyTriggeredState) {
               return Container(
                 child: Center(
                   child: CircularProgressIndicator(),
@@ -129,8 +132,7 @@ class InfantWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String url =
-        "https://www.parents.com/thmb/lu1-Kj8eY6ceThlQakCoQyjNzjU=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-1300384940-2000-a5979552a66f4fc7b67aeb35110fea8d.jpg";
+  
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Container(
@@ -150,7 +152,7 @@ class InfantWidget extends StatelessWidget {
                   child: Center(
                     child: CircleAvatar(
                       radius: 45,
-                      backgroundImage: NetworkImage(url),
+                      backgroundImage: NetworkImage(DHIS2Config.babyImageURL),
                     ),
                   ),
                 ),
@@ -178,26 +180,3 @@ class InfantWidget extends StatelessWidget {
   }
 }
 
-class TextWidget extends StatelessWidget {
-  final String heading;
-  final String data;
-  const TextWidget({
-    Key? key,
-    required this.heading,
-    required this.data,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-        text: TextSpan(
-            text: heading,
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-            children: [
-          TextSpan(
-              text: data,
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.normal))
-        ]));
-  }
-}

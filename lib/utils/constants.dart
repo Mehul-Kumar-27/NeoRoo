@@ -14,3 +14,4 @@ Color deepWhite = Color.fromRGBO(255, 255, 255, 1);
 Color themepurple = Color.fromRGBO(110, 120, 247, 1);
 Color textGrey = Color.fromRGBO(96, 96, 104, 1);
 Color black = Colors.black;
+Color purpleTheme = Color.fromRGBO(110, 42, 127, 1);

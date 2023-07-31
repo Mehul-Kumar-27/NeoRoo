@@ -70,3 +70,5 @@ final Map<String, String> toDoAttributeList = {
 };
 
 final String toDoEntityName = "ToDo";
+
+final String babyImageURL =   "https://www.parents.com/thmb/lu1-Kj8eY6ceThlQakCoQyjNzjU=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-1300384940-2000-a5979552a66f4fc7b67aeb35110fea8d.jpg";

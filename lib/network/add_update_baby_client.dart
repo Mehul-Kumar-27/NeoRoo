@@ -113,6 +113,10 @@ class BabyAddUpdateClient {
         "attribute": attributesShortNameAndUID["infant_ID"]!,
         "value": infantId,
       },
+      {
+        "attribute": attributesShortNameAndUID["Goals"]!,
+        "value": "Dummy",
+      },
     ];
     if (avatarID != null) {
       attributes.add(
@@ -279,6 +283,10 @@ class BabyAddUpdateClient {
       {
         "attribute": attributesShortNameAndUID["NeoRoo_TEI_avatar"]!,
         "value": "Dummy",
+      },
+      {
+        "attribute": attributesShortNameAndUID["Goals"]!,
+        "value": infant.goals,
       },
     ];
 

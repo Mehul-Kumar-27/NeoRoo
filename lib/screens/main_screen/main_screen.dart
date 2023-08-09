@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:neoroo_app/screens/home/home.dart';
+import 'package:neoroo_app/screens/messaging/messaging_home.dart';
 import 'package:neoroo_app/screens/more_options/more_options.dart';
 import 'package:neoroo_app/screens/notifications/notifications.dart';
 import 'package:neoroo_app/screens/skin_to_skin_time/skin_to_skin_time.dart';
@@ -27,7 +28,7 @@ class _MainScreenState extends State<MainScreen> {
         HomeScreen(),
         SkinToSkinTimeScreen(),
         VitalsPage(),
-        NotificationPage(),
+        ChatHomePage(),
         MoreOptions(),
       ],
       items: [
@@ -57,10 +58,10 @@ class _MainScreenState extends State<MainScreen> {
         ),
         PersistentBottomNavBarItem(
           icon: Icon(
-            Icons.notifications_active,
+            Icons.chat,
           ),
-          title: AppLocalizations.of(context).notifications,
-          activeColorPrimary: primaryBlue,
+          title: "Messaging",
+          activeColorPrimary: purpleTheme,
           inactiveColorPrimary: outlineGrey,
         ),
         PersistentBottomNavBarItem(

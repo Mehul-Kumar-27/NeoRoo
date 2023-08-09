@@ -152,7 +152,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 LoginButton(
                   onPressed: () {
-                  
                     BlocProvider.of<LoginBloc>(context).add(
                       LoginEvent(
                         _serverURLController.text,

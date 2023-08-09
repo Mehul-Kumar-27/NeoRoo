@@ -12,6 +12,7 @@ import 'package:neoroo_app/bloc/baby_details_family_member/baby_details_family_m
 import 'package:neoroo_app/bloc/bluetooth_bloc/ble_bloc.dart';
 import 'package:neoroo_app/bloc/fetch_baby_bloc/fetch_baby_bloc.dart';
 import 'package:neoroo_app/bloc/learning_resources_bloc/learning_resources_bloc.dart';
+import 'package:neoroo_app/bloc/message_bloc/message_bloc.dart';
 import 'package:neoroo_app/bloc/more_options/more_options_bloc.dart';
 import 'package:neoroo_app/bloc/on_call_doctors/on_call_doctors_bloc.dart';
 import 'package:neoroo_app/bloc/server_bloc/server_bloc.dart';
@@ -26,6 +27,7 @@ import 'package:neoroo_app/network/baby_details_client.dart';
 import 'package:neoroo_app/network/fetch_baby_client.dart';
 import 'package:neoroo_app/network/fetch_from_eceb.dart';
 import 'package:neoroo_app/network/learning_resources_client.dart';
+import 'package:neoroo_app/network/message_network_client.dart';
 import 'package:neoroo_app/network/on_call_doctors_client.dart';
 import 'package:neoroo_app/network/server_client.dart';
 import 'package:neoroo_app/network/todo_client.dart';
@@ -36,6 +38,7 @@ import 'package:neoroo_app/repository/eceb_to_neoroo_repository.dart';
 import 'package:neoroo_app/repository/fetch_baby_repository.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 import 'package:neoroo_app/repository/learning_resources_repository.dart';
+import 'package:neoroo_app/repository/message_repository.dart';
 import 'package:neoroo_app/repository/more_options_repository.dart';
 import 'package:neoroo_app/repository/on_call_doctors_repository.dart';
 import 'package:neoroo_app/repository/secure_storage_repository.dart';
@@ -177,6 +180,12 @@ class _MyAppState extends State<MyApp> {
               create: (context) => ToDoBloc(
                     context.read<ToDoRepository>(),
                   )),
+          BlocProvider<MessageBloc>(
+              create: (context) => MessageBloc(
+                  messageRepository: MessageRepository(
+                      messageNetwrokApiClient: MessageNetwrokApiClient(),
+                      hiveStorageRepository:
+                          context.read<HiveStorageRepository>())))
         ],
       ),
       providers: [
@@ -242,10 +251,13 @@ class _MyAppState extends State<MyApp> {
                 )),
         RepositoryProvider<ToDoRepository>(
             create: (context) => ToDoRepository(
-              hiveStorageRepository: context.read<HiveStorageRepository>(),
-              addUpdateDeleteToDoClient: AddUpdateDeleteToDoClient(),
-              context: context
-            ))
+                hiveStorageRepository: context.read<HiveStorageRepository>(),
+                addUpdateDeleteToDoClient: AddUpdateDeleteToDoClient(),
+                context: context)),
+        RepositoryProvider<MessageRepository>(
+            create: (context) => MessageRepository(
+                messageNetwrokApiClient: MessageNetwrokApiClient(),
+                hiveStorageRepository: context.read<HiveStorageRepository>()))
       ],
     );
   }

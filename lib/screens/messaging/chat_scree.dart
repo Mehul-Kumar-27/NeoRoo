@@ -39,6 +39,15 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  int longPollingCount = 0;
+
+  longPolling() async {
+    while (mounted) {
+      BlocProvider.of<MessageBloc>(context).add(FetchChatsOfChatRoom(chatUser));
+      await Future.delayed(Duration(seconds: 10));
+    }
+  }
+
   late ChatUser chatUser;
   late bool isChatRoomAvailable;
 
@@ -52,6 +61,7 @@ class _ChatScreenState extends State<ChatScreen> {
     } else {
       isChatRoomAvailable = true;
     }
+    longPolling();
     super.initState();
   }
 
@@ -106,6 +116,7 @@ class _ChatScreenState extends State<ChatScreen> {
         listener: (context, state) {
           if (state is FetchingChatsOfChatRoomSuccessfulState) {
             setState(() {
+              longPollingCount++;
               chatsOfThisRoom = state.chatsOfThisRoom;
             });
           }
@@ -135,7 +146,8 @@ class _ChatScreenState extends State<ChatScreen> {
           }
         },
         builder: (context, state) {
-          if (state is FetchingChatsOfChatsRoomInitialState) {
+          if (longPollingCount == 0 &&
+              state is FetchingChatsOfChatsRoomInitialState) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

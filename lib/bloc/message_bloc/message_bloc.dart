@@ -14,6 +14,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageBlocState> {
     on<UserBackFromChatRoom>(userBackFromChatRoom);
     on<CreateCharRoomForThisUser>(createChatRoom);
     on<SendMessageEvent>(sendMessage);
+    on<SeacrchUserInList>(searchUserInTheList);
   }
   getUserFromDhis2(
       GetUsersFromDhis2 event, Emitter<MessageBlocState> emitter) async {
@@ -83,5 +84,17 @@ class MessageBloc extends Bloc<MessageEvent, MessageBlocState> {
     } else {
       emitter(SendMessageFailedState());
     }
+  }
+
+  searchUserInTheList(
+      SeacrchUserInList event, Emitter<MessageBlocState> emitter) async {
+    emitter(SearchResultList(event.userChatList));
+    List<ChatUser> searchResult = [];
+    for (var user in event.userChatList) {
+      if (user.recieverName.toLowerCase().contains(event.query.toLowerCase())) {
+        searchResult.add(user);
+      }
+    }
+    emitter(SearchResultList(searchResult));
   }
 }

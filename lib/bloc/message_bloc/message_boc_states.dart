@@ -21,12 +21,6 @@ class UserChatList extends MessageBlocState {
   UserChatList(this.userChatList);
 }
 
-class UserSearchResult extends MessageBlocState {
-  final List<ChatUser> searchChatList;
-
-  UserSearchResult(this.searchChatList);
-}
-
 class FetchingChatsOfChatsRoomInitialState extends MessageBlocState {}
 
 class FetchingChatsOfChatRoomSuccessfulState extends MessageBlocState {
@@ -56,8 +50,17 @@ class CreateChatRoomSucessful extends MessageBlocState {
 }
 
 class CreateChatUserFaildedState extends MessageBlocState {}
-class CreateChatRoomInitialState extends MessageBlocState{}
 
-class SendMessageInitialState extends MessageBlocState{}
-class SendMessageSuccessfullState extends MessageBlocState{}
-class SendMessageFailedState extends MessageBlocState{}
+class CreateChatRoomInitialState extends MessageBlocState {}
+
+class SendMessageInitialState extends MessageBlocState {}
+
+class SendMessageSuccessfullState extends MessageBlocState {}
+
+class SendMessageFailedState extends MessageBlocState {}
+
+class SearchResultList extends MessageBlocState {
+  final List<ChatUser> searchResultList;
+
+  SearchResultList(this.searchResultList);
+}

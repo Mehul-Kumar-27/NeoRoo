@@ -102,13 +102,21 @@ class _ChatHomePageState extends State<ChatHomePage> {
                                     hintStyle: TextStyle(
                                         color: Colors.white.withOpacity(0.6)),
                                     hintText: "Search For User to chat ..."),
-                                onChanged: (value) {},
+                                onChanged: (value) {
+                                  BlocProvider.of<MessageBloc>(context).add(
+                                      SeacrchUserInList(
+                                          value, chatListToDisplay));
+                                },
                               ),
                             ),
                           ),
                           InkWell(
                             onTap: () {
                               searchController.clear();
+                              setState(() {
+                                showingChatsUserPreviouslyDone = true;
+                                chatListToDisplay = previousChats;
+                              });
                             },
                             child: const Icon(
                               Icons.cancel,
@@ -151,11 +159,17 @@ class _ChatHomePageState extends State<ChatHomePage> {
               chatListToDisplay = state.chatUsersFetched;
             });
           }
+          if (state is SearchResultList) {
+            setState(() {
+              chatListToDisplay = state.searchResultList;
+            });
+          }
         },
         builder: (context, state) {
           if (state is GetUserFromDhis2Sucessful ||
               state is UserChatList ||
-              state is StoreChatUsers) {
+              state is StoreChatUsers ||
+              state is SearchResultList) {
             return RefreshIndicator(
               onRefresh: () => refreshIndcatorFunction(),
               child: ChatListOfUser(
@@ -229,8 +243,10 @@ class ChatListOfUser extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        ChatScreen(chatUser: chatList[index], profile: profile,))).then((value) {
+                    builder: (context) => ChatScreen(
+                          chatUser: chatList[index],
+                          profile: profile,
+                        ))).then((value) {
               BlocProvider.of<MessageBloc>(newContext)
                   .add(UserBackFromChatRoom(chatList));
             });
@@ -243,8 +259,9 @@ class ChatListOfUser extends StatelessWidget {
               child: const Icon(Icons.person),
             ),
             title: Text(chatList[index].recieverName),
-            subtitle: Text(
-                chatList[index].conversationId ?? "Connect with the user .."),
+            subtitle: Text((chatList[index].conversationId != null)
+                ? (chatList[index].recieverId)
+                : "Connect with the user .."),
           ),
         );
       },

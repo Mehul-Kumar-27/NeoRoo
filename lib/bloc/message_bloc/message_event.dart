@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:neoroo_app/models/chat_user.dart';
 
 class MessageEvent {}
@@ -11,9 +12,13 @@ class GetUsersFromDhis2 extends MessageEvent {
 class GetConversationOfUser extends MessageEvent {}
 
 class SeacrchUserInList extends MessageEvent {
+    final String query;
   final List<ChatUser> userChatList;
 
-  SeacrchUserInList(this.userChatList);
+  SeacrchUserInList(
+    this.query,
+    this.userChatList,
+  );
 }
 
 class FetchChatsOfChatRoom extends MessageEvent {
@@ -40,3 +45,5 @@ class SendMessageEvent extends MessageEvent {
 
   SendMessageEvent(this.message, this.chatUser);
 }
+
+

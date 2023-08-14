@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:neoroo_app/bloc/ToDo_bloc/to_do_bloc.dart';
 import 'package:neoroo_app/bloc/add_baby_bloc/add_baby_bloc.dart';
+import 'package:neoroo_app/bloc/add_user_bloc/add_user_bloc.dart';
 import 'package:neoroo_app/bloc/all_babies_bloc/all_babies_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/local_auth_login_bloc/local_authentication_bloc.dart';
 import 'package:neoroo_app/bloc/authentication/login_bloc/login_bloc.dart';
@@ -22,6 +23,7 @@ import 'package:neoroo_app/models/baby_details_family_member.dart';
 import 'package:neoroo_app/models/profile.dart';
 import 'package:neoroo_app/models/tracked_attributes.dart';
 import 'package:neoroo_app/network/add_update_baby_client.dart';
+import 'package:neoroo_app/network/add_user_client.dart';
 import 'package:neoroo_app/network/authentication_client.dart';
 import 'package:neoroo_app/network/baby_details_client.dart';
 import 'package:neoroo_app/network/fetch_baby_client.dart';
@@ -32,6 +34,7 @@ import 'package:neoroo_app/network/on_call_doctors_client.dart';
 import 'package:neoroo_app/network/server_client.dart';
 import 'package:neoroo_app/network/todo_client.dart';
 import 'package:neoroo_app/repository/add_update_baby_repository.dart';
+import 'package:neoroo_app/repository/add_user_repository.dart';
 import 'package:neoroo_app/repository/authentication_repository.dart';
 import 'package:neoroo_app/repository/baby_details_repository.dart';
 import 'package:neoroo_app/repository/eceb_to_neoroo_repository.dart';
@@ -185,7 +188,10 @@ class _MyAppState extends State<MyApp> {
                   messageRepository: MessageRepository(
                       messageNetwrokApiClient: MessageNetwrokApiClient(),
                       hiveStorageRepository:
-                          context.read<HiveStorageRepository>())))
+                          context.read<HiveStorageRepository>()))),
+          BlocProvider<AddUserBloc>(
+              create: (context) =>
+                  AddUserBloc(context.read<AddUserRepository>()))
         ],
       ),
       providers: [
@@ -257,7 +263,11 @@ class _MyAppState extends State<MyApp> {
         RepositoryProvider<MessageRepository>(
             create: (context) => MessageRepository(
                 messageNetwrokApiClient: MessageNetwrokApiClient(),
-                hiveStorageRepository: context.read<HiveStorageRepository>()))
+                hiveStorageRepository: context.read<HiveStorageRepository>())),
+        RepositoryProvider<AddUserRepository>(
+            create: (context) => AddUserRepository(
+                addUserCliet: AddUserCliet(),
+                hiveStorageRepository: context.read<HiveStorageRepository>())),
       ],
     );
   }

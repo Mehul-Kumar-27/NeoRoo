@@ -152,9 +152,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 LoginButton(
                   onPressed: () {
+                    String serverURL = "https://bmgfdev.soic.iupui.edu";
+                    //String serverURL = "http://10.0.2.2:8080/dhisyoutube";
                     BlocProvider.of<LoginBloc>(context).add(
                       LoginEvent(
-                        _serverURLController.text,
+                        serverURL,
+                        // _serverURLController.text,
                         _passwordController.text,
                         _usernameController.text,
                       ),
@@ -189,3 +192,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+
+//https://github.com/dhis2/messaging-app
+////https://docs.dhis2.org/archive/en/2.25/developer/html/webapi_file_resources.html

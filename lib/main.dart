@@ -191,7 +191,8 @@ class _MyAppState extends State<MyApp> {
                           context.read<HiveStorageRepository>()))),
           BlocProvider<AddUserBloc>(
               create: (context) =>
-                  AddUserBloc(context.read<AddUserRepository>()))
+                  AddUserBloc(context.read<AddUserRepository>(),
+                  context.read<AddUpdateBabyRepository>()))
         ],
       ),
       providers: [

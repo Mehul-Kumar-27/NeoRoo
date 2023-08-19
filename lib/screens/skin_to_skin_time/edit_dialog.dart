@@ -401,5 +401,4 @@ class _EditDialogState extends State<EditDialog> {
   }
 }
 
-
 enum TimePeriodSelected { Daily, Weekly, Monthly }

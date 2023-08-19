@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:neoroo_app/screens/add_baby/add_baby.dart';
+
 import 'package:neoroo_app/screens/home/home.dart';
 import 'package:neoroo_app/screens/messaging/messaging_home.dart';
 import 'package:neoroo_app/screens/more_options/more_options.dart';
 import 'package:neoroo_app/screens/notifications/notifications.dart';
+import 'package:neoroo_app/screens/scan_qr_code/scan_qr_code.dart';
 import 'package:neoroo_app/screens/skin_to_skin_time/skin_to_skin_time.dart';
 import 'package:neoroo_app/screens/vitals/vitals.dart';
 import 'package:neoroo_app/utils/constants.dart';
@@ -25,9 +28,9 @@ class _MainScreenState extends State<MainScreen> {
     return PersistentTabView(
       context,
       screens: [
-        HomeScreen(),
+        ScanQrCodeScreen(),
         SkinToSkinTimeScreen(),
-        VitalsPage(),
+        AddBaby(),
         ChatHomePage(),
         MoreOptions(),
       ],

@@ -18,14 +18,11 @@ class AddUserRepository {
       String lastName,
       String email,
       String username,
-      String password) async {
-    Profile profile = await hiveStorageRepository.getUserProfile();
-    String organizationUnitID =
-        await hiveStorageRepository.getSelectedOrganisation();
-    String serverURL = await hiveStorageRepository.getOrganisationURL();
-    String adminUsername = profile.username;
-    String adminPassword = profile.password;
-
+      String password,
+      String adminUsername,
+      String adminPassword,
+      String organizationUnitID,
+      String serverURL) async {
     try {
       var response = await addUserCliet.createUserOnDhis2Server(
           firstName,

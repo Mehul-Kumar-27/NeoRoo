@@ -78,13 +78,10 @@ class AddBabyBloc extends Bloc<AddBabyEvents, AddBabyStates> {
         addBabyEvent.birthTime.isEmpty ||
         addBabyEvent.birthWeight.isEmpty ||
         addBabyEvent.bodyLength.isEmpty ||
-        addBabyEvent.cribNumber.isEmpty ||
         addBabyEvent.headCircumference.isEmpty ||
         addBabyEvent.needResuscitation.isEmpty ||
         addBabyEvent.wardNumber.isEmpty ||
         addBabyEvent.presentWeight.isEmpty ||
-        addBabyEvent.motherName.isEmpty ||
-        addBabyEvent.motherId.isEmpty ||
         addBabyEvent.infantId.isEmpty) {
       emitter(
         AddBabyEmptyField(),

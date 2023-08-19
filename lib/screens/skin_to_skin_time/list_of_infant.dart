@@ -4,9 +4,11 @@ import 'package:neoroo_app/screens/skin_to_skin_time/graph.dart';
 import 'package:neoroo_app/screens/skin_to_skin_time/skin_to_skin_screen_for_infant.dart';
 import 'package:neoroo_app/utils/constants.dart';
 import 'package:neoroo_app/utils/dhis2_config.dart' as DHIS2Config;
+import 'package:neoroo_app/utils/qr_code_generator.dart';
 import 'package:neoroo_app/utils/text_widget.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class ListOfInfantsOnServer extends StatelessWidget {
+class ListOfInfantsOnServer extends StatefulWidget {
   final List<Infant> infantOnServer;
   const ListOfInfantsOnServer({
     Key? key,
@@ -14,16 +16,21 @@ class ListOfInfantsOnServer extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<ListOfInfantsOnServer> createState() => _ListOfInfantsOnServerState();
+}
+
+class _ListOfInfantsOnServerState extends State<ListOfInfantsOnServer> {
+  @override
   Widget build(BuildContext context) {
     return ListView.separated(
       itemBuilder: (context, index) {
-        Infant infant = infantOnServer[index];
+        Infant infant = widget.infantOnServer[index];
         return Padding(
-          padding: const EdgeInsets.only(top: 30.0, left: 40),
+          padding: const EdgeInsets.only(top: 30.0, left: 25, right: 20),
           child: SizedBox(
-            height: 170,
             width: MediaQuery.of(context).size.width,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
@@ -53,6 +60,9 @@ class ListOfInfantsOnServer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(
+                      height: 25,
+                    ),
                     TextWidget(
                         heading: "Date of Birth: ", data: infant.dateOfBirth),
                     TextWidget(
@@ -113,6 +123,19 @@ class ListOfInfantsOnServer extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Text("Generate QR Code"),
+                        IconButton(
+                            onPressed: () async {
+                              generateQrCode(context, infant);
+                            },
+                            icon: Icon(Icons.qr_code)),
+                      ],
                     )
                   ],
                 )
@@ -121,7 +144,7 @@ class ListOfInfantsOnServer extends StatelessWidget {
           ),
         );
       },
-      itemCount: infantOnServer.length,
+      itemCount: widget.infantOnServer.length,
       separatorBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.only(left: 25, right: 25),

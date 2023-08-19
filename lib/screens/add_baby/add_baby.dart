@@ -169,7 +169,7 @@ class _AddBabyState extends State<AddBaby> {
                   ),
                   AddBabyButton(onPressed: () {
                     String infantID =
-                        "${DateTime.now().millisecondsSinceEpoch.toString()}${motherID.text}";
+                        "${DateTime.now().millisecondsSinceEpoch.toString()}";
 
                     BlocProvider.of<AddBabyBloc>(context).add(AddBabyEvent(
                       birthDate.text,
@@ -178,13 +178,15 @@ class _AddBabyState extends State<AddBaby> {
                       birthWeight.text,
                       bodyLength.text,
                       cribNumber.text,
-                      "1234",
+                      "",
                       headCircumference.text,
                       avatarDetails["value"],
                       (needsResuscitation["value"] == true) ? "Yes" : "No",
                       wardNumber.text,
                       birthWeight.text,
-                      motherName.text,
+                      (motherName.text.isNotEmpty)
+                          ? motherName.text
+                          : "Unknown",
                       motherID.text,
                       "", //sts time
                       "", //n sts time

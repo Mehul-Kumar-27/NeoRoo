@@ -131,4 +131,32 @@ class Infant {
       }
     }
   }
+
+    Map<String, dynamic> toJson() {
+    return {
+      'infantId': infantId,
+      'moterName': moterName,
+      'motherUsername': motherUsername,
+      'dateOfBirth': dateOfBirth,
+      'timeOfBirth': timeOfBirth,
+      'birthWeight': birthWeight,
+      'bodyLength': bodyLength,
+      'headCircumference': headCircumference,
+      'birthNotes': birthNotes,
+      'resuscitation': resuscitation,
+      'neoTemperature': neoTemperature,
+      'neoHeartRate': neoHeartRate,
+      'neoRespiratoryRate': neoRespiratoryRate,
+      'neoOxygenSaturation': neoOxygenSaturation,
+      'neoSTS': neoSTS,
+      'neoNSTS': neoNSTS,
+      'infantTrackedInstanceID': infantTrackedInstanceID,
+      'cribNumber': cribNumber,
+      'wardNumber': wardNumber,
+      'presentWeight': presentWeight,
+      'neoDeviceID': neoDeviceID,
+      'avatarID': avatarID,
+      'goals': goals,
+    };
+  }
 }

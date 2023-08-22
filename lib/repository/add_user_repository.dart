@@ -1,8 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 
 import 'package:neoroo_app/exceptions/custom_exception.dart';
-import 'package:neoroo_app/models/profile.dart';
 import 'package:neoroo_app/network/add_user_client.dart';
 import 'package:neoroo_app/repository/hive_storage_repository.dart';
 
@@ -13,7 +14,7 @@ class AddUserRepository {
     required this.hiveStorageRepository,
     required this.addUserCliet,
   });
-  Future<Either<bool, CustomException>> createUserOnDhis2Server(
+  Future<Either<String, CustomException>> createUserOnDhis2Server(
       String firstName,
       String lastName,
       String email,
@@ -37,8 +38,16 @@ class AddUserRepository {
       print(response.body);
       print(response.statusCode);
 
-      if (response.statusCode == 200) {
-        return Left(true);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var data = jsonDecode(response.body);
+        if (response.statusCode == 200) {
+          String uid = data['typeReports'][0]['objectReports'][0]['uid'];
+
+          return Left(uid);
+        } else {
+          String uid = data['response']['uid'];
+          return Left(uid);
+        }
       } else {
         Right(CustomException(response.body, response.statusCode));
       }

@@ -187,7 +187,7 @@ class _AddBabyState extends State<AddBaby> {
                       (motherName.text.isNotEmpty)
                           ? motherName.text
                           : "Unknown",
-                      motherID.text,
+                      (motherID.text.isNotEmpty) ? motherID.text : "Unknown",
                       "", //sts time
                       "", //n sts time
                       "", //infant temperature

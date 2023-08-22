@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neoroo_app/bloc/add_user_bloc/add_user_bloc.dart';
@@ -7,11 +5,9 @@ import 'package:neoroo_app/bloc/add_user_bloc/add_user_event.dart';
 import 'package:neoroo_app/bloc/add_user_bloc/add_user_state.dart';
 import 'package:neoroo_app/models/infant_model.dart';
 import 'package:neoroo_app/models/qr_model.dart';
-import 'package:neoroo_app/screens/add_baby/add_baby.dart';
 import 'package:neoroo_app/utils/constants.dart';
 import 'package:neoroo_app/utils/custom_loader.dart';
 import 'package:neoroo_app/utils/qr_code_scanner.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScanQrCodeScreen extends StatefulWidget {
   const ScanQrCodeScreen({super.key});
@@ -58,6 +54,7 @@ class _ScanQrCodeScreenState extends State<ScanQrCodeScreen> {
               setState(() {
                 infant.moterName =
                     "${_firstNameController.text} ${_surnameController.text}";
+                infant.motherUsername = state.uidOfUserCreated;
               });
               BlocProvider.of<AddUserBloc>(context)
                   .add(UpdateBabyWithFamilyMember(infant));

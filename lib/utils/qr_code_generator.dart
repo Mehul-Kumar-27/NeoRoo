@@ -108,6 +108,7 @@ class _QrScannerDialogState extends State<QrScannerDialog> {
 }
 
 String generateJsonData(QrModel qrModel) {
+  print(qrModel.toString());
   String qrString = jsonEncode(qrModel);
 
   return qrString;

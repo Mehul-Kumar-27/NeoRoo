@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:neoroo_app/exceptions/custom_exception.dart';
 import 'package:neoroo_app/models/profile.dart';

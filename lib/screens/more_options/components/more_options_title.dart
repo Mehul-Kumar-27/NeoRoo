@@ -2,7 +2,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:neoroo_app/utils/constants.dart';
 
-class MoreOptionsTitle extends StatelessWidget with PreferredSizeWidget {
+class MoreOptionsTitle extends StatelessWidget implements PreferredSizeWidget {
   const MoreOptionsTitle({Key? key}) : super(key: key);
 
   @override

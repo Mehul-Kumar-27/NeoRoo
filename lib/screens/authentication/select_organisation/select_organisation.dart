@@ -6,7 +6,6 @@ import 'package:neoroo_app/bloc/authentication/select_organisation_bloc/select_o
 import 'package:neoroo_app/bloc/authentication/select_organisation_bloc/select_organisation_states.dart';
 import 'package:neoroo_app/screens/authentication/select_organisation/components/mobile_body_select_organisation.dart';
 import 'package:neoroo_app/screens/authentication/select_organisation/components/tablet_body_select_organisation.dart';
-import 'package:neoroo_app/screens/main_screen/main_screen.dart';
 import 'package:neoroo_app/screens/server/server.dart';
 import 'package:neoroo_app/utils/constants.dart';
 

@@ -3,7 +3,7 @@ import 'package:neoroo_app/utils/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BabyDetailsFamilyMemberTitle extends StatelessWidget
-    with PreferredSizeWidget {
+    implements PreferredSizeWidget {
   const BabyDetailsFamilyMemberTitle({Key? key}) : super(key: key);
 
   @override

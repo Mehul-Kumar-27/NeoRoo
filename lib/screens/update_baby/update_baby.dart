@@ -5,7 +5,6 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:neoroo_app/bloc/update_baby_bloc/update_baby_bloc.dart';
 import 'package:neoroo_app/bloc/update_baby_bloc/update_baby_events.dart';
 import 'package:neoroo_app/bloc/update_baby_bloc/update_baby_states.dart';
-import 'package:neoroo_app/models/baby_details_caregiver.dart';
 import 'package:neoroo_app/models/infant_model.dart';
 import 'package:neoroo_app/screens/add_baby/components/add_baby_input.dart';
 import 'package:neoroo_app/screens/bluethooth_screen/bluethooth_scan.dart';

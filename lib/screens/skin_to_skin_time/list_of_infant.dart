@@ -6,7 +6,6 @@ import 'package:neoroo_app/utils/constants.dart';
 import 'package:neoroo_app/utils/dhis2_config.dart' as DHIS2Config;
 import 'package:neoroo_app/utils/qr_code_generator.dart';
 import 'package:neoroo_app/utils/text_widget.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ListOfInfantsOnServer extends StatefulWidget {
   final List<Infant> infantOnServer;

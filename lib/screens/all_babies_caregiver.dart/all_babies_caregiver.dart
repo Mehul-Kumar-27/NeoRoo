@@ -7,7 +7,6 @@ import 'package:neoroo_app/models/baby_details_caregiver.dart';
 import 'package:neoroo_app/screens/add_baby/add_baby.dart';
 import 'package:neoroo_app/screens/all_babies_caregiver.dart/components/all_babies_caregiver_title.dart';
 import 'package:neoroo_app/screens/all_babies_caregiver.dart/components/baby_item.dart';
-import 'package:neoroo_app/screens/update_baby/update_baby.dart';
 import 'package:neoroo_app/utils/constants.dart';
 import 'package:neoroo_app/utils/empty_baby_page.dart';
 import 'package:neoroo_app/utils/error_page.dart';

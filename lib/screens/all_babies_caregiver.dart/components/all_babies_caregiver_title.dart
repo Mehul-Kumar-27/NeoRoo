@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:neoroo_app/utils/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class AllBabiesCaregiverTitle extends StatelessWidget with PreferredSizeWidget {
+class AllBabiesCaregiverTitle extends StatelessWidget implements PreferredSizeWidget {
   const AllBabiesCaregiverTitle({Key? key}) : super(key: key);
 
   @override

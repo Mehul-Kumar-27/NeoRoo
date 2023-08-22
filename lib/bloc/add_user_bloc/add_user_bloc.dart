@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neoroo_app/bloc/add_user_bloc/add_user_event.dart';
 import 'package:neoroo_app/bloc/add_user_bloc/add_user_state.dart';
 import 'package:neoroo_app/exceptions/custom_exception.dart';
-import 'package:neoroo_app/models/infant_model.dart';
 import 'package:neoroo_app/models/qr_model.dart';
 import 'package:neoroo_app/repository/add_update_baby_repository.dart';
 import 'package:neoroo_app/repository/add_user_repository.dart';
@@ -35,7 +34,7 @@ class AddUserBloc extends Bloc<AddUserEvent, AddUserState> {
           CustomException("Please Fill All the details !", 501);
       emitter(AddUserFailed(customException));
     } else {
-      Either<bool, CustomException> response =
+      Either<String, CustomException> response =
           await addUserRepository.createUserOnDhis2Server(
               event.firstName,
               event.lastName,
@@ -46,7 +45,7 @@ class AddUserBloc extends Bloc<AddUserEvent, AddUserState> {
               event.adminPassword,
               event.organizationUnit,
               event.serverURL);
-      response.fold((l) => emitter(AddUserSuccessful()),
+      response.fold((l) => emitter(AddUserSuccessful(l)),
           (r) => emitter(AddUserFailed(r)));
     }
   }

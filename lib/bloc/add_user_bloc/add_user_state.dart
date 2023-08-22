@@ -8,7 +8,11 @@ class AddUserInitial extends AddUserState {}
 
 class AddUserEventInitial extends AddUserState {}
 
-class AddUserSuccessful extends AddUserState {}
+class AddUserSuccessful extends AddUserState {
+  final String uidOfUserCreated;
+
+  AddUserSuccessful(this.uidOfUserCreated);
+}
 
 class AddUserFailed extends AddUserState {
   final CustomException customException;

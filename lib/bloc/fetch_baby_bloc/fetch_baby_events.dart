@@ -17,6 +17,7 @@ class GetInfantsFromServer extends FetchBabyEvents {
   GetInfantsFromServer(this.context);
 }
 
+// ignore: must_be_immutable
 class SearchInfants extends FetchBabyEvents {
   String query;
   List<Infant> infantList;

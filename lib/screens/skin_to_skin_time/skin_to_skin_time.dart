@@ -15,9 +15,13 @@ class SkinToSkinTimeScreen extends StatefulWidget {
 }
 
 class _SkinToSkinTimeScreenState extends State<SkinToSkinTimeScreen> {
+  getInfantsFromServer() {
+    BlocProvider.of<FetchBabyBloc>(context).add(GetInfantsFromServer(context));
+  }
+
   @override
   void initState() {
-    BlocProvider.of<FetchBabyBloc>(context).add(GetInfantsFromServer(context));
+    getInfantsFromServer();
 
     super.initState();
   }
@@ -48,8 +52,11 @@ class _SkinToSkinTimeScreenState extends State<SkinToSkinTimeScreen> {
               child: Center(child: CustomCircularProgressIndicator()),
             );
           } else if (state is FetchInfantFromServerSuccess) {
-            return ListOfInfantsOnServer(
-              infantOnServer: state.infantList,
+            return RefreshIndicator(
+              onRefresh: () => getInfantsFromServer(),
+              child: ListOfInfantsOnServer(
+                infantOnServer: state.infantList,
+              ),
             );
           }
           return Container(
